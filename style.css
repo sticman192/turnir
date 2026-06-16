@@ -1,1 +1,82 @@
+body{
+    background:#2d2d2d;
+    color:white;
+    font-family:Arial;
+}
 
+h1{
+    text-align:center;
+}
+
+.bracket{
+    width:500px;
+    margin:auto;
+}
+
+.match{
+    background:#555;
+    border-radius:6px;
+    cursor:pointer;
+    margin:20px;
+}
+
+.team{
+    display:flex;
+    justify-content:space-between;
+    padding:12px;
+    border-bottom:1px solid #666;
+}
+
+.team span{
+    background:#ff8c32;
+    padding:5px 10px;
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.8);
+}
+
+.modal-content{
+    width:900px;
+    margin:50px auto;
+    background:#333;
+    padding:20px;
+}
+
+#close{
+    float:right;
+    font-size:30px;
+    cursor:pointer;
+}
+
+.score-box{
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    margin:30px 0;
+}
+
+.player-card{
+    width:250px;
+    text-align:center;
+    background:#444;
+    padding:20px;
+}
+
+.score{
+    font-size:50px;
+}
+
+#gallery{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+#gallery img{
+    width:250px;
+    border-radius:8px;
+}
