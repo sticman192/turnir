@@ -66,9 +66,10 @@
             overflow-x: auto;
         }
 
+        /* Увеличили количество колонок до 7, чтобы 44 и 45 матчи стояли в разных столбцах, но между 2 и 3 линией */
         .bracket-grid-lower {
             display: grid;
-            grid-template-columns: repeat(6, minmax(220px, 1fr));
+            grid-template-columns: repeat(7, minmax(200px, 1fr));
             gap: 25px;
             background-color: #1a1a1a;
             padding: 25px;
@@ -101,7 +102,6 @@
             border-radius: 4px;
         }
 
-        /* Обычная обертка раундов */
         .match-wrapper {
             display: flex;
             flex-direction: column;
@@ -111,7 +111,7 @@
             min-height: 500px;
         }
 
-        /* Обертка для точного построчного позиционирования матчей 4 раунда, СФ и Финала НС */
+        /* Построчное позиционирование для строгого выравнивания линий 1, 2, 3, 4 */
         .match-wrapper-rows {
             display: flex;
             flex-direction: column;
@@ -121,7 +121,18 @@
             justify-content: center;
         }
 
-        /* Жесткий слот под высоту одного матча */
+        /* Центрирование контента между 2-й и 3-й линиями */
+        .match-wrapper-between {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            min-height: 500px;
+            padding-top: 74px; /* Сдвиг, чтобы убрать влияние 1-й линии и встать ровно между 2 и 3 */
+            box-sizing: border-box;
+        }
+
+        /* Жесткий слот под высоту одного матча + гэп */
         .grid-row-slot {
             height: 74px; 
             display: flex;
@@ -129,7 +140,6 @@
             justify-content: center;
         }
         
-        /* Пустой невидимый блок-заглушка для сохранения шага строк */
         .empty-match-spacer {
             height: 74px;
         }
@@ -143,7 +153,7 @@
             cursor: pointer;
             position: relative;
             transition: border-color 0.2s, transform 0.1s;
-            height: 72px; /* Фиксируем высоту ноды для идеального стыка */
+            height: 72px;
             box-sizing: border-box;
         }
 
@@ -355,7 +365,7 @@
 <body>
 
     <header class="bracket-header">
-        <button id="adminLoginBtn" class="admin-toggle-btn">Войти как Админ</button>
+        <button id="adminLoginBtn" class="admin-toggle-btn">Войти как Admin</button>
         <button id="adminLogoutBtn" class="admin-toggle-btn log-out" style="display: none;">Выйти из Админа</button>
     </header>
 
@@ -412,12 +422,16 @@
                     <div class="match-wrapper-rows" id="lower-r4"></div>
                 </div>
                 <div class="round-col">
-                    <div class="round-header">НС Полуфиналы</div>
-                    <div class="match-wrapper-rows" id="lower-sf"></div>
+                    <div class="round-header">НС Полуфиналы 1</div>
+                    <div class="match-wrapper-rows" id="lower-sf1"></div>
+                </div>
+                <div class="round-col">
+                    <div class="round-header">НС Полуфиналы 2</div>
+                    <div class="match-wrapper-rows" id="lower-sf2"></div>
                 </div>
                 <div class="round-col">
                     <div class="round-header">Финал НС</div>
-                    <div class="match-wrapper-rows" id="lower-f"></div>
+                    <div class="match-wrapper-between" id="lower-f-final"></div>
                 </div>
             </div>
         </div>
@@ -426,7 +440,7 @@
 
     <div id="adminExportPanel" class="export-panel" style="display: none;">
         <h3 style="margin-top:0; color:#ff7a00;">Панель администратора: Сохранение турнира</h3>
-        <p>Вы изменили счёт или добавили скриншоты. Нажмите на кнопку ниже, чтобы скопировать весь код, затем полностью вставьте его в ваш file <b>index.html</b> на GitHub.</p>
+        <p>Вы изменили счёт или добавили скриншоты. Нажмите на кнопку ниже, чтобы скопировать весь код, затем полностью вставьте его в ваш файл <b>index.html</b> на GitHub.</p>
         <button id="exportDataBtn" class="custom-btn">Скопировать весь код страницы</button>
     </div>
 
@@ -681,7 +695,7 @@
 
         function buildTournament() {
             recalculateAllMatches();
-            document.querySelectorAll('.match-wrapper, .match-wrapper-rows').forEach(c => c.innerHTML = '');
+            document.querySelectorAll('.match-wrapper, .match-wrapper-rows, .match-wrapper-between').forEach(c => c.innerHTML = '');
             document.getElementById('grand-final-container').innerHTML = '';
 
             // Обычный рендер верхних и первых нижних раундов
@@ -695,34 +709,45 @@
                 }
             });
 
-            // СТРОГОЕ ПОСТРОЧНОЕ СТЫКОВАНИЕ (ЛИНИЯ В ЛИНИЮ)
+            // --- СТРОГОЕ ВЫРАВНИВАНИЕ ПО ЛИНИЯМ (1, 2, 3, 4) ---
             
-            // Раунд 4: Матчи 33, 34, 35, 36 подряд по строкам
+            // Колонка НС Раунд 4: Матчи 33, 34, 35, 36
             const r4Container = document.getElementById('lower-r4');
             if (r4Container) {
-                r4Container.appendChild(createRowSlot(createMatchNode("l13"))); // Строка 1: Матч 33
-                r4Container.appendChild(createRowSlot(createMatchNode("l14"))); // Строка 2: Матч 34
-                r4Container.appendChild(createRowSlot(createMatchNode("l15"))); // Строка 3: Матч 35
-                r4Container.appendChild(createRowSlot(createMatchNode("l16"))); // Строка 4: Матч 36
+                r4Container.appendChild(createRowSlot(createMatchNode("l13"))); // Линия 1: Матч 33
+                r4Container.appendChild(createRowSlot(createMatchNode("l14"))); // Линия 2: Матч 34
+                r4Container.appendChild(createRowSlot(createMatchNode("l15"))); // Линия 3: Матч 35
+                r4Container.appendChild(createRowSlot(createMatchNode("l16"))); // Линия 4: Матч 36
             }
 
-            // Полуфиналы: Напротив 33 -> пустой, напротив 34 -> 37, напротив 35 -> 38, напротив 36 -> пустой
-            // А следом на второй итерации в этой же колонке встают 42 и 43!
-            const sfContainer = document.getElementById('lower-sf');
-            if (sfContainer) {
-                sfContainer.appendChild(createRowSlot(createMatchNode("l19"))); // Строка 1: Матч 42 (Напротив 33)
-                sfContainer.appendChild(createRowSlot(createMatchNode("l17"))); // Строка 2: Матч 37 (Напротив 34)
-                sfContainer.appendChild(createRowSlot(createMatchNode("l18"))); // Строка 3: Матч 38 (Напротив 35)
-                sfContainer.appendChild(createRowSlot(createMatchNode("l20"))); // Строка 4: Матч 43 (Напротив 36)
+            // Колонка НС Полуфиналы 1: Напротив 34 -> 37, Напротив 35 -> 38
+            const sf1Container = document.getElementById('lower-sf1');
+            if (sf1Container) {
+                sf1Container.appendChild(createRowSlot(null));                   // Линия 1: Пусто
+                sf1Container.appendChild(createRowSlot(createMatchNode("l17"))); // Линия 2: Матч 37 (напротив 34)
+                sf1Container.appendChild(createRowSlot(createMatchNode("l18"))); // Линия 3: Матч 38 (напротив 35)
+                sf1Container.appendChild(createRowSlot(null));                   // Линия 4: Пусто
             }
 
-            // Финал НС: Напротив 42 -> 44, Напротив 37 -> пусто, Напротив 38 -> пусто, Напротив 43 -> 45
-            const fContainer = document.getElementById('lower-f');
-            if (fContainer) {
-                fContainer.appendChild(createRowSlot(createMatchNode("l21"))); // Строка 1: Матч 44 (Напротив 42)
-                fContainer.appendChild(createRowSlot(null));                   // Строка 2: Пусто
-                fContainer.appendChild(createRowSlot(null));                   // Строка 3: Пусто
-                fContainer.appendChild(createRowSlot(createMatchNode("l22"))); // Строка 4: Матч 45 (Напротив 43)
+            // Колонка НС Полуфиналы 2: Напротив 37 -> 42, Напротив 38 -> 43
+            const sf2Container = document.getElementById('lower-sf2');
+            if (sf2Container) {
+                sf2Container.appendChild(createRowSlot(null));                   // Линия 1: Пусто
+                sf2Container.appendChild(createRowSlot(createMatchNode("l19"))); // Линия 2: Матч 42 (напротив 37)
+                sf2Container.appendChild(createRowSlot(createMatchNode("l20"))); // Линия 3: Матч 43 (напротив 38)
+                sf2Container.appendChild(createRowSlot(null));                   // Линия 4: Пусто
+            }
+
+            // Финал НС: Матчи 44 и 45 выводятся друг под другом ровно посередине между 2 и 3 линией
+            const fFinalContainer = document.getElementById('lower-f-final');
+            if (fFinalContainer) {
+                // Выводим 44 и 45 матчи. Благодарная стилям .match-wrapper-between структура выровняет их ровно по центру между линиями 2 и 3
+                fFinalContainer.appendChild(createMatchNode("l21")); // Матч 44 (между 2-3 линией)
+                // Создаем небольшой отступ между матчами 44 и 45 внутри центральной зоны
+                const gapSpacer = document.createElement('div');
+                gapSpacer.style.height = '15px';
+                fFinalContainer.appendChild(gapSpacer);
+                fFinalContainer.appendChild(createMatchNode("l22")); // Матч 45 (между 2-3 линией)
             }
         }
 
