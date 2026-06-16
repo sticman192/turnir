@@ -168,7 +168,6 @@
             color: #bbbbbb;
         }
 
-        /* Стиль для умных подсказок (Победитель/Проигравший) */
         .team-title.placeholder-hint {
             color: #777777;
             font-style: italic;
@@ -334,7 +333,6 @@
         <button id="adminLogoutBtn" class="admin-toggle-btn log-out" style="display: none;">Выйти из Админа</button>
     </header>
 
-    <!-- ГРАНД-ФИНАЛ -->
     <div class="grand-final-section">
         <div class="bracket-title-main" style="text-align: center; border: none; padding: 0; margin-bottom: 10px; color: #ff7a00;">🏆 Гранд-Финал 🏆</div>
         <div id="grand-final-container"></div>
@@ -342,7 +340,6 @@
 
     <div class="tournament-wrapper">
         
-        <!-- ВЕРХНЯЯ СЕТКА -->
         <div class="bracket-section">
             <div class="bracket-title-main">Верхняя сетка</div>
             <div class="bracket-grid bracket-grid-upper">
@@ -369,7 +366,6 @@
             </div>
         </div>
 
-        <!-- НИЖНЯЯ СЕТКА -->
         <div class="bracket-section">
             <div class="bracket-title-main">Нижняя сетка (Сетка Проигравших)</div>
             <div class="bracket-grid bracket-grid-lower">
@@ -391,29 +387,23 @@
                 </div>
                 <div class="round-col">
                     <div class="round-header">НС Полуфиналы</div>
-                    <!-- Блоки-контейнеры для матчей 37,38 и 42,43 разделены по вашему запросу -->
-                    <div class="match-wrapper" id="lower-sf-1"></div>
-                    <div class="match-wrapper" id="lower-sf-2"></div>
+                    <div class="match-wrapper" id="lower-sf"></div>
                 </div>
                 <div class="round-col">
                     <div class="round-header">Финал НС</div>
-                    <!-- Блоки-контейнеры для матчей 44 и 45 -->
-                    <div class="match-wrapper" id="lower-f-1"></div>
-                    <div class="match-wrapper" id="lower-f-2"></div>
+                    <div class="match-wrapper" id="lower-f"></div>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <!-- ПАНЕЛЬ ЭКСПОРТА -->
     <div id="adminExportPanel" class="export-panel" style="display: none;">
         <h3 style="margin-top:0; color:#ff7a00;">Панель администратора: Сохранение турнира</h3>
         <p>Вы изменили счёт или добавили скриншоты. Нажмите на кнопку ниже, чтобы скопировать весь код, затем полностью вставьте его в ваш файл <b>index.html</b> на GitHub.</p>
         <button id="exportDataBtn" class="custom-btn">Скопировать весь код страницы</button>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО МАТЧА -->
     <div class="modal-overlay" id="matchModal">
         <div class="modal-content">
             <button class="close-modal-btn" id="closeModal">&times;</button>
@@ -451,16 +441,13 @@
         </div>
     </div>
 
-    <!-- ОКНО ПРОСМОТРА КАРТИНКИ -->
     <div id="lightboxOverlay" class="lightbox-overlay" onclick="this.style.display='none'">
         <img id="lightboxImg" src="" alt="Скриншот">
     </div>
 
-    <!-- --- ЛОГИКА (JAVASCRIPT) --- -->
     <script>
         const ADMIN_PASSWORD = "1234"; 
 
-        // АРХИТЕКТУРА СЕТКИ С ИНТЕГРИРОВАННЫМИ ДИНАМИЧЕСКИМИ МАРКЕРАМИ НАПРАВЛЕНИЙ
         const bracketData = {
             // ВЕРХНЯЯ СЕТКА: РАУНД 1
             "u1": { id: 1, type: "upper-r1", s1: 16, team1: "svoloch", score1: 0, s2: 17, team2: "Lotus", score2: 0, images: [] },
@@ -520,19 +507,15 @@
             "l15": { id: 35, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 27", ph2: "Проигравший 31", images: [] },
             "l16": { id: 36, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 28", ph2: "Проигравший 32", images: [] },
 
-            // НС ПОЛУФИНАЛЫ: ЭТАП 1 (Идут первыми в колонке)
-            "l17": { id: 37, type: "lower-sf-1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 33", ph2: "Победитель 34", images: [] },
-            "l18": { id: 38, type: "lower-sf-1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 35", ph2: "Победитель 36", images: [] },
+            // НС ПОЛУФИНАЛЫ
+            "l17": { id: 37, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 33", ph2: "Победитель 34", images: [] },
+            "l18": { id: 38, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 35", ph2: "Победитель 36", images: [] },
+            "l19": { id: 42, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 37", ph2: "Проигравший 39", images: [] },
+            "l20": { id: 43, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 38", ph2: "Проигравший 40", images: [] },
 
-            // НС ПОЛУФИНАЛЫ: ЭТАП 2 (Идут вторыми в колонке)
-            "l19": { id: 42, type: "lower-sf-2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 37", ph2: "Проигравший 39", images: [] },
-            "l20": { id: 43, type: "lower-sf-2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 38", ph2: "Проигравший 40", images: [] },
-
-            // НС ФИНАЛ: ЭТАП 1
-            "l21": { id: 44, type: "lower-f-1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 42", ph2: "Победитель 43", images: [] },
-            
-            // НС ФИНАЛ: ЭТАП 2
-            "l22": { id: 45, type: "lower-f-2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 41", ph2: "Победитель 44", images: [] },
+            // НС ФИНАЛ
+            "l21": { id: 44, type: "lower-f", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 42", ph2: "Победитель 43", images: [] },
+            "l22": { id: 45, type: "lower-f", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 41", ph2: "Победитель 44", images: [] },
 
             // ================= ГРАНД-ФИНАЛ =================
             "gf1": { id: 50, type: "grand-final", s1: "ВС", team1: "", score1: 0, s2: "НС", team2: "", score2: 0, ph1: "Победитель 41", ph2: "Победитель 45", images: [] }
@@ -543,7 +526,6 @@
         let activeKey = null;
 
         function recalculateAllMatches() {
-            // Сброс динамических полей перед циклом перерасчета
             const keysToReset = [
                 "u29", "u30", "u31", "u32", "u39", "u40", "u41",
                 "l1", "l2", "l3", "l4", "l5", "l6", "l7", "l8", "l9", "l10", "l11", "l12",
@@ -555,7 +537,6 @@
             });
             for (let i = 9; i <= 16; i++) { store["u" + i].team2 = ""; store["u" + i].s2 = "?"; }
 
-            // Логика автоматического продвижения по цепочкам Double Elimination
             autoPush("u1", "u9", "team2", "s2", "l1", "team1", "s1");
             autoPush("u2", "u10", "team2", "s2", "l1", "team2", "s2");
             autoPush("u3", "u11", "team2", "s2", "l2", "team1", "s1");
@@ -600,18 +581,15 @@
             autoPush("l15", "l18", "team1", "s1", null, null, null);
             autoPush("l16", "l18", "team2", "s2", null, null, null);
 
-            // Направление победителей: 37 -> 42, 38 -> 43
             autoPush("l17", "l19", "team1", "s1", null, null, null);
             autoPush("l18", "l20", "team1", "s1", null, null, null);
 
             autoPush("u39", "u41", "team1", "s1", "l19", "team2", "s2");
             autoPush("u40", "u41", "team2", "s2", "l20", "team2", "s2");
 
-            // Победители 42 и 43 идут в матч 44
             autoPush("l19", "l21", "team1", "s1", null, null, null);
             autoPush("l20", "l21", "team2", "s2", null, null, null);
 
-            // Победитель 44 идет в матч 45
             autoPush("l21", "l22", "team2", "s2", null, null, null);
 
             autoPush("u41", "gf1", "team1", "s1", "l22", "team1", "s1");
@@ -631,49 +609,68 @@
             if (loseKey && loseProp) { store[loseKey][loseProp] = lName; store[loseKey][loseSeed] = lSeed; }
         }
 
+        function createMatchNode(key) {
+            const data = store[key];
+            const node = document.createElement('div');
+            node.className = 'match-node';
+            node.onclick = () => openModalBox(key);
+
+            const hasPlayed = (data.score1 > 0 || data.score2 > 0) && (data.team1 && data.team2);
+            const win1 = hasPlayed && data.score1 > data.score2;
+            const win2 = hasPlayed && data.score2 > data.score1;
+
+            const dispTeam1 = data.team1 || (data.ph1 ? `(${data.ph1})` : 'Ожидание');
+            const dispTeam2 = data.team2 || (data.ph2 ? `(${data.ph2})` : 'Ожидание');
+            
+            const isHint1 = !data.team1 && data.ph1;
+            const isHint2 = !data.team2 && data.ph2;
+
+            node.innerHTML = `
+                <div class="match-index">${data.id}</div>
+                <div class="team-slot ${win1 ? 'winner-row' : ''}">
+                    <div class="seed-num">${data.s1}</div>
+                    <div class="team-title ${isHint1 ? 'placeholder-hint' : ''}">${dispTeam1}</div>
+                    <div class="team-score">${data.team1 && data.team2 ? data.score1 : ''}</div>
+                </div>
+                <div class="team-slot ${win2 ? 'winner-row' : ''}">
+                    <div class="seed-num">${data.s2}</div>
+                    <div class="team-title ${isHint2 ? 'placeholder-hint' : ''}">${dispTeam2}</div>
+                    <div class="team-score">${data.team1 && data.team2 ? data.score2 : ''}</div>
+                </div>
+            `;
+            return node;
+        }
+
         function buildTournament() {
             recalculateAllMatches();
             document.querySelectorAll('.match-wrapper').forEach(c => c.innerHTML = '');
             document.getElementById('grand-final-container').innerHTML = '';
 
+            // Стандартный рендер обычных раундов
             Object.keys(store).forEach(key => {
                 const data = store[key];
-                const node = document.createElement('div');
-                node.className = 'match-node';
-                node.onclick = () => openModalBox(key);
-
-                const hasPlayed = (data.score1 > 0 || data.score2 > 0) && (data.team1 && data.team2);
-                const win1 = hasPlayed && data.score1 > data.score2;
-                const win2 = hasPlayed && data.score2 > data.score1;
-
-                // Генерация названий: если имени нет, берем умную подсказку, иначе стандартное "Ожидание"
-                const dispTeam1 = data.team1 || (data.ph1 ? `(${data.ph1})` : 'Ожидание');
-                const dispTeam2 = data.team2 || (data.ph2 ? `(${data.ph2})` : 'Ожидание');
-                
-                const isHint1 = !data.team1 && data.ph1;
-                const isHint2 = !data.team2 && data.ph2;
-
-                node.innerHTML = `
-                    <div class="match-index">${data.id}</div>
-                    <div class="team-slot ${win1 ? 'winner-row' : ''}">
-                        <div class="seed-num">${data.s1}</div>
-                        <div class="team-title ${isHint1 ? 'placeholder-hint' : ''}">${dispTeam1}</div>
-                        <div class="team-score">${data.team1 && data.team2 ? data.score1 : ''}</div>
-                    </div>
-                    <div class="team-slot ${win2 ? 'winner-row' : ''}">
-                        <div class="seed-num">${data.s2}</div>
-                        <div class="team-title ${isHint2 ? 'placeholder-hint' : ''}">${dispTeam2}</div>
-                        <div class="team-score">${data.team1 && data.team2 ? data.score2 : ''}</div>
-                    </div>
-                `;
-                
-                if(data.type === "grand-final") {
-                    document.getElementById('grand-final-container').appendChild(node);
-                } else {
+                if (data.type === "grand-final") {
+                    document.getElementById('grand-final-container').appendChild(createMatchNode(key));
+                } else if (data.type !== "lower-sf" && data.type !== "lower-f") {
                     const targetContainer = document.getElementById(data.type);
-                    if (targetContainer) targetContainer.appendChild(node);
+                    if (targetContainer) targetContainer.appendChild(createMatchNode(key));
                 }
             });
+
+            // ЖЕСТКИЙ ПОРЯДОК ОТРЕСОВКИ ДЛЯ НИЖНЕЙ СЕТКИ (ЧТОБЫ 37, 38 БЫЛИ В ЦЕНТРЕ И СВЕРХУ)
+            const sfContainer = document.getElementById('lower-sf');
+            if (sfContainer) {
+                sfContainer.appendChild(createMatchNode("l17")); // Матч 37
+                sfContainer.appendChild(createMatchNode("l18")); // Матч 38
+                sfContainer.appendChild(createMatchNode("l19")); // Матч 42
+                sfContainer.appendChild(createMatchNode("l20")); // Матч 43
+            }
+
+            const fContainer = document.getElementById('lower-f');
+            if (fContainer) {
+                fContainer.appendChild(createMatchNode("l21")); // Матч 44
+                fContainer.appendChild(createMatchNode("l22")); // Матч 45
+            }
         }
 
         const modalOverlay = document.getElementById('matchModal');
@@ -795,7 +792,7 @@
             const regex = /const bracketData = \{[\s\S]*?\};/;
             const finalHtml = "<!DOCTYPE html>\n<html lang=\"ru\">\n" + currentFullHtml.replace(regex, `const bracketData = ${cleanStoreData};`) + "\n</html>";
             navigator.clipboard.writeText(finalHtml);
-            alert("УСПЕШНО!\n\nВесь код скопирован вместе со структурами подсказок. Замените его на GitHub!");
+            alert("УСПЕШНО!\n\nВесь код скопирован. Замените им содержимое вашего файла на GitHub!");
         };
 
         buildTournament();
