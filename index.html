@@ -101,6 +101,7 @@
             border-radius: 4px;
         }
 
+        /* Обычная обертка раундов */
         .match-wrapper {
             display: flex;
             flex-direction: column;
@@ -110,20 +111,27 @@
             min-height: 500px;
         }
 
-        /* Новые стили для центрирования кастомных блоков в НС Полуфиналах и Финале */
-        .match-wrapper-centered {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 30px;
-            height: 100%;
-            min-height: 500px;
-        }
-
-        .match-group-block {
+        /* Обертка для точного построчного позиционирования матчей 4 раунда, СФ и Финала НС */
+        .match-wrapper-rows {
             display: flex;
             flex-direction: column;
             gap: 15px;
+            height: 100%;
+            min-height: 500px;
+            justify-content: center;
+        }
+
+        /* Жесткий слот под высоту одного матча */
+        .grid-row-slot {
+            height: 74px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        /* Пустой невидимый блок-заглушка для сохранения шага строк */
+        .empty-match-spacer {
+            height: 74px;
         }
 
         .height-large { min-height: 850px; }
@@ -135,6 +143,8 @@
             cursor: pointer;
             position: relative;
             transition: border-color 0.2s, transform 0.1s;
+            height: 72px; /* Фиксируем высоту ноды для идеального стыка */
+            box-sizing: border-box;
         }
 
         .match-node:hover {
@@ -155,7 +165,7 @@
         .team-slot {
             display: flex;
             align-items: center;
-            height: 36px;
+            height: 35px;
             border-bottom: 1px solid #2e2e2e;
             background-color: #444444;
         }
@@ -399,15 +409,15 @@
                 </div>
                 <div class="round-col">
                     <div class="round-header">НС Раунд 4</div>
-                    <div class="match-wrapper" id="lower-r4"></div>
+                    <div class="match-wrapper-rows" id="lower-r4"></div>
                 </div>
                 <div class="round-col">
                     <div class="round-header">НС Полуфиналы</div>
-                    <div class="match-wrapper-centered" id="lower-sf"></div>
+                    <div class="match-wrapper-rows" id="lower-sf"></div>
                 </div>
                 <div class="round-col">
                     <div class="round-header">Финал НС</div>
-                    <div class="match-wrapper-centered" id="lower-f"></div>
+                    <div class="match-wrapper-rows" id="lower-f"></div>
                 </div>
             </div>
         </div>
@@ -416,7 +426,7 @@
 
     <div id="adminExportPanel" class="export-panel" style="display: none;">
         <h3 style="margin-top:0; color:#ff7a00;">Панель администратора: Сохранение турнира</h3>
-        <p>Вы изменили счёт или добавили скриншоты. Нажмите на кнопку ниже, чтобы скопировать весь код, затем полностью вставьте его в ваш файл <b>index.html</b> на GitHub.</p>
+        <p>Вы изменили счёт или добавили скриншоты. Нажмите на кнопку ниже, чтобы скопировать весь код, затем полностью вставьте его в ваш file <b>index.html</b> на GitHub.</p>
         <button id="exportDataBtn" class="custom-btn">Скопировать весь код страницы</button>
     </div>
 
@@ -657,46 +667,62 @@
             return node;
         }
 
+        function createRowSlot(child) {
+            const slot = document.createElement('div');
+            slot.className = 'grid-row-slot';
+            if (child) slot.appendChild(child);
+            else {
+                const spacer = document.createElement('div');
+                spacer.className = 'empty-match-spacer';
+                slot.appendChild(spacer);
+            }
+            return slot;
+        }
+
         function buildTournament() {
             recalculateAllMatches();
-            document.querySelectorAll('.match-wrapper, .match-wrapper-centered').forEach(c => c.innerHTML = '');
+            document.querySelectorAll('.match-wrapper, .match-wrapper-rows').forEach(c => c.innerHTML = '');
             document.getElementById('grand-final-container').innerHTML = '';
 
-            // Обычный рендер
+            // Обычный рендер верхних и первых нижних раундов
             Object.keys(store).forEach(key => {
                 const data = store[key];
                 if (data.type === "grand-final") {
                     document.getElementById('grand-final-container').appendChild(createMatchNode(key));
-                } else if (data.type !== "lower-sf" && data.type !== "lower-f") {
+                } else if (data.type !== "lower-r4" && data.type !== "lower-sf" && data.type !== "lower-f") {
                     const targetContainer = document.getElementById(data.type);
                     if (targetContainer) targetContainer.appendChild(createMatchNode(key));
                 }
             });
 
-            // ИСПРАВЛЕННЫЙ ВЫВОД: группируем матчи внутри контейнеров, чтобы они шли друг за другом по центру
-            const sfContainer = document.getElementById('lower-sf');
-            if (sfContainer) {
-                const topGroup = document.createElement('div');
-                topGroup.className = 'match-group-block';
-                topGroup.appendChild(createMatchNode("l17")); // Матч 37
-                topGroup.appendChild(createMatchNode("l18")); // Матч 38
-
-                const bottomGroup = document.createElement('div');
-                bottomGroup.className = 'match-group-block';
-                bottomGroup.appendChild(createMatchNode("l19")); // Матч 42
-                bottomGroup.appendChild(createMatchNode("l20")); // Матч 43
-
-                sfContainer.appendChild(topGroup);
-                sfContainer.appendChild(bottomGroup);
+            // СТРОГОЕ ПОСТРОЧНОЕ СТЫКОВАНИЕ (ЛИНИЯ В ЛИНИЮ)
+            
+            // Раунд 4: Матчи 33, 34, 35, 36 подряд по строкам
+            const r4Container = document.getElementById('lower-r4');
+            if (r4Container) {
+                r4Container.appendChild(createRowSlot(createMatchNode("l13"))); // Строка 1: Матч 33
+                r4Container.appendChild(createRowSlot(createMatchNode("l14"))); // Строка 2: Матч 34
+                r4Container.appendChild(createRowSlot(createMatchNode("l15"))); // Строка 3: Матч 35
+                r4Container.appendChild(createRowSlot(createMatchNode("l16"))); // Строка 4: Матч 36
             }
 
+            // Полуфиналы: Напротив 33 -> пустой, напротив 34 -> 37, напротив 35 -> 38, напротив 36 -> пустой
+            // А следом на второй итерации в этой же колонке встают 42 и 43!
+            const sfContainer = document.getElementById('lower-sf');
+            if (sfContainer) {
+                sfContainer.appendChild(createRowSlot(createMatchNode("l19"))); // Строка 1: Матч 42 (Напротив 33)
+                sfContainer.appendChild(createRowSlot(createMatchNode("l17"))); // Строка 2: Матч 37 (Напротив 34)
+                sfContainer.appendChild(createRowSlot(createMatchNode("l18"))); // Строка 3: Матч 38 (Напротив 35)
+                sfContainer.appendChild(createRowSlot(createMatchNode("l20"))); // Строка 4: Матч 43 (Напротив 36)
+            }
+
+            // Финал НС: Напротив 42 -> 44, Напротив 37 -> пусто, Напротив 38 -> пусто, Напротив 43 -> 45
             const fContainer = document.getElementById('lower-f');
             if (fContainer) {
-                const finalGroup = document.createElement('div');
-                finalGroup.className = 'match-group-block';
-                finalGroup.appendChild(createMatchNode("l21")); // Матч 44
-                finalGroup.appendChild(createMatchNode("l22")); // Матч 45
-                fContainer.appendChild(finalGroup);
+                fContainer.appendChild(createRowSlot(createMatchNode("l21"))); // Строка 1: Матч 44 (Напротив 42)
+                fContainer.appendChild(createRowSlot(null));                   // Строка 2: Пусто
+                fContainer.appendChild(createRowSlot(null));                   // Строка 3: Пусто
+                fContainer.appendChild(createRowSlot(createMatchNode("l22"))); // Строка 4: Матч 45 (Напротив 43)
             }
         }
 
@@ -819,7 +845,7 @@
             const regex = /const bracketData = \{[\s\S]*?\};/;
             const finalHtml = "<!DOCTYPE html>\n<html lang=\"ru\">\n" + currentFullHtml.replace(regex, `const bracketData = ${cleanStoreData};`) + "\n</html>";
             navigator.clipboard.writeText(finalHtml);
-            alert("УСПЕШНО!\n\nВесь код скопирован. Замените им содержимое вашего файла на GitHub!");
+            alert("УСПЕШНО!\n\nВесь код скопирован вместе со структурами подсказок. Замените его на GitHub!");
         };
 
         buildTournament();
