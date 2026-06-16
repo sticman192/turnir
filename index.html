@@ -3,91 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Турнирная Сетка (Double Elimination)</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Турнирная Сетка</title>
+    <!-- Исправленный относительный путь для GitHub Pages -->
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 
-    <div class="tournament-container">
+    <div class="tournament-wrapper">
+        
         <!-- ВЕРХНЯЯ СЕТКА -->
-        <h2>Верхняя сетка</h2>
-        <div class="bracket upper-bracket">
-            <div class="column">
-                <div class="column-header">Раунд 1</div>
-                <div class="match-list" id="upper-r1"></div>
-            </div>
-            <div class="column">
-                <div class="column-header">Раунд 2</div>
-                <div class="match-list" id="upper-r2"></div>
-            </div>
-            <div class="column">
-                <div class="column-header">Полуфиналы</div>
-                <div class="match-list" id="upper-sf"></div>
-            </div>
-            <div class="column">
-                <div class="column-header">Финал</div>
-                <div class="match-list" id="upper-f"></div>
+        <div class="bracket-section">
+            <div class="bracket-title-main">Верхняя сетка</div>
+            <div class="bracket-grid upper-grid">
+                
+                <!-- Раунд 1 -->
+                <div class="round-col">
+                    <div class="round-header">Раунд 1</div>
+                    <div class="match-wrapper" id="upper-r1"></div>
+                </div>
+                
+                <!-- Раунд 2 -->
+                <div class="round-col">
+                    <div class="round-header">Раунд 2</div>
+                    <div class="match-wrapper" id="upper-r2"></div>
+                </div>
+                
+                <!-- Полуфиналы -->
+                <div class="round-col">
+                    <div class="round-header">Полуфиналы</div>
+                    <div class="match-wrapper" id="upper-sf"></div>
+                </div>
+                
+                <!-- Финал -->
+                <div class="round-col">
+                    <div class="round-header">Финал</div>
+                    <div class="match-wrapper" id="upper-f"></div>
+                </div>
+                
             </div>
         </div>
 
         <!-- НИЖНЯЯ СЕТКА -->
-        <h2>Нижняя сетка</h2>
-        <div class="bracket lower-bracket">
-            <div class="column">
-                <div class="column-header">Раунд нижней сетки 1</div>
-                <div class="match-list" id="lower-r1"></div>
-            </div>
-            <div class="column">
-                <div class="column-header">Раунд нижней сетки 2</div>
-                <div class="match-list" id="lower-r2"></div>
-            </div>
-            <div class="column">
-                <div class="column-header">Раунд нижней сетки 3</div>
-                <div class="match-list" id="lower-r3"></div>
-            </div>
-            <div class="column">
-                <div class="column-header">Раунд нижней сетки 4</div>
-                <div class="match-list" id="lower-r4"></div>
+        <div class="bracket-section">
+            <div class="bracket-title-main">Нижняя сетка</div>
+            <div class="bracket-grid lower-grid">
+                
+                <!-- РНС 1 -->
+                <div class="round-col">
+                    <div class="round-header">Раунд нижней сетки 1</div>
+                    <div class="match-wrapper" id="lower-r1"></div>
+                </div>
+                
+                <!-- РНС 2 -->
+                <div class="round-col">
+                    <div class="round-header">Раунд нижней сетки 2</div>
+                    <div class="match-wrapper" id="lower-r2"></div>
+                </div>
+                
+                <!-- РНС 3 -->
+                <div class="round-col">
+                    <div class="round-header">Раунд нижней сетки 3</div>
+                    <div class="match-wrapper" id="lower-r3"></div>
+                </div>
+                
+                <!-- РНС 4 -->
+                <div class="round-col">
+                    <div class="round-header">Раунд нижней сетки 4</div>
+                    <div class="match-wrapper" id="lower-r4"></div>
+                </div>
+                
             </div>
         </div>
+
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО (Результаты матча) -->
+    <!-- МОДАЛЬНОЕ ОКНО -->
     <div class="modal-overlay" id="matchModal">
-        <div class="modal">
-            <button class="close-btn" id="closeModal">&times;</button>
-            <div class="modal-title">Результаты матча</div>
+        <div class="modal-content">
+            <button class="close-modal-btn" id="closeModal">&times;</button>
+            <div class="modal-header-title">Результаты матча</div>
             
-            <div class="modal-vs-container">
-                <div class="modal-team-card">
-                    <div class="team-logo">⚡</div>
-                    <div class="modal-team-name" id="modal-team1">Команда 1</div>
-                    <div class="modal-score" id="modal-score1">0</div>
+            <div class="vs-flex-box">
+                <div class="team-modal-card">
+                    <div class="avatar-circle">⚡</div>
+                    <div class="modal-t-name" id="modal-team1">Команда 1</div>
+                    <div class="modal-t-score" id="modal-score1">0</div>
                 </div>
                 
-                <div class="vs-text">против</div>
+                <div class="vs-divider">против</div>
                 
-                <div class="modal-team-card">
-                    <div class="team-logo">⚡</div>
-                    <div class="modal-team-name" id="modal-team2">Команда 2</div>
-                    <div class="modal-score" id="modal-score2">0</div>
+                <div class="team-modal-card">
+                    <div class="avatar-circle">⚡</div>
+                    <div class="modal-t-name" id="modal-team2">Команда 2</div>
+                    <div class="modal-t-score" id="modal-score2">0</div>
                 </div>
             </div>
 
-            <!-- ЗОНА СКРИНШОТОВ (под результатами) -->
-            <div class="screenshots-section">
-                <h3>Скриншоты матча</h3>
-                <div class="screenshots-gallery" id="screenshotsGallery">
-                    <!-- Сюда будут добавляться скриншоты -->
-                </div>
-                <div class="upload-controls">
-                    <label for="fileInput" class="upload-btn">Добавить скриншот</label>
+            <div class="screenshot-block">
+                <div class="screenshot-title">Скриншоты матча</div>
+                <div class="gallery-container" id="screenshotsGallery"></div>
+                <div class="upload-zone">
+                    <label for="fileInput" class="custom-file-upload">Добавить скриншот</label>
                     <input type="file" id="fileInput" accept="image/*" style="display:none;">
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="./script.js"></script>
 </body>
 </html>
