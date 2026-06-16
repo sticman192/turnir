@@ -1,20 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>Tournament</title>
+    <meta charset="UTF-8">
+    <title>Турнирная сетка</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>My Tournament</h1>
+<h1>Турнирная сетка</h1>
 
-<div id="bracket">
-    <div class="match">
-        Team A vs Team B
+<div class="bracket">
+
+    <div class="match"
+         data-team1="DuRimAn + miate"
+         data-team2="STICMAN + zernd"
+         data-score1="3"
+         data-score2="2"
+         data-images="images/match1_1.jpg,images/match1_2.jpg">
+
+        <div class="team">
+            DuRimAn + miate
+            <span>3</span>
+        </div>
+
+        <div class="team">
+            STICMAN + zernd
+            <span>2</span>
+        </div>
+
     </div>
+
+</div>
+
+<div id="modal" class="modal">
+
+    <div class="modal-content">
+
+        <span id="close">&times;</span>
+
+        <h2>Результаты матча</h2>
+
+        <div class="score-box">
+
+            <div class="player-card">
+                <h3 id="team1"></h3>
+                <div id="score1" class="score"></div>
+            </div>
+
+            <div class="vs">VS</div>
+
+            <div class="player-card">
+                <h3 id="team2"></h3>
+                <div id="score2" class="score"></div>
+            </div>
+
+        </div>
+
+        <h3>Скриншоты матча</h3>
+
+        <div id="gallery"></div>
+
+    </div>
+
 </div>
 
 <script src="script.js"></script>
-
 </body>
 </html>
