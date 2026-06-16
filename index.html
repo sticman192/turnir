@@ -4,10 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Турнирная Сетка</title>
-    <!-- Исправленный относительный путь для GitHub Pages -->
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
+
+    <!-- Шапка с кнопкой админа -->
+    <header class="bracket-header">
+        <button id="adminLoginBtn" class="admin-toggle-btn">Войти как Админ</button>
+        <button id="adminLogoutBtn" class="admin-toggle-btn log-out style-danger" style="display: none;">Выйти из Админа</button>
+    </header>
 
     <div class="tournament-wrapper">
         
@@ -15,31 +20,22 @@
         <div class="bracket-section">
             <div class="bracket-title-main">Верхняя сетка</div>
             <div class="bracket-grid upper-grid">
-                
-                <!-- Раунд 1 -->
                 <div class="round-col">
                     <div class="round-header">Раунд 1</div>
                     <div class="match-wrapper" id="upper-r1"></div>
                 </div>
-                
-                <!-- Раунд 2 -->
                 <div class="round-col">
                     <div class="round-header">Раунд 2</div>
                     <div class="match-wrapper" id="upper-r2"></div>
                 </div>
-                
-                <!-- Полуфиналы -->
                 <div class="round-col">
                     <div class="round-header">Полуфиналы</div>
                     <div class="match-wrapper" id="upper-sf"></div>
                 </div>
-                
-                <!-- Финал -->
                 <div class="round-col">
                     <div class="round-header">Финал</div>
                     <div class="match-wrapper" id="upper-f"></div>
                 </div>
-                
             </div>
         </div>
 
@@ -47,34 +43,32 @@
         <div class="bracket-section">
             <div class="bracket-title-main">Нижняя сетка</div>
             <div class="bracket-grid lower-grid">
-                
-                <!-- РНС 1 -->
                 <div class="round-col">
                     <div class="round-header">Раунд нижней сетки 1</div>
                     <div class="match-wrapper" id="lower-r1"></div>
                 </div>
-                
-                <!-- РНС 2 -->
                 <div class="round-col">
                     <div class="round-header">Раунд нижней сетки 2</div>
                     <div class="match-wrapper" id="lower-r2"></div>
                 </div>
-                
-                <!-- РНС 3 -->
                 <div class="round-col">
                     <div class="round-header">Раунд нижней сетки 3</div>
                     <div class="match-wrapper" id="lower-r3"></div>
                 </div>
-                
-                <!-- РНС 4 -->
                 <div class="round-col">
                     <div class="round-header">Раунд нижней сетки 4</div>
                     <div class="match-wrapper" id="lower-r4"></div>
                 </div>
-                
             </div>
         </div>
 
+    </div>
+
+    <!-- ПАНЕЛЬ ЭКСПОРТА (ВИДИТ ТОЛЬКО АДМИН) -->
+    <div id="adminExportPanel" class="export-panel" style="display: none;">
+        <h3>Панель администратора: Сохранение изменений</h3>
+        <p>Вы изменили сетку или добавили скриншоты. Чтобы сохранить это для всех пользователей, нажмите кнопку ниже, скопируйте код и замените им содержимое файла <strong>script.js</strong> на GitHub.</p>
+        <button id="exportDataBtn" class="custom-btn">Скопировать код для script.js</button>
     </div>
 
     <!-- МОДАЛЬНОЕ ОКНО -->
@@ -88,6 +82,8 @@
                     <div class="avatar-circle">⚡</div>
                     <div class="modal-t-name" id="modal-team1">Команда 1</div>
                     <div class="modal-t-score" id="modal-score1">0</div>
+                    <!-- Инпут для админа -->
+                    <input type="number" id="inputScore1" class="admin-score-input" min="0" style="display: none;">
                 </div>
                 
                 <div class="vs-divider">против</div>
@@ -96,13 +92,20 @@
                     <div class="avatar-circle">⚡</div>
                     <div class="modal-t-name" id="modal-team2">Команда 2</div>
                     <div class="modal-t-score" id="modal-score2">0</div>
+                    <!-- Инпут для админа -->
+                    <input type="number" id="inputScore2" class="admin-score-input" min="0" style="display: none;">
                 </div>
             </div>
+
+            <!-- Кнопка сохранения результатов (для админа) -->
+            <button id="saveMatchResultsBtn" class="custom-btn style-success" style="display: none; margin-bottom: 20px; width: 100%;">Сохранить результаты</button>
 
             <div class="screenshot-block">
                 <div class="screenshot-title">Скриншоты матча</div>
                 <div class="gallery-container" id="screenshotsGallery"></div>
-                <div class="upload-zone">
+                
+                <!-- Загрузка только для админа -->
+                <div class="upload-zone" id="adminUploadZone" style="display: none;">
                     <label for="fileInput" class="custom-file-upload">Добавить скриншот</label>
                     <input type="file" id="fileInput" accept="image/*" style="display:none;">
                 </div>
