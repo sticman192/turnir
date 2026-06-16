@@ -2,68 +2,92 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Турнирная сетка</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Турнирная Сетка (Double Elimination)</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>Турнирная сетка</h1>
-
-<div class="bracket">
-
-    <div class="match"
-         data-team1="DuRimAn + miate"
-         data-team2="STICMAN + zernd"
-         data-score1="3"
-         data-score2="2"
-         data-images="images/match1_1.jpg,images/match1_2.jpg">
-
-        <div class="team">
-            DuRimAn + miate
-            <span>3</span>
+    <div class="tournament-container">
+        <!-- ВЕРХНЯЯ СЕТКА -->
+        <h2>Верхняя сетка</h2>
+        <div class="bracket upper-bracket">
+            <div class="column">
+                <div class="column-header">Раунд 1</div>
+                <div class="match-list" id="upper-r1"></div>
+            </div>
+            <div class="column">
+                <div class="column-header">Раунд 2</div>
+                <div class="match-list" id="upper-r2"></div>
+            </div>
+            <div class="column">
+                <div class="column-header">Полуфиналы</div>
+                <div class="match-list" id="upper-sf"></div>
+            </div>
+            <div class="column">
+                <div class="column-header">Финал</div>
+                <div class="match-list" id="upper-f"></div>
+            </div>
         </div>
 
-        <div class="team">
-            STICMAN + zernd
-            <span>2</span>
+        <!-- НИЖНЯЯ СЕТКА -->
+        <h2>Нижняя сетка</h2>
+        <div class="bracket lower-bracket">
+            <div class="column">
+                <div class="column-header">Раунд нижней сетки 1</div>
+                <div class="match-list" id="lower-r1"></div>
+            </div>
+            <div class="column">
+                <div class="column-header">Раунд нижней сетки 2</div>
+                <div class="match-list" id="lower-r2"></div>
+            </div>
+            <div class="column">
+                <div class="column-header">Раунд нижней сетки 3</div>
+                <div class="match-list" id="lower-r3"></div>
+            </div>
+            <div class="column">
+                <div class="column-header">Раунд нижней сетки 4</div>
+                <div class="match-list" id="lower-r4"></div>
+            </div>
         </div>
-
     </div>
 
-</div>
-
-<div id="modal" class="modal">
-
-    <div class="modal-content">
-
-        <span id="close">&times;</span>
-
-        <h2>Результаты матча</h2>
-
-        <div class="score-box">
-
-            <div class="player-card">
-                <h3 id="team1"></h3>
-                <div id="score1" class="score"></div>
+    <!-- МОДАЛЬНОЕ ОКНО (Результаты матча) -->
+    <div class="modal-overlay" id="matchModal">
+        <div class="modal">
+            <button class="close-btn" id="closeModal">&times;</button>
+            <div class="modal-title">Результаты матча</div>
+            
+            <div class="modal-vs-container">
+                <div class="modal-team-card">
+                    <div class="team-logo">⚡</div>
+                    <div class="modal-team-name" id="modal-team1">Команда 1</div>
+                    <div class="modal-score" id="modal-score1">0</div>
+                </div>
+                
+                <div class="vs-text">против</div>
+                
+                <div class="modal-team-card">
+                    <div class="team-logo">⚡</div>
+                    <div class="modal-team-name" id="modal-team2">Команда 2</div>
+                    <div class="modal-score" id="modal-score2">0</div>
+                </div>
             </div>
 
-            <div class="vs">VS</div>
-
-            <div class="player-card">
-                <h3 id="team2"></h3>
-                <div id="score2" class="score"></div>
+            <!-- ЗОНА СКРИНШОТОВ (под результатами) -->
+            <div class="screenshots-section">
+                <h3>Скриншоты матча</h3>
+                <div class="screenshots-gallery" id="screenshotsGallery">
+                    <!-- Сюда будут добавляться скриншоты -->
+                </div>
+                <div class="upload-controls">
+                    <label for="fileInput" class="upload-btn">Добавить скриншот</label>
+                    <input type="file" id="fileInput" accept="image/*" style="display:none;">
+                </div>
             </div>
-
         </div>
-
-        <h3>Скриншоты матча</h3>
-
-        <div id="gallery"></div>
-
     </div>
 
-</div>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
