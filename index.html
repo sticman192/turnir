@@ -4,14 +4,301 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Турнирная Сетка</title>
-    <link rel="stylesheet" href="./style.css">
+    <style>
+        /* --- СТИЛИ (CSS) --- */
+        body {
+            background-color: #222222;
+            color: #e0e0e0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .bracket-header {
+            max-width: 1400px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .admin-toggle-btn {
+            background-color: #ff7a00;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .admin-toggle-btn:hover { background-color: #e06b00; }
+        .admin-toggle-btn.log-out { background-color: #dc3545; }
+        .admin-toggle-btn.log-out:hover { background-color: #c82333; }
+
+        .tournament-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .bracket-title-main {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+
+        .bracket-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(250px, 1fr));
+            gap: 25px;
+            background-color: #1a1a1a;
+            padding: 25px;
+            border-radius: 6px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            overflow-x: auto;
+        }
+
+        .round-col { display: flex; flex-direction: column; }
+
+        .round-header {
+            background-color: #333333;
+            padding: 12px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: #bbbbbb;
+            border-bottom: 2px solid #444;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .match-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            justify-content: space-around;
+            height: 100%;
+            min-height: 480px;
+        }
+
+        .match-node {
+            background-color: #3a3a3a;
+            border-radius: 4px;
+            border: 1px solid #444;
+            cursor: pointer;
+            position: relative;
+            transition: border-color 0.2s, transform 0.1s;
+        }
+
+        .match-node:hover {
+            border-color: #ff7a00;
+            transform: translateY(-2px);
+        }
+
+        .match-index {
+            position: absolute;
+            left: -22px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+            color: #777;
+            font-weight: bold;
+        }
+
+        .team-slot {
+            display: flex;
+            align-items: center;
+            height: 36px;
+            border-bottom: 1px solid #2e2e2e;
+            background-color: #444444;
+        }
+
+        .team-slot:last-child { border-bottom: none; }
+
+        .seed-num {
+            background-color: #333333;
+            color: #888;
+            font-size: 11px;
+            width: 24px;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-right: 1px solid #2e2e2e;
+        }
+
+        .team-title {
+            padding-left: 10px;
+            font-size: 13px;
+            flex-grow: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #bbbbbb;
+        }
+
+        .team-score {
+            background-color: #555555;
+            width: 35px;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .winner-row .team-score { background-color: #ff7a00; color: #ffffff; }
+        .winner-row .team-title { color: #ffffff; font-weight: 500; }
+
+        /* МОДАЛЬНОЕ ОКНО */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+        .modal-content {
+            background-color: #333333;
+            width: 90%;
+            max-width: 600px;
+            padding: 30px;
+            border-radius: 6px;
+            position: relative;
+            border: 1px solid #444;
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: 15px; right: 20px;
+            background: none; border: none;
+            color: #999; font-size: 30px; cursor: pointer;
+        }
+        .close-modal-btn:hover { color: #fff; }
+
+        .modal-header-title {
+            font-size: 18px; font-weight: bold;
+            border-bottom: 2px solid #ff7a00;
+            padding-bottom: 6px; margin-bottom: 25px;
+            display: inline-block;
+        }
+
+        .vs-flex-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .team-modal-card {
+            background-color: #222222;
+            flex: 1; text-align: center;
+            padding: 20px; border-radius: 4px;
+            border: 1px solid #444;
+        }
+
+        .avatar-circle {
+            width: 44px; height: 44px; background-color: #444;
+            border-radius: 50%; display: flex;
+            justify-content: center; align-items: center; margin: 0 auto 12px auto;
+        }
+
+        .modal-t-name { font-size: 14px; margin-bottom: 12px; font-weight: 500; }
+        .modal-t-score { background-color: #333; font-size: 26px; font-weight: bold; padding: 8px 0; border-radius: 4px; }
+        
+        .admin-score-input {
+            width: 80%; background-color: #444; color: #fff;
+            border: 1px solid #ff7a00; padding: 6px;
+            text-align: center; font-size: 18px; font-weight: bold;
+            border-radius: 4px; margin: 10px auto 0 auto;
+        }
+
+        .vs-divider { padding: 0 15px; color: #777; font-style: italic; }
+
+        /* ГАЛЕРЕЯ СКРИНШОТОВ */
+        .screenshot-block { border-top: 1px solid #444; padding-top: 20px; }
+        .screenshot-title { font-size: 14px; color: #aaa; margin-bottom: 15px; }
+        .gallery-container { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px; }
+        
+        .gallery-item {
+            position: relative;
+            display: inline-block;
+        }
+
+        .preview-img {
+            width: 110px; height: 75px; object-fit: cover;
+            border-radius: 4px; border: 1px solid #555;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .preview-img:hover { transform: scale(1.03); border-color: #ff7a00; }
+
+        .delete-img-btn {
+            position: absolute; top: -6px; right: -6px;
+            background-color: #dc3545; color: white; border: none;
+            border-radius: 50%; width: 20px; height: 20px;
+            font-size: 12px; font-weight: bold; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        .delete-img-btn:hover { background-color: #c82333; }
+
+        /* ОКНО ПРОСМОТРА ИЗОБРАЖЕНИЯ (ЛАЙТБОКС) */
+        .lightbox-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.9); display: none;
+            justify-content: center; align-items: center; z-index: 10000;
+            cursor: zoom-out;
+        }
+        .lightbox-overlay img {
+            max-width: 90%; max-height: 90%;
+            border: 2px solid #fff; border-radius: 4px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+        }
+
+        /* КНОПКИ */
+        .custom-btn {
+            background-color: #ff7a00; color: white;
+            padding: 12px 20px; border: none; border-radius: 4px;
+            cursor: pointer; font-weight: bold; display: inline-block;
+        }
+        .custom-btn:hover { background-color: #e06b00; }
+        .style-success { background-color: #28a745; }
+        .style-success:hover { background-color: #218838; }
+
+        .custom-file-upload {
+            background-color: #ff7a00; color: white;
+            padding: 10px 20px; border-radius: 4px;
+            cursor: pointer; font-size: 13px; font-weight: bold; display: inline-block;
+        }
+
+        .export-panel {
+            max-width: 1350px; margin: 40px auto 20px auto;
+            background-color: #1a1a1a; padding: 25px;
+            border-left: 5px solid #ff7a00; border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Шапка с кнопкой админа -->
     <header class="bracket-header">
         <button id="adminLoginBtn" class="admin-toggle-btn">Войти как Админ</button>
-        <button id="adminLogoutBtn" class="admin-toggle-btn log-out style-danger" style="display: none;">Выйти из Админа</button>
+        <button id="adminLogoutBtn" class="admin-toggle-btn log-out" style="display: none;">Выйти из Админа</button>
     </header>
 
     <div class="tournament-wrapper">
@@ -19,7 +306,7 @@
         <!-- ВЕРХНЯЯ СЕТКА -->
         <div class="bracket-section">
             <div class="bracket-title-main">Верхняя сетка</div>
-            <div class="bracket-grid upper-grid">
+            <div class="bracket-grid">
                 <div class="round-col">
                     <div class="round-header">Раунд 1</div>
                     <div class="match-wrapper" id="upper-r1"></div>
@@ -42,7 +329,7 @@
         <!-- НИЖНЯЯ СЕТКА -->
         <div class="bracket-section">
             <div class="bracket-title-main">Нижняя сетка</div>
-            <div class="bracket-grid lower-grid">
+            <div class="bracket-grid">
                 <div class="round-col">
                     <div class="round-header">Раунд нижней сетки 1</div>
                     <div class="match-wrapper" id="lower-r1"></div>
@@ -64,14 +351,14 @@
 
     </div>
 
-    <!-- ПАНЕЛЬ ЭКСПОРТА (ВИДИТ ТОЛЬКО АДМИН) -->
+    <!-- ПАНЕЛЬ ЭКСПОРТА -->
     <div id="adminExportPanel" class="export-panel" style="display: none;">
-        <h3>Панель администратора: Сохранение изменений</h3>
-        <p>Вы изменили сетку или добавили скриншоты. Чтобы сохранить это для всех пользователей, нажмите кнопку ниже, скопируйте код и замените им содержимое файла <strong>script.js</strong> на GitHub.</p>
-        <button id="exportDataBtn" class="custom-btn">Скопировать код для script.js</button>
+        <h3 style="margin-top:0; color:#ff7a00;">Панель администратора: Сохранение турнира</h3>
+        <p>Вы изменили счёт или добавили скриншоты. Нажмите на кнопку ниже, чтобы скопировать весь код, затем полностью вставьте его в ваш файл <b>index.html</b> на GitHub.</p>
+        <button id="exportDataBtn" class="custom-btn">Скопировать весь код страницы</button>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО -->
+    <!-- МОДАЛЬНОЕ ОКНО МАТЧА -->
     <div class="modal-overlay" id="matchModal">
         <div class="modal-content">
             <button class="close-modal-btn" id="closeModal">&times;</button>
@@ -82,7 +369,6 @@
                     <div class="avatar-circle">⚡</div>
                     <div class="modal-t-name" id="modal-team1">Команда 1</div>
                     <div class="modal-t-score" id="modal-score1">0</div>
-                    <!-- Инпут для админа -->
                     <input type="number" id="inputScore1" class="admin-score-input" min="0" style="display: none;">
                 </div>
                 
@@ -92,19 +378,16 @@
                     <div class="avatar-circle">⚡</div>
                     <div class="modal-t-name" id="modal-team2">Команда 2</div>
                     <div class="modal-t-score" id="modal-score2">0</div>
-                    <!-- Инпут для админа -->
                     <input type="number" id="inputScore2" class="admin-score-input" min="0" style="display: none;">
                 </div>
             </div>
 
-            <!-- Кнопка сохранения результатов (для админа) -->
             <button id="saveMatchResultsBtn" class="custom-btn style-success" style="display: none; margin-bottom: 20px; width: 100%;">Сохранить результаты</button>
 
             <div class="screenshot-block">
-                <div class="screenshot-title">Скриншоты матча</div>
+                <div class="screenshot-title">Скриншоты матча (Нажмите для просмотра)</div>
                 <div class="gallery-container" id="screenshotsGallery"></div>
                 
-                <!-- Загрузка только для админа -->
                 <div class="upload-zone" id="adminUploadZone" style="display: none;">
                     <label for="fileInput" class="custom-file-upload">Добавить скриншот</label>
                     <input type="file" id="fileInput" accept="image/*" style="display:none;">
@@ -113,6 +396,244 @@
         </div>
     </div>
 
-    <script src="./script.js"></script>
+    <!-- ОКНО ПРОСМОТРА КАРТИНКИ (LIGHTBOX) -->
+    <div id="lightboxOverlay" class="lightbox-overlay" onclick="this.style.display='none'">
+        <img id="lightboxImg" src="" alt="Скриншот">
+    </div>
+
+    <!-- --- ЛОГИКА (JAVASCRIPT) --- -->
+    <script>
+        const ADMIN_PASSWORD = "1234"; 
+
+        // Исходные данные турнира. Будущие раунды теперь изначально пустые ("Ожидание")
+        const bracketData = {
+            "u1": { id: 1, type: "upper-r1", s1: 1, team1: "DuRimAn + miate", score1: 0, s2: 8, team2: "KiNg + vovelon", score2: 3, images: [] },
+            "u2": { id: 2, type: "upper-r1", s1: 4, team1: "Akuma + bildreyn", score1: 3, s2: 5, team2: "STICMAN + zernd", score2: 0, images: [] },
+            "u3": { id: 3, type: "upper-r1", s1: 2, team1: "svoloch + Laz", score1: 2, s2: 7, team2: "mogilka + VikuSiK", score2: 3, images: [] },
+            "u4": { id: 4, type: "upper-r1", s1: 3, team1: "qwrchk + isagi", score1: 3, s2: 6, team2: "Daniil + W1nston", score2: 0, images: [] },
+            
+            "u7": { id: 7, type: "upper-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+            "u8": { id: 8, type: "upper-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+            
+            "u12": { id: 12, type: "upper-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+            "u14": { id: 15, type: "upper-f", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+
+            "l5": { id: 5, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+            "l6": { id: 6, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+            
+            "l10": { id: 10, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+            "l9": { id: 9, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+            
+            "l11": { id: 11, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+            "l13": { id: 13, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] }
+        };
+
+        let store = JSON.parse(localStorage.getItem('grid_save_data')) || bracketData;
+        let isAdmin = false;
+        let activeKey = null;
+
+        // Последовательный пересчет всей турнирной сетки
+        function recalculateAllMatches() {
+            // Сбрасываем зависимые раунды перед пересчетом
+            const dependents = ["u7", "u8", "u12", "u14", "l5", "l6", "l9", "l10", "l11", "l13"];
+            dependents.forEach(k => {
+                store[k].team1 = ""; store[k].team2 = "";
+                store[k].s1 = "?"; store[k].s2 = "?";
+            });
+
+            // Раунд 1 -> Раунд 2 Верхней и Раунд 1 Ниженй
+            autoPush("u1", "u7", "team1", "s1", "l5", "team1", "s1");
+            autoPush("u2", "u7", "team2", "s2", "l5", "team2", "s2");
+            autoPush("u3", "u8", "team1", "s1", "l6", "team1", "s1");
+            autoPush("u4", "u8", "team2", "s2", "l6", "team2", "s2");
+
+            // Раунд 2 Верхней -> Полуфинал и Нижняя сетка
+            autoPush("u7", "u12", "team1", "s1", "l9", "team1", "s1");
+            autoPush("u8", "u12", "team2", "s2", "l10", "team1", "s1");
+
+            // Нижняя сетка Раунд 1 -> Нижняя сетка Раунд 2
+            autoPush("l5", null, null, null, "l10", "team2", "s2", true);
+            autoPush("l6", null, null, null, "l9", "team2", "s2", true);
+
+            // Нижняя сетка Раунд 2 -> Раунд 3
+            autoPush("l10", "l11", "team1", "s1", null, null, null);
+            autoPush("l9", "l11", "team2", "s2", null, null, null);
+
+            // Нижняя сетка Раунд 3 -> Раунд 4
+            autoPush("l11", "l13", "team2", "s2", null, null, null);
+
+            // Полуфинал верхний -> Финал и Раунд 4 Нижней
+            autoPush("u12", "u14", "team1", "s1", "l13", "team1", "s1");
+
+            // Раунд 4 Нижней -> Финал верхний
+            autoPush("l13", "u14", "team2", "s2", null, null, null);
+        }
+
+        function autoPush(matchKey, winKey, winProp, winSeed, loseKey, loseProp, loseSeed, winToLoseSlot = false) {
+            const m = store[matchKey];
+            if (!m || !m.team1 || !m.team2 || m.score1 === m.score2) return;
+
+            const wName = m.score1 > m.score2 ? m.team1 : m.team2;
+            const wSeed = m.score1 > m.score2 ? m.s1 : m.s2;
+            const lName = m.score1 > m.score2 ? m.team2 : m.team1;
+            const lSeed = m.score1 > m.score2 ? m.s2 : m.s1;
+
+            if (winKey && winProp) {
+                store[winKey][winProp] = wName;
+                store[winKey][winSeed] = wSeed;
+            }
+            if (loseKey && loseProp) {
+                store[loseKey][loseProp] = winToLoseSlot ? wName : lName;
+                store[loseKey][loseSeed] = winToLoseSlot ? wSeed : lSeed;
+            }
+        }
+
+        function buildTournament() {
+            recalculateAllMatches();
+            document.querySelectorAll('.match-wrapper').forEach(c => c.innerHTML = '');
+
+            Object.keys(store).forEach(key => {
+                const data = store[key];
+                const node = document.createElement('div');
+                node.className = 'match-node';
+                node.onclick = () => openModalBox(key);
+
+                const hasPlayed = (data.score1 > 0 || data.score2 > 0) && (data.team1 && data.team2);
+                const win1 = hasPlayed && data.score1 > data.score2;
+                const win2 = hasPlayed && data.score2 > data.score1;
+
+                node.innerHTML = `
+                    <div class="match-index">${data.id}</div>
+                    <div class="team-slot ${win1 ? 'winner-row' : ''}">
+                        <div class="seed-num">${data.s1}</div>
+                        <div class="team-title">${data.team1 || 'Ожидание'}</div>
+                        <div class="team-score">${data.team1 && data.team2 ? data.score1 : ''}</div>
+                    </div>
+                    <div class="team-slot ${win2 ? 'winner-row' : ''}">
+                        <div class="seed-num">${data.s2}</div>
+                        <div class="team-title">${data.team2 || 'Ожидание'}</div>
+                        <div class="team-score">${data.team1 && data.team2 ? data.score2 : ''}</div>
+                    </div>
+                `;
+                document.getElementById(data.type).appendChild(node);
+            });
+        }
+
+        const modalOverlay = document.getElementById('matchModal');
+        const closeBtn = document.getElementById('closeModal');
+        const fileLoader = document.getElementById('fileInput');
+        const galleryBox = document.getElementById('screenshotsGallery');
+        const adminLoginBtn = document.getElementById('adminLoginBtn');
+        const adminLogoutBtn = document.getElementById('adminLogoutBtn');
+        const adminExportPanel = document.getElementById('adminExportPanel');
+        const adminUploadZone = document.getElementById('adminUploadZone');
+        const saveMatchResultsBtn = document.getElementById('saveMatchResultsBtn');
+        const inputScore1 = document.getElementById('inputScore1');
+        const inputScore2 = document.getElementById('inputScore2');
+        const modalScore1 = document.getElementById('modal-score1');
+        const modalScore2 = document.getElementById('modal-score2');
+
+        function toggleAdminInterface(visible) {
+            isAdmin = visible;
+            adminLoginBtn.style.display = visible ? 'none' : 'block';
+            adminLogoutBtn.style.display = visible ? 'block' : 'none';
+            adminExportPanel.style.display = visible ? 'block' : 'none';
+            adminUploadZone.style.display = visible ? 'block' : 'none';
+            saveMatchResultsBtn.style.display = visible ? 'block' : 'none';
+            inputScore1.style.display = visible ? 'block' : 'none';
+            inputScore2.style.display = visible ? 'block' : 'none';
+            modalScore1.style.display = visible ? 'none' : 'block';
+            modalScore2.style.display = visible ? 'none' : 'block';
+        }
+
+        adminLoginBtn.onclick = () => {
+            if (prompt("Введите пароль администратора:") === ADMIN_PASSWORD) toggleAdminInterface(true);
+            else alert("Неверный пароль!");
+        };
+        adminLogoutBtn.onclick = () => toggleAdminInterface(false);
+
+        function openModalBox(key) {
+            activeKey = key;
+            const match = store[key];
+            document.getElementById('modal-team1').innerText = match.team1 || 'Ожидание';
+            document.getElementById('modal-team2').innerText = match.team2 || 'Ожидание';
+            modalScore1.innerText = match.score1; modalScore2.innerText = match.score2;
+            inputScore1.value = match.score1; inputScore2.value = match.score2;
+            updateGalleryView();
+            modalOverlay.classList.add('active');
+        }
+
+        saveMatchResultsBtn.onclick = () => {
+            store[activeKey].score1 = parseInt(inputScore1.value) || 0;
+            store[activeKey].score2 = parseInt(inputScore2.value) || 0;
+            localStorage.setItem('grid_save_data', JSON.stringify(store));
+            buildTournament();
+            closeModalBox();
+        };
+
+        function closeModalBox() { modalOverlay.classList.remove('active'); }
+        closeBtn.onclick = closeModalBox;
+        modalOverlay.onclick = (e) => { if (e.target === modalOverlay) closeModalBox(); };
+
+        function viewImage(src) {
+            document.getElementById('lightboxImg').src = src;
+            document.getElementById('lightboxOverlay').style.display = 'flex';
+        }
+
+        function deleteImage(index) {
+            if (confirm("Удалить этот скриншот?")) {
+                store[activeKey].images.splice(index, 1);
+                localStorage.setItem('grid_save_data', JSON.stringify(store));
+                updateGalleryView();
+            }
+        }
+
+        function updateGalleryView() {
+            galleryBox.innerHTML = '';
+            const imgs = store[activeKey].images || [];
+            if (imgs.length === 0) { galleryBox.innerHTML = '<div style="color: #666; font-size: 13px;">Скриншотов нет</div>'; return; }
+            
+            imgs.forEach((src, idx) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'gallery-item';
+                
+                const img = document.createElement('img');
+                img.src = src; img.className = 'preview-img';
+                img.onclick = () => viewImage(src);
+                wrapper.appendChild(img);
+
+                if (isAdmin) {
+                    const delBtn = document.createElement('button');
+                    delBtn.className = 'delete-img-btn'; delBtn.innerHTML = '&times;';
+                    delBtn.onclick = (e) => { e.stopPropagation(); deleteImage(idx); };
+                    wrapper.appendChild(delBtn);
+                }
+                galleryBox.appendChild(wrapper);
+            });
+        }
+
+        fileLoader.addEventListener('change', function(e) {
+            const file = e.target.files[0]; if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                if (!store[activeKey].images) store[activeKey].images = [];
+                store[activeKey].images.push(event.target.result);
+                localStorage.setItem('grid_save_data', JSON.stringify(store));
+                updateGalleryView();
+            };
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById('exportDataBtn').onclick = () => {
+            const currentFullHtml = document.documentElement.outerHTML;
+            const cleanStoreData = JSON.stringify(store, null, 12);
+            const regex = /const bracketData = \{[\s\S]*?\};/;
+            const finalHtml = "<!DOCTYPE html>\n<html lang=\"ru\">\n" + currentFullHtml.replace(regex, `const bracketData = ${cleanStoreData};`) + "\n</html>";
+            navigator.clipboard.writeText(finalHtml);
+            alert("Весь код сайта скопирован со ВСЕМИ скриншотами! Перейдите на GitHub, сотрите всё из index.html, вставьте этот код и сохраните. Скриншоты увидят все!");
+        };
+
+        buildTournament();
+    </script>
 </body>
 </html>
