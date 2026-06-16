@@ -3,92 +3,25 @@ const ADMIN_PASSWORD = "1234";
 
 // Главная база данных турнира. Именно этот блок будет обновляться при экспорте!
 const bracketData = {
-    // ==========================================
-    // ВЕРХНЯЯ СЕТКА: РАУНД 1
-    // ==========================================
-    "u1": { id: 1, type: "upper-r1", s1: 16, team1: "svoloch", score1: 1, s2: 17, team2: "Lotus", score2: 0, images: ["screenshot.png", "screenshot1.png", "screenshot2.png", "screenshot3.png", "screenshot4.png", "screenshot5.png", "screenshot6.png"] },
-    "u2": { id: 2, type: "upper-r1", s1: 9, team1: "Laz", score1: 1, s2: 24, team2: "xKros", score2: 0, images: [] },
-    "u3": { id: 3, type: "upper-r1", s1: 13, team1: "mogilka", score1: 1, s2: 20, team2: "isagi", score2: 0, images: [] },
-    "u4": { id: 4, type: "upper-r1", s1: 12, team1: "Justix", score1: 1, s2: 21, team2: "miate", score2: 0, images: [] },
-    "u5": { id: 5, type: "upper-r1", s1: 15, team1: "Daniil", score1: 0, s2: 18, team2: "HD", score2: 0, images: [] },
-    "u6": { id: 6, type: "upper-r1", s1: 10, team1: "vovelon", score1: 0, s2: 23, team2: "Rangerss", score2: 0, images: [] },
-    "u7": { id: 7, type: "upper-r1", s1: 14, team1: "VikuSiK", score1: 0, s2: 19, team2: "willave", score2: 0, images: [] },
-    "u8": { id: 8, type: "upper-r1", s1: 11, team1: "KiNg", score1: 0, s2: 22, team2: "W1nston", score2: 0, images: [] },
+    "u1": { id: 1, type: "upper-r1", s1: 1, team1: "DuRimAn + miate", score1: 0, s2: 8, team2: "KiNg + vovelon", score2: 3, images: [] },
+    "u2": { id: 2, type: "upper-r1", s1: 4, team1: "Akuma + bildreyn", score1: 3, s2: 5, team2: "STICMAN + zernd", score2: 0, images: [] },
+    "u3": { id: 3, type: "upper-r1", s1: 2, team1: "svoloch + Laz", score1: 2, s2: 7, team2: "mogilka + VikuSiK", score2: 3, images: [] },
+    "u4": { id: 4, type: "upper-r1", s1: 3, team1: "qwrchk + isagi", score1: 3, s2: 6, team2: "Daniil + W1nston", score2: 0, images: [] },
+    
+    "u7": { id: 7, type: "upper-r2", s1: 8, team1: "KiNg + vovelon", score1: 3, s2: 4, team2: "Akuma + bildreyn", score2: 1, images: [] },
+    "u8": { id: 8, type: "upper-r2", s1: 7, team1: "mogilka + VikuSiK", score1: 0, s2: 3, team2: "qwrchk + isagi", score2: 3, images: [] },
+    
+    "u12": { id: 12, type: "upper-sf", s1: 8, team1: "KiNg + vovelon", score1: 1, s2: 3, team2: "qwrchk + isagi", score2: 3, images: [] },
+    "u14": { id: 14, type: "upper-f", s1: 3, team1: "qwrchk + isagi", score1: 1, s2: 8, team2: "KiNg + vovelon", score2: 5, images: [] },
 
-    // ==========================================
-    // ВЕРХНЯЯ СЕТКА: РАУНД 2
-    // ==========================================
-    "u9": { id: 9, type: "upper-r2", s1: 1, team1: "Pokich", score1: 1, s2: 16, team2: "svoloch", score2: 0, images: [] },
-    "u10": { id: 10, type: "upper-r2", s1: 8, team1: "Chacomol", score1: 1, s2: 9, team2: "Laz", score2: 0, images: [] },
-    "u11": { id: 11, type: "upper-r2", s1: 4, team1: "Akuma", score1: 1, s2: 13, team2: "mogilka", score2: 0, images: [] },
-    "u12": { id: 12, type: "upper-r2", s1: 5, team1: "Kayix", score1: 1, s2: 12, team2: "Justix", score2: 0, images: [] },
-    "u13": { id: 13, type: "upper-r2", s1: 2, team1: "STICMAN", score1: 0, s2: null, team2: "Ожидание", score2: 0, images: [] },
-    "u14": { id: 14, type: "upper-r2", s1: 7, team1: "qwrchk", score1: 0, s2: null, team2: "Ожидание", score2: 0, images: [] },
-    "u15": { id: 15, type: "upper-r2", s1: 3, team1: "german", score1: 0, s2: null, team2: "Ожидание", score2: 0, images: [] },
-    "u16": { id: 16, type: "upper-r2", s1: 6, team1: "DuRimAn", score1: 0, s2: null, team2: "Ожидание", score2: 0, images: [] },
-
-    // ==========================================
-    // ВЕРХНЯЯ СЕТКА: РАУНД 3
-    // ==========================================
-    "u29": { id: 29, type: "upper-r3", s1: 1, team1: "Pokich", score1: 1, s2: 8, team2: "Chacomol", score2: 0, images: [] },
-    "u30": { id: 30, type: "upper-r3", s1: 4, team1: "Akuma", score1: 1, s2: 5, team2: "Kayix", score2: 0, images: [] },
-    "u31": { id: 31, type: "upper-r3", s1: null, team1: "Ожидание", score1: 0, s2: null, team2: "Ожидание", score2: 0, images: [] },
-    "u32": { id: 32, type: "upper-r3", s1: null, team1: "Ожидание", score1: 0, s2: null, team2: "Ожидание", score2: 0, images: [] },
-
-    // ==========================================
-    // ВЕРХНЯЯ СЕТКА: ПОЛУФИНАЛЫ И ФИНАЛ
-    // ==========================================
-    "u39": { id: 39, type: "upper-r4", s1: 1, team1: "Pokich", score1: 1, s2: 4, team2: "Akuma", score2: 0, images: [] },
-    "u40": { id: 40, type: "upper-r4", s1: null, team1: "Ожидание", score1: 0, s2: null, team2: "Ожидание", score2: 0, images: [] },
-    "u41": { id: 41, type: "upper-r5", s1: 1, team1: "Pokich", score1: 0, s2: null, team2: "Ожидание", score2: 0, images: [] },
-
-    // ==========================================
-    // НИЖНЯЯ СЕТКА: РАУНД 1 НС
-    // ==========================================
-    "u17": { id: 17, type: "lower-r1", s1: 17, team1: "Lotus", score1: 0, s2: 24, team2: "xKros", score2: 0, images: [] },
-    "u18": { id: 18, type: "lower-r1", s1: 20, team1: "isagi", score1: 0, s2: 21, team2: "miate", score2: 0, images: [] },
-    "u19": { id: 19, type: "lower-r1", s1: 15, team1: "HD", score1: 0, s2: 23, team2: "Rangerss", score2: 0, images: [] },
-    "u20": { id: 20, type: "lower-r1", s1: 19, team1: "willave", score1: 0, s2: 22, team2: "W1nston", score2: 0, images: [] },
-
-    // ==========================================
-    // НИЖНЯЯ СЕТКА: РАУНД 2 НС
-    // ==========================================
-    "u21": { id: 21, type: "lower-r2", s1: 16, team1: "svoloch", score1: 0, s2: 9, team2: "Laz", score2: 0, images: [] },
-    "u22": { id: 22, type: "lower-r2", s1: 13, team1: "mogilka", score1: 0, s2: 12, team2: "Justix", score2: 0, images: [] },
-    "u23": { id: 23, type: "lower-r2", s1: null, team1: "Ожидание", score1: 0, s2: null, team2: "Ожидание", score2: 0, images: [] },
-    "u24": { id: 24, type: "lower-r2", s1: null, team1: "Ожидание", score1: 0, s2: null, team2: "Ожидание", score2: 0, images: [] },
-
-    // ==========================================
-    // НИЖНЯЯ СЕТКА: РАУНД 3 НС
-    // ==========================================
-    "u25": { id: 25, type: "lower-r3", s1: null, team1: "Ожидание", score1: 0, s2: null, team2: "Ожидание", score2: 0, images: [] },
-    "u26": { id: 26, type: "lower-r3", s1: null, team1: "Ожидание", score1: 0, s2: null, team2: "Ожидание", score2: 0, images: [] },
-    "u27": { id: 27, type: "lower-r3", s1: null, team1: "Ожидание", score1: 0, s2: null, team2: "Ожидание", score2: 0, images: [] },
-    "u28": { id: 28, type: "lower-r3", s1: null, team1: "Ожидание", score1: 0, s2: null, team2: "Ожидание", score2: 0, images: [] },
-
-    // ==========================================
-    // НИЖНЯЯ СЕТКА: РАУНД 4 НС
-    // ==========================================
-    "u33": { id: 33, type: "lower-r4", s1: null, team1: "Ожидание", score1: 0, s2: null, team2: "Ожидание", score2: 0, images: [] },
-    "u34": { id: 34, type: "lower-r4", s1: null, team1: "Ожидание", score1: 0, s2: null, team2: "Ожидание", score2: 0, images: [] },
-    "u35": { id: 35, type: "lower-r4", s1: null, team1: "Ожидание", score1: 0, s2: null, team2: "Ожидание", score2: 0, images: [] },
-    "u36": { id: 36, type: "lower-r4", s1: null, team1: "Ожидание", score1: 0, s2: null, team2: "Ожидание", score2: 0, images: [] },
-
-    // ==========================================
-    // ИЗМЕНЕННАЯ ПОЛУФИНАЛЬНАЯ ЛОГИКА (ПО ЦЕНТРУ)
-    // ==========================================
-    "u37": { id: 37, type: "lower-r5", s1: null, team1: "Ожидание", score1: 0, s2: null, team2: "Ожидание", score2: 0, images: [] }, 
-    "u38": { id: 38, type: "lower-r5", s1: null, team1: "Ожидание", score1: 0, s2: null, team2: "Ожидание", score2: 0, images: [] }, 
-
-    // Матч 42 теперь ждет Победителей 37 и 38 команд и выводит их в центр
-    "u42": { id: 42, type: "lower-r6", ph1: "Победитель 37", ph2: "Победитель 38", team1: "", score1: 0, team2: "", score2: 0, images: [] },
-    "u43": { id: 43, type: "lower-r6", ph1: "Победитель 35", ph2: "Победитель 36", team1: "", score1: 0, team2: "", score2: 0, images: [] },
-
-    // Матч 44 (Финал Нижней Сетки) — сюда сходятся победители 42 и 43
-    "u44": { id: 44, type: "lower-final-stage", ph1: "Победитель 42", ph2: "Победитель 43", team1: "", score1: 0, team2: "", score2: 0, images: [] },
-
-    // Матч 45 (Гранд Финал) — победитель верхней (Pokich) играет против победителя НС (44)
-    "u45": { id: 45, type: "grand-final", team1: "Pokich", score1: 0, ph2: "Победитель 44", team2: "", score2: 0, images: [] }
+    "l5": { id: 5, type: "lower-r1", s1: 1, team1: "DuRimAn + miate", score1: 3, s2: 5, team2: "STICMAN + zernd", score2: 2, images: [] },
+    "l6": { id: 6, type: "lower-r1", s1: 2, team1: "svoloch + Laz", score1: 3, s2: 6, team2: "Daniil + W1nston", score2: 2, images: [] },
+    
+    "l10": { id: 10, type: "lower-r2", s1: 7, team1: "mogilka + VikuSiK", score1: 1, s2: 1, team2: "DuRimAn + miate", score2: 3, images: [] },
+    "l9": { id: 9, type: "lower-r2", s1: 4, team1: "Akuma + bildreyn", score1: 3, s2: 2, team2: "svoloch + Laz", score2: 0, images: [] },
+    
+    "l11": { id: 11, type: "lower-r3", s1: 1, team1: "DuRimAn + miate", score1: 3, s2: 4, team2: "Akuma + bildreyn", score2: 2, images: [] },
+    "l13": { id: 13, type: "lower-r4", s1: 8, team1: "KiNg + vovelon", score1: 4, s2: 1, team2: "DuRimAn + miate", score2: 2, images: [] }
 };
 
 let store = JSON.parse(localStorage.getItem('grid_save_data')) || bracketData;
