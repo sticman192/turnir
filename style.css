@@ -1,10 +1,30 @@
-/* Общие настройки темы */
 body {
     background-color: #2b2b2b;
     color: #e0e0e0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     margin: 0;
     padding: 24px;
+}
+
+.bracket-header {
+    max-width: 1400px;
+    margin: 0 auto 20px auto;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.admin-toggle-btn {
+    background-color: #444;
+    color: #fff;
+    border: 1px solid #555;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.admin-toggle-btn:hover {
+    background-color: #555;
 }
 
 .tournament-wrapper {
@@ -21,10 +41,8 @@ body {
     margin-bottom: 16px;
     color: #ffffff;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 
-/* Сетка раундов */
 .bracket-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(260px, 1fr));
@@ -32,7 +50,6 @@ body {
     background-color: #222222;
     padding: 20px;
     border-radius: 6px;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
     overflow-x: auto;
 }
 
@@ -62,19 +79,16 @@ body {
     min-height: 400px;
 }
 
-/* Дизайн карточки матча из Снимка экрана 2026-06-16 145933.png */
 .match-node {
     background-color: #3a3a3a;
     border-radius: 4px;
     border: 1px solid #444;
     cursor: pointer;
     position: relative;
-    transition: border-color 0.2s, transform 0.1s;
 }
 
 .match-node:hover {
     border-color: #ff7a00;
-    transform: translateY(-2px);
 }
 
 .match-index {
@@ -118,7 +132,6 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: #dddddd;
 }
 
 .team-score {
@@ -129,26 +142,17 @@ body {
     justify-content: center;
     align-items: center;
     font-weight: bold;
-    font-size: 14px;
 }
 
-/* Подсветка победителя оранжевым */
 .winner-row .team-score {
     background-color: #ff7a00;
     color: #ffffff;
-}
-.winner-row .team-title {
-    color: #ffffff;
-    font-weight: 500;
 }
 
 /* МОДАЛЬНОЕ ОКНО */
 .modal-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0; width: 100%; height: 100%;
     background-color: rgba(0, 0, 0, 0.8);
     display: flex;
     justify-content: center;
@@ -156,7 +160,7 @@ body {
     z-index: 9999;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.25s ease;
+    transition: opacity 0.2s;
 }
 
 .modal-overlay.active {
@@ -171,31 +175,20 @@ body {
     padding: 30px;
     border-radius: 6px;
     position: relative;
-    border: 1px solid #444;
 }
 
 .close-modal-btn {
     position: absolute;
-    top: 15px;
-    right: 20px;
-    background: none;
-    border: none;
-    color: #999;
-    font-size: 30px;
-    cursor: pointer;
-}
-
-.close-modal-btn:hover {
-    color: #fff;
+    top: 15px; right: 20px;
+    background: none; border: none;
+    color: #999; font-size: 30px; cursor: pointer;
 }
 
 .modal-header-title {
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 18px; font-weight: bold;
     border-bottom: 2px solid #ff7a00;
-    padding-bottom: 6px;
+    padding-bottom: 6px; margin-bottom: 25px;
     display: inline-block;
-    margin-bottom: 25px;
 }
 
 .vs-flex-box {
@@ -207,84 +200,60 @@ body {
 
 .team-modal-card {
     background-color: #222222;
-    flex: 1;
-    text-align: center;
-    padding: 20px;
-    border-radius: 4px;
-    border: 1px solid #444;
+    flex: 1; text-align: center;
+    padding: 20px; border-radius: 4px;
 }
 
 .avatar-circle {
-    width: 44px;
-    height: 44px;
-    background-color: #444;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto 12px auto;
+    width: 44px; height: 44px; background-color: #444;
+    border-radius: 50%; display: flex;
+    justify-content: center; align-items: center; margin: 0 auto 12px auto;
 }
 
-.modal-t-name {
-    font-size: 14px;
-    margin-bottom: 12px;
-    font-weight: 500;
+.admin-score-input {
+    width: 80%; background-color: #444; color: #fff;
+    border: 1px solid #ff7a00; padding: 6px;
+    text-align: center; font-size: 18px; font-weight: bold;
+    border-radius: 4px; margin-top: 10px;
 }
 
 .modal-t-score {
-    background-color: #333;
-    font-size: 26px;
-    font-weight: bold;
-    padding: 8px 0;
-    border-radius: 4px;
-    border: 1px solid #444;
+    background-color: #333; font-size: 26px;
+    font-weight: bold; padding: 8px 0; border-radius: 4px;
 }
 
-.vs-divider {
-    padding: 0 15px;
-    color: #777;
-    font-size: 14px;
-}
+.vs-divider { padding: 0 15px; color: #777; }
 
-/* Раздел скриншотов */
-.screenshot-block {
-    border-top: 1px solid #444;
-    padding-top: 20px;
-}
-
-.screenshot-title {
-    font-size: 14px;
-    color: #aaa;
-    margin-bottom: 15px;
-}
-
-.gallery-container {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-}
+/* СКРИНШОТЫ (ОТКРЫТЬ/УДАЛИТЬ НЕЛЬЗЯ) */
+.screenshot-block { border-top: 1px solid #444; padding-top: 20px; }
+.screenshot-title { font-size: 14px; color: #aaa; margin-bottom: 15px; }
+.gallery-container { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
 
 .preview-img {
-    width: 110px;
-    height: 75px;
-    object-fit: cover;
-    border-radius: 4px;
-    border: 1px solid #555;
-    cursor: pointer;
+    width: 110px; height: 75px; object-fit: cover;
+    border-radius: 4px; border: 1px solid #555;
+    cursor: default; /* Обычный курсор вместо указателя */
+    pointer-events: none; /* Запрещает любые клики и открытие */
 }
+
+/* КНОПКИ */
+.custom-btn {
+    background-color: #ff7a00; color: white;
+    padding: 12px 20px; border: none; border-radius: 4px;
+    cursor: pointer; font-weight: bold; display: inline-block;
+}
+.custom-btn:hover { background-color: #e06b00; }
+.style-success { background-color: #28a745; }
+.style-success:hover { background-color: #218838; }
 
 .custom-file-upload {
-    background-color: #ff7a00;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 4px;
-    display: inline-block;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: bold;
+    background-color: #ff7a00; color: white;
+    padding: 10px 20px; border-radius: 4px;
+    cursor: pointer; font-size: 13px; font-weight: bold;
 }
 
-.custom-file-upload:hover {
-    background-color: #e06b00;
+.export-panel {
+    max-width: 1360px; margin: 30px auto 0 auto;
+    background-color: #1a1a1a; padding: 20px;
+    border-left: 5px solid #ff7a00; border-radius: 4px;
 }
