@@ -405,7 +405,7 @@
     <script>
         const ADMIN_PASSWORD = "1234"; 
 
-        // Исходные данные турнира. Будущие раунды теперь изначально пустые ("Ожидание")
+        // База данных турнира прямо внутри кода
         const bracketData = {
             "u1": { id: 1, type: "upper-r1", s1: 1, team1: "DuRimAn + miate", score1: 0, s2: 8, team2: "KiNg + vovelon", score2: 3, images: [] },
             "u2": { id: 2, type: "upper-r1", s1: 4, team1: "Akuma + bildreyn", score1: 3, s2: 5, team2: "STICMAN + zernd", score2: 0, images: [] },
@@ -428,44 +428,30 @@
             "l13": { id: 13, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] }
         };
 
-        let store = JSON.parse(localStorage.getItem('grid_save_data')) || bracketData;
+        // Теперь данные считываются только напрямую из исходного кода страницы
+        let store = bracketData;
         let isAdmin = false;
         let activeKey = null;
 
-        // Последовательный пересчет всей турнирной сетки
         function recalculateAllMatches() {
-            // Сбрасываем зависимые раунды перед пересчетом
             const dependents = ["u7", "u8", "u12", "u14", "l5", "l6", "l9", "l10", "l11", "l13"];
             dependents.forEach(k => {
                 store[k].team1 = ""; store[k].team2 = "";
                 store[k].s1 = "?"; store[k].s2 = "?";
             });
 
-            // Раунд 1 -> Раунд 2 Верхней и Раунд 1 Ниженй
             autoPush("u1", "u7", "team1", "s1", "l5", "team1", "s1");
             autoPush("u2", "u7", "team2", "s2", "l5", "team2", "s2");
             autoPush("u3", "u8", "team1", "s1", "l6", "team1", "s1");
             autoPush("u4", "u8", "team2", "s2", "l6", "team2", "s2");
-
-            // Раунд 2 Верхней -> Полуфинал и Нижняя сетка
             autoPush("u7", "u12", "team1", "s1", "l9", "team1", "s1");
             autoPush("u8", "u12", "team2", "s2", "l10", "team1", "s1");
-
-            // Нижняя сетка Раунд 1 -> Нижняя сетка Раунд 2
             autoPush("l5", null, null, null, "l10", "team2", "s2", true);
             autoPush("l6", null, null, null, "l9", "team2", "s2", true);
-
-            // Нижняя сетка Раунд 2 -> Раунд 3
             autoPush("l10", "l11", "team1", "s1", null, null, null);
             autoPush("l9", "l11", "team2", "s2", null, null, null);
-
-            // Нижняя сетка Раунд 3 -> Раунд 4
             autoPush("l11", "l13", "team2", "s2", null, null, null);
-
-            // Полуфинал верхний -> Финал и Раунд 4 Нижней
             autoPush("u12", "u14", "team1", "s1", "l13", "team1", "s1");
-
-            // Раунд 4 Нижней -> Финал верхний
             autoPush("l13", "u14", "team2", "s2", null, null, null);
         }
 
@@ -566,7 +552,6 @@
         saveMatchResultsBtn.onclick = () => {
             store[activeKey].score1 = parseInt(inputScore1.value) || 0;
             store[activeKey].score2 = parseInt(inputScore2.value) || 0;
-            localStorage.setItem('grid_save_data', JSON.stringify(store));
             buildTournament();
             closeModalBox();
         };
@@ -583,7 +568,6 @@
         function deleteImage(index) {
             if (confirm("Удалить этот скриншот?")) {
                 store[activeKey].images.splice(index, 1);
-                localStorage.setItem('grid_save_data', JSON.stringify(store));
                 updateGalleryView();
             }
         }
@@ -618,7 +602,6 @@
             reader.onload = function(event) {
                 if (!store[activeKey].images) store[activeKey].images = [];
                 store[activeKey].images.push(event.target.result);
-                localStorage.setItem('grid_save_data', JSON.stringify(store));
                 updateGalleryView();
             };
             reader.readAsDataURL(file);
@@ -630,7 +613,7 @@
             const regex = /const bracketData = \{[\s\S]*?\};/;
             const finalHtml = "<!DOCTYPE html>\n<html lang=\"ru\">\n" + currentFullHtml.replace(regex, `const bracketData = ${cleanStoreData};`) + "\n</html>";
             navigator.clipboard.writeText(finalHtml);
-            alert("Весь код сайта скопирован со ВСЕМИ скриншотами! Перейдите на GitHub, сотрите всё из index.html, вставьте этот код и сохраните. Скриншоты увидят все!");
+            alert("УСПЕШНО!\n\nВесь код скопирован. Теперь:\n1. Зайдите на GitHub в свой репозиторий.\n2. Откройте index.html и удалите старый текст.\n3. Вставьте скопированный код и нажмите 'Commit changes'.\n4. Подождите 1-2 минуты, пока обновится сайт, и проверяйте с телефона!");
         };
 
         buildTournament();
