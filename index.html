@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
+<html lang="ru"><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/content/location/location.js" id="eppiocemhmnlbhjplcgkofciiegomcon"></script><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/extend-native-history-api.js"></script><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/requests.js"></script><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Турнирная Сетка (Double Elimination)</title>
@@ -326,76 +326,628 @@
             border-left: 5px solid #ff7a00; border-radius: 4px;
         }
     </style>
-</head>
-<body>
+<script bis_use="true" type="text/javascript" charset="utf-8" nonce="" data-dynamic-id="0f32fcc5-6903-4735-b16e-901e8c50e892" src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js"></script><script bis_use="true" type="text/javascript" charset="utf-8" nonce="" data-dynamic-id="0f32fcc5-6903-4735-b16e-901e8c50e892" src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/101.js"></script></head>
+<body __processed_5cb70c83-0001-4a84-8d10-cc81d146a681__="true" bis_register="W3sibWFzdGVyIjp0cnVlLCJleHRlbnNpb25JZCI6ImVwcGlvY2VtaG1ubGJoanBsY2drb2ZjaWllZ29tY29uIiwiYWRibG9ja2VyU3RhdHVzIjp7IkRJU1BMQVkiOiJlbmFibGVkIiwiRkFDRUJPT0siOiJlbmFibGVkIiwiVFdJVFRFUiI6ImVuYWJsZWQiLCJSRURESVQiOiJlbmFibGVkIiwiUElOVEVSRVNUIjoiZW5hYmxlZCIsIklOU1RBR1JBTSI6ImVuYWJsZWQiLCJUSUtUT0siOiJlbmFibGVkIiwiTElOS0VESU4iOiJlbmFibGVkIiwiQ09ORklHIjoiZGlzYWJsZWQifSwidmVyc2lvbiI6IjIuMS4xIiwic2NvcmUiOjIwMTAxMH1d">
 
     <header class="bracket-header">
-        <button id="adminLoginBtn" class="admin-toggle-btn">Войти как Админ</button>
-        <button id="adminLogoutBtn" class="admin-toggle-btn log-out" style="display: none;">Выйти из Админа</button>
+        <button id="adminLoginBtn" class="admin-toggle-btn" style="display: none;">Войти как Админ</button>
+        <button id="adminLogoutBtn" class="admin-toggle-btn log-out" style="display: block;">Выйти из Админа</button>
     </header>
 
     <!-- ГРАНД-ФИНАЛ -->
-    <div class="grand-final-section">
-        <div class="bracket-title-main" style="text-align: center; border: none; padding: 0; margin-bottom: 10px; color: #ff7a00;">🏆 Гранд-Финал 🏆</div>
-        <div id="grand-final-container"></div>
+    <div class="grand-final-section" bis_skin_checked="1">
+        <div class="bracket-title-main" style="text-align: center; border: none; padding: 0; margin-bottom: 10px; color: #ff7a00;" bis_skin_checked="1">🏆 Гранд-Финал 🏆</div>
+        <div id="grand-final-container" bis_skin_checked="1"><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">50</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">2</div>
+                        <div class="team-title " bis_skin_checked="1">STICMAN</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">?</div>
+                        <div class="team-title placeholder-hint" bis_skin_checked="1">(Победитель 45)</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                </div></div>
     </div>
 
-    <div class="tournament-wrapper">
+    <div class="tournament-wrapper" bis_skin_checked="1">
         
         <!-- ВЕРХНЯЯ СЕТКА -->
-        <div class="bracket-section">
-            <div class="bracket-title-main">Верхняя сетка</div>
-            <div class="bracket-grid bracket-grid-upper">
-                <div class="round-col">
-                    <div class="round-header">Раунд 1</div>
-                    <div class="match-wrapper height-large" id="upper-r1"></div>
+        <div class="bracket-section" bis_skin_checked="1">
+            <div class="bracket-title-main" bis_skin_checked="1">Верхняя сетка</div>
+            <div class="bracket-grid bracket-grid-upper" bis_skin_checked="1">
+                <div class="round-col" bis_skin_checked="1">
+                    <div class="round-header" bis_skin_checked="1">Раунд 1</div>
+                    <div class="match-wrapper height-large" id="upper-r1" bis_skin_checked="1"><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">1</div>
+                    <div class="team-slot winner-row" bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">16</div>
+                        <div class="team-title " bis_skin_checked="1">svoloch</div>
+                        <div class="team-score" bis_skin_checked="1">1</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">17</div>
+                        <div class="team-title " bis_skin_checked="1">Lotus</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">2</div>
+                    <div class="team-slot winner-row" bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">9</div>
+                        <div class="team-title " bis_skin_checked="1">Laz</div>
+                        <div class="team-score" bis_skin_checked="1">1</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">24</div>
+                        <div class="team-title " bis_skin_checked="1">xKros</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">3</div>
+                    <div class="team-slot winner-row" bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">13</div>
+                        <div class="team-title " bis_skin_checked="1">mogilka</div>
+                        <div class="team-score" bis_skin_checked="1">1</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">20</div>
+                        <div class="team-title " bis_skin_checked="1">isagi</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">4</div>
+                    <div class="team-slot winner-row" bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">12</div>
+                        <div class="team-title " bis_skin_checked="1">Justix</div>
+                        <div class="team-score" bis_skin_checked="1">1</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">21</div>
+                        <div class="team-title " bis_skin_checked="1">miate</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">5</div>
+                    <div class="team-slot winner-row" bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">15</div>
+                        <div class="team-title " bis_skin_checked="1">Daniil</div>
+                        <div class="team-score" bis_skin_checked="1">1</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">18</div>
+                        <div class="team-title " bis_skin_checked="1">HD</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">6</div>
+                    <div class="team-slot winner-row" bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">10</div>
+                        <div class="team-title " bis_skin_checked="1">vovelon</div>
+                        <div class="team-score" bis_skin_checked="1">1</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">23</div>
+                        <div class="team-title " bis_skin_checked="1">Rangerss</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">7</div>
+                    <div class="team-slot winner-row" bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">14</div>
+                        <div class="team-title " bis_skin_checked="1">VikuSiK</div>
+                        <div class="team-score" bis_skin_checked="1">1</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">19</div>
+                        <div class="team-title " bis_skin_checked="1">willave</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">8</div>
+                    <div class="team-slot winner-row" bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">11</div>
+                        <div class="team-title " bis_skin_checked="1">KiNg</div>
+                        <div class="team-score" bis_skin_checked="1">1</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">22</div>
+                        <div class="team-title " bis_skin_checked="1">W1nston</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div></div>
                 </div>
-                <div class="round-col">
-                    <div class="round-header">Раунд 2</div>
-                    <div class="match-wrapper height-large" id="upper-r2"></div>
+                <div class="round-col" bis_skin_checked="1">
+                    <div class="round-header" bis_skin_checked="1">Раунд 2</div>
+                    <div class="match-wrapper height-large" id="upper-r2" bis_skin_checked="1"><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">9</div>
+                    <div class="team-slot winner-row" bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">1</div>
+                        <div class="team-title " bis_skin_checked="1">Pokich</div>
+                        <div class="team-score" bis_skin_checked="1">1</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">16</div>
+                        <div class="team-title " bis_skin_checked="1">svoloch</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">10</div>
+                    <div class="team-slot winner-row" bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">8</div>
+                        <div class="team-title " bis_skin_checked="1">Chacomol</div>
+                        <div class="team-score" bis_skin_checked="1">1</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">9</div>
+                        <div class="team-title " bis_skin_checked="1">Laz</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">11</div>
+                    <div class="team-slot winner-row" bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">4</div>
+                        <div class="team-title " bis_skin_checked="1">Akuma</div>
+                        <div class="team-score" bis_skin_checked="1">1</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">13</div>
+                        <div class="team-title " bis_skin_checked="1">mogilka</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">12</div>
+                    <div class="team-slot winner-row" bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">5</div>
+                        <div class="team-title " bis_skin_checked="1">Kayix</div>
+                        <div class="team-score" bis_skin_checked="1">1</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">12</div>
+                        <div class="team-title " bis_skin_checked="1">Justix</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">13</div>
+                    <div class="team-slot winner-row" bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">2</div>
+                        <div class="team-title " bis_skin_checked="1">STICMAN</div>
+                        <div class="team-score" bis_skin_checked="1">1</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">15</div>
+                        <div class="team-title " bis_skin_checked="1">Daniil</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">14</div>
+                    <div class="team-slot winner-row" bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">7</div>
+                        <div class="team-title " bis_skin_checked="1">qwrchk</div>
+                        <div class="team-score" bis_skin_checked="1">1</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">10</div>
+                        <div class="team-title " bis_skin_checked="1">vovelon</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">15</div>
+                    <div class="team-slot winner-row" bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">3</div>
+                        <div class="team-title " bis_skin_checked="1">german</div>
+                        <div class="team-score" bis_skin_checked="1">1</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">14</div>
+                        <div class="team-title " bis_skin_checked="1">VikuSiK</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">16</div>
+                    <div class="team-slot winner-row" bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">6</div>
+                        <div class="team-title " bis_skin_checked="1">DuRimAn</div>
+                        <div class="team-score" bis_skin_checked="1">1</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">11</div>
+                        <div class="team-title " bis_skin_checked="1">KiNg</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div></div>
                 </div>
-                <div class="round-col">
-                    <div class="round-header">Раунд 3</div>
-                    <div class="match-wrapper" id="upper-r3"></div>
+                <div class="round-col" bis_skin_checked="1">
+                    <div class="round-header" bis_skin_checked="1">Раунд 3</div>
+                    <div class="match-wrapper" id="upper-r3" bis_skin_checked="1"><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">29</div>
+                    <div class="team-slot winner-row" bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">1</div>
+                        <div class="team-title " bis_skin_checked="1">Pokich</div>
+                        <div class="team-score" bis_skin_checked="1">1</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">8</div>
+                        <div class="team-title " bis_skin_checked="1">Chacomol</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">30</div>
+                    <div class="team-slot winner-row" bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">4</div>
+                        <div class="team-title " bis_skin_checked="1">Akuma</div>
+                        <div class="team-score" bis_skin_checked="1">1</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">5</div>
+                        <div class="team-title " bis_skin_checked="1">Kayix</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">31</div>
+                    <div class="team-slot winner-row" bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">2</div>
+                        <div class="team-title " bis_skin_checked="1">STICMAN</div>
+                        <div class="team-score" bis_skin_checked="1">1</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">7</div>
+                        <div class="team-title " bis_skin_checked="1">qwrchk</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">32</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">3</div>
+                        <div class="team-title " bis_skin_checked="1">german</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                    <div class="team-slot winner-row" bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">6</div>
+                        <div class="team-title " bis_skin_checked="1">DuRimAn</div>
+                        <div class="team-score" bis_skin_checked="1">1</div>
+                    </div>
+                </div></div>
                 </div>
-                <div class="round-col">
-                    <div class="round-header">Полуфиналы</div>
-                    <div class="match-wrapper" id="upper-sf"></div>
+                <div class="round-col" bis_skin_checked="1">
+                    <div class="round-header" bis_skin_checked="1">Полуфиналы</div>
+                    <div class="match-wrapper" id="upper-sf" bis_skin_checked="1"><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">39</div>
+                    <div class="team-slot winner-row" bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">1</div>
+                        <div class="team-title " bis_skin_checked="1">Pokich</div>
+                        <div class="team-score" bis_skin_checked="1">1</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">4</div>
+                        <div class="team-title " bis_skin_checked="1">Akuma</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">40</div>
+                    <div class="team-slot winner-row" bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">2</div>
+                        <div class="team-title " bis_skin_checked="1">STICMAN</div>
+                        <div class="team-score" bis_skin_checked="1">1</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">6</div>
+                        <div class="team-title " bis_skin_checked="1">DuRimAn</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div></div>
                 </div>
-                <div class="round-col">
-                    <div class="round-header">Финал ВС</div>
-                    <div class="match-wrapper" id="upper-f"></div>
+                <div class="round-col" bis_skin_checked="1">
+                    <div class="round-header" bis_skin_checked="1">Финал ВС</div>
+                    <div class="match-wrapper" id="upper-f" bis_skin_checked="1"><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">41</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">1</div>
+                        <div class="team-title " bis_skin_checked="1">Pokich</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                    <div class="team-slot winner-row" bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">2</div>
+                        <div class="team-title " bis_skin_checked="1">STICMAN</div>
+                        <div class="team-score" bis_skin_checked="1">1</div>
+                    </div>
+                </div></div>
                 </div>
             </div>
         </div>
 
         <!-- НИЖНЯЯ СЕТКА -->
-        <div class="bracket-section">
-            <div class="bracket-title-main">Нижняя сетка (Сетка Проигравших)</div>
-            <div class="bracket-grid bracket-grid-lower">
-                <div class="round-col">
-                    <div class="round-header">НС Раунд 1</div>
-                    <div class="match-wrapper" id="lower-r1"></div>
+        <div class="bracket-section" bis_skin_checked="1">
+            <div class="bracket-title-main" bis_skin_checked="1">Нижняя сетка (Сетка Проигравших)</div>
+            <div class="bracket-grid bracket-grid-lower" bis_skin_checked="1">
+                <div class="round-col" bis_skin_checked="1">
+                    <div class="round-header" bis_skin_checked="1">НС Раунд 1</div>
+                    <div class="match-wrapper" id="lower-r1" bis_skin_checked="1"><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">17</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">17</div>
+                        <div class="team-title " bis_skin_checked="1">Lotus</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">24</div>
+                        <div class="team-title " bis_skin_checked="1">xKros</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">18</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">20</div>
+                        <div class="team-title " bis_skin_checked="1">isagi</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">21</div>
+                        <div class="team-title " bis_skin_checked="1">miate</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">19</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">18</div>
+                        <div class="team-title " bis_skin_checked="1">HD</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">23</div>
+                        <div class="team-title " bis_skin_checked="1">Rangerss</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">20</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">19</div>
+                        <div class="team-title " bis_skin_checked="1">willave</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">22</div>
+                        <div class="team-title " bis_skin_checked="1">W1nston</div>
+                        <div class="team-score" bis_skin_checked="1">0</div>
+                    </div>
+                </div></div>
                 </div>
-                <div class="round-col">
-                    <div class="round-header">НС Раунд 2</div>
-                    <div class="match-wrapper" id="lower-r2"></div>
+                <div class="round-col" bis_skin_checked="1">
+                    <div class="round-header" bis_skin_checked="1">НС Раунд 2</div>
+                    <div class="match-wrapper" id="lower-r2" bis_skin_checked="1"><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">21</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">?</div>
+                        <div class="team-title placeholder-hint" bis_skin_checked="1">(Победитель 17)</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">16</div>
+                        <div class="team-title " bis_skin_checked="1">svoloch</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">22</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">?</div>
+                        <div class="team-title placeholder-hint" bis_skin_checked="1">(Победитель 18)</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">9</div>
+                        <div class="team-title " bis_skin_checked="1">Laz</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">23</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">?</div>
+                        <div class="team-title placeholder-hint" bis_skin_checked="1">(Победитель 19)</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">13</div>
+                        <div class="team-title " bis_skin_checked="1">mogilka</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">24</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">?</div>
+                        <div class="team-title placeholder-hint" bis_skin_checked="1">(Победитель 20)</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">12</div>
+                        <div class="team-title " bis_skin_checked="1">Justix</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                </div></div>
                 </div>
-                <div class="round-col">
-                    <div class="round-header">НС Раунд 3</div>
-                    <div class="match-wrapper" id="lower-r3"></div>
+                <div class="round-col" bis_skin_checked="1">
+                    <div class="round-header" bis_skin_checked="1">НС Раунд 3</div>
+                    <div class="match-wrapper" id="lower-r3" bis_skin_checked="1"><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">25</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">?</div>
+                        <div class="team-title placeholder-hint" bis_skin_checked="1">(Победитель 21)</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">15</div>
+                        <div class="team-title " bis_skin_checked="1">Daniil</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">26</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">?</div>
+                        <div class="team-title placeholder-hint" bis_skin_checked="1">(Победитель 22)</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">10</div>
+                        <div class="team-title " bis_skin_checked="1">vovelon</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">27</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">?</div>
+                        <div class="team-title placeholder-hint" bis_skin_checked="1">(Победитель 23)</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">14</div>
+                        <div class="team-title " bis_skin_checked="1">VikuSiK</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">28</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">?</div>
+                        <div class="team-title placeholder-hint" bis_skin_checked="1">(Победитель 24)</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">11</div>
+                        <div class="team-title " bis_skin_checked="1">KiNg</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                </div></div>
                 </div>
-                <div class="round-col">
-                    <div class="round-header">НС Раунд 4</div>
-                    <div class="match-wrapper" id="lower-r4"></div>
+                <div class="round-col" bis_skin_checked="1">
+                    <div class="round-header" bis_skin_checked="1">НС Раунд 4</div>
+                    <div class="match-wrapper" id="lower-r4" bis_skin_checked="1"><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">33</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">?</div>
+                        <div class="team-title placeholder-hint" bis_skin_checked="1">(Победитель 25)</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">8</div>
+                        <div class="team-title " bis_skin_checked="1">Chacomol</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">34</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">?</div>
+                        <div class="team-title placeholder-hint" bis_skin_checked="1">(Победитель 26)</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">5</div>
+                        <div class="team-title " bis_skin_checked="1">Kayix</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">35</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">?</div>
+                        <div class="team-title placeholder-hint" bis_skin_checked="1">(Победитель 27)</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">7</div>
+                        <div class="team-title " bis_skin_checked="1">qwrchk</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">36</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">?</div>
+                        <div class="team-title placeholder-hint" bis_skin_checked="1">(Победитель 28)</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">3</div>
+                        <div class="team-title " bis_skin_checked="1">german</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                </div></div>
                 </div>
-                <div class="round-col">
-                    <div class="round-header">НС Полуфиналы</div>
-                    <div class="match-wrapper" id="lower-sf"></div>
+                <div class="round-col" bis_skin_checked="1">
+                    <div class="round-header" bis_skin_checked="1">НС Полуфиналы</div>
+                    <div class="match-wrapper" id="lower-sf" bis_skin_checked="1"><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">37</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">?</div>
+                        <div class="team-title placeholder-hint" bis_skin_checked="1">(Победитель 33)</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">?</div>
+                        <div class="team-title placeholder-hint" bis_skin_checked="1">(Победитель 34)</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">38</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">?</div>
+                        <div class="team-title placeholder-hint" bis_skin_checked="1">(Победитель 35)</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">?</div>
+                        <div class="team-title placeholder-hint" bis_skin_checked="1">(Победитель 36)</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">42</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">?</div>
+                        <div class="team-title placeholder-hint" bis_skin_checked="1">(Победитель 37)</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">4</div>
+                        <div class="team-title " bis_skin_checked="1">Akuma</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">43</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">?</div>
+                        <div class="team-title placeholder-hint" bis_skin_checked="1">(Победитель 38)</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">6</div>
+                        <div class="team-title " bis_skin_checked="1">DuRimAn</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                </div></div>
                 </div>
-                <div class="round-col">
-                    <div class="round-header">Финал НС</div>
-                    <div class="match-wrapper" id="lower-f"></div>
+                <div class="round-col" bis_skin_checked="1">
+                    <div class="round-header" bis_skin_checked="1">Финал НС</div>
+                    <div class="match-wrapper" id="lower-f" bis_skin_checked="1"><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">44</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">?</div>
+                        <div class="team-title placeholder-hint" bis_skin_checked="1">(Победитель 42)</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">?</div>
+                        <div class="team-title placeholder-hint" bis_skin_checked="1">(Победитель 43)</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                </div><div class="match-node" bis_skin_checked="1">
+                    <div class="match-index" bis_skin_checked="1">45</div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">1</div>
+                        <div class="team-title " bis_skin_checked="1">Pokich</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                    <div class="team-slot " bis_skin_checked="1">
+                        <div class="seed-num" bis_skin_checked="1">?</div>
+                        <div class="team-title placeholder-hint" bis_skin_checked="1">(Победитель 44)</div>
+                        <div class="team-score" bis_skin_checked="1"></div>
+                    </div>
+                </div></div>
                 </div>
             </div>
         </div>
@@ -403,43 +955,43 @@
     </div>
 
     <!-- ПАНЕЛЬ ЭКСПОРТА -->
-    <div id="adminExportPanel" class="export-panel" style="display: none;">
+    <div id="adminExportPanel" class="export-panel" style="display: block;" bis_skin_checked="1">
         <h3 style="margin-top:0; color:#ff7a00;">Панель администратора: Сохранение турнира</h3>
         <p>Вы изменили счёт или добавили скриншоты. Нажмите на кнопку ниже, чтобы скопировать весь код, затем полностью вставьте его в ваш файл <b>index.html</b> на GitHub.</p>
         <button id="exportDataBtn" class="custom-btn">Скопировать весь код страницы</button>
     </div>
 
     <!-- МОДАЛЬНОЕ ОКНО МАТЧА -->
-    <div class="modal-overlay" id="matchModal">
-        <div class="modal-content">
-            <button class="close-modal-btn" id="closeModal">&times;</button>
-            <div class="modal-header-title">Результаты матча</div>
+    <div class="modal-overlay" id="matchModal" bis_skin_checked="1">
+        <div class="modal-content" bis_skin_checked="1">
+            <button class="close-modal-btn" id="closeModal">×</button>
+            <div class="modal-header-title" bis_skin_checked="1">Результаты матча</div>
             
-            <div class="vs-flex-box">
-                <div class="team-modal-card">
-                    <div class="avatar-circle">⚡</div>
-                    <div class="modal-t-name" id="modal-team1">Команда 1</div>
-                    <div class="modal-t-score" id="modal-score1">0</div>
-                    <input type="number" id="inputScore1" class="admin-score-input" min="0" style="display: none;">
+            <div class="vs-flex-box" bis_skin_checked="1">
+                <div class="team-modal-card" bis_skin_checked="1">
+                    <div class="avatar-circle" bis_skin_checked="1">⚡</div>
+                    <div class="modal-t-name" id="modal-team1" bis_skin_checked="1">Pokich</div>
+                    <div class="modal-t-score" id="modal-score1" bis_skin_checked="1" style="display: none;">0</div>
+                    <input type="number" id="inputScore1" class="admin-score-input" min="0" style="display: block;">
                 </div>
                 
-                <div class="vs-divider">против</div>
+                <div class="vs-divider" bis_skin_checked="1">против</div>
                 
-                <div class="team-modal-card">
-                    <div class="avatar-circle">⚡</div>
-                    <div class="modal-t-name" id="modal-team2">Команда 2</div>
-                    <div class="modal-t-score" id="modal-score2">0</div>
-                    <input type="number" id="inputScore2" class="admin-score-input" min="0" style="display: none;">
+                <div class="team-modal-card" bis_skin_checked="1">
+                    <div class="avatar-circle" bis_skin_checked="1">⚡</div>
+                    <div class="modal-t-name" id="modal-team2" bis_skin_checked="1">STICMAN</div>
+                    <div class="modal-t-score" id="modal-score2" bis_skin_checked="1" style="display: none;">0</div>
+                    <input type="number" id="inputScore2" class="admin-score-input" min="0" style="display: block;">
                 </div>
             </div>
 
-            <button id="saveMatchResultsBtn" class="custom-btn style-success" style="display: none; margin-bottom: 20px; width: 100%;">Сохранить результаты</button>
+            <button id="saveMatchResultsBtn" class="custom-btn style-success" style="display: block; margin-bottom: 20px; width: 100%;">Сохранить результаты</button>
 
-            <div class="screenshot-block">
-                <div class="screenshot-title">Скриншоты матча (Нажмите для просмотра)</div>
-                <div class="gallery-container" id="screenshotsGallery"></div>
+            <div class="screenshot-block" bis_skin_checked="1">
+                <div class="screenshot-title" bis_skin_checked="1">Скриншоты матча (Нажмите для просмотра)</div>
+                <div class="gallery-container" id="screenshotsGallery" bis_skin_checked="1"><div style="color: #666; font-size: 13px;" bis_skin_checked="1">Скриншотов нет</div></div>
                 
-                <div class="upload-zone" id="adminUploadZone" style="display: none;">
+                <div class="upload-zone" id="adminUploadZone" style="display: block;" bis_skin_checked="1">
                     <label for="fileInput" class="custom-file-upload">Добавить скриншот</label>
                     <input type="file" id="fileInput" accept="image/*" style="display:none;">
                 </div>
@@ -448,8 +1000,8 @@
     </div>
 
     <!-- ОКНО ПРОСМОТРА КАРТИНКИ -->
-    <div id="lightboxOverlay" class="lightbox-overlay" onclick="this.style.display='none'">
-        <img id="lightboxImg" src="" alt="Скриншот">
+    <div id="lightboxOverlay" class="lightbox-overlay" onclick="this.style.display='none'" bis_skin_checked="1" style="display: none;">
+        <img id="lightboxImg" src="screenshot.png" alt="Скриншот">
     </div>
 
     <!-- --- ЛОГИКА (JAVASCRIPT) --- -->
@@ -458,81 +1010,583 @@
 
         // АРХИТЕКТУРА СЕТКИ С ИНТЕГРИРОВАННЫМИ ДИНАМИЧЕСКИМИ МАРКЕРАМИ НАПРАВЛЕНИЙ
         const bracketData = {
-            // ВЕРХНЯЯ СЕТКА: РАУНД 1
-            "u1": { id: 1, type: "upper-r1", s1: 16, team1: "svoloch", score1: 0, s2: 17, team2: "Lotus", score2: 0, images: ["screenshot.png"] },
-            "u2": { id: 2, type: "upper-r1", s1: 9, team1: "Laz", score1: 0, s2: 24, team2: "xKros", score2: 0, images: [] },
-            "u3": { id: 3, type: "upper-r1", s1: 13, team1: "mogilka", score1: 0, s2: 20, team2: "isagi", score2: 0, images: [] },
-            "u4": { id: 4, type: "upper-r1", s1: 12, team1: "Justix", score1: 0, s2: 21, team2: "miate", score2: 0, images: [] },
-            "u5": { id: 5, type: "upper-r1", s1: 15, team1: "Daniil", score1: 0, s2: 18, team2: "HD", score2: 0, images: [] },
-            "u6": { id: 6, type: "upper-r1", s1: 10, team1: "vovelon", score1: 0, s2: 23, team2: "Rangerss", score2: 0, images: [] },
-            "u7": { id: 7, type: "upper-r1", s1: 14, team1: "VikuSiK", score1: 0, s2: 19, team2: "willave", score2: 0, images: [] },
-            "u8": { id: 8, type: "upper-r1", s1: 11, team1: "KiNg", score1: 0, s2: 22, team2: "W1nston", score2: 0, images: [] },
-            
-            // ВЕРХНЯЯ СЕТКА: РАУНД 2
-            "u9": { id: 9, type: "upper-r2", s1: 1, team1: "Pokich", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 1", images: [] },
-            "u10": { id: 10, type: "upper-r2", s1: 8, team1: "Chacomol", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 2", images: [] },
-            "u11": { id: 11, type: "upper-r2", s1: 4, team1: "Akuma", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 3", images: [] },
-            "u12": { id: 12, type: "upper-r2", s1: 5, team1: "Kayix", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 4", images: [] },
-            "u13": { id: 13, type: "upper-r2", s1: 2, team1: "STICMAN", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 5", images: [] },
-            "u14": { id: 14, type: "upper-r2", s1: 7, team1: "qwrchk", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 6", images: [] },
-            "u15": { id: 15, type: "upper-r2", s1: 3, team1: "german", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 7", images: [] },
-            "u16": { id: 16, type: "upper-r2", s1: 6, team1: "DuRimAn", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 8", images: [] },
-            
-            // ВЕРХНЯЯ СЕТКА: РАУНД 3
-            "u29": { id: 29, type: "upper-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 9", ph2: "Победитель 10", images: [] },
-            "u30": { id: 30, type: "upper-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 11", ph2: "Победитель 12", images: [] },
-            "u31": { id: 31, type: "upper-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 13", ph2: "Победитель 14", images: [] },
-            "u32": { id: 32, type: "upper-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 15", ph2: "Победитель 16", images: [] },
-
-            // ВЕРХНЯЯ СЕТКА: ПОЛУФИНАЛЫ
-            "u39": { id: 39, type: "upper-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 29", ph2: "Победитель 30", images: [] },
-            "u40": { id: 40, type: "upper-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 31", ph2: "Победитель 32", images: [] },
-
-            // ВЕРХНЯЯ СЕТКА: ФИНАЛ
-            "u41": { id: 41, type: "upper-f", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 39", ph2: "Победитель 40", images: [] },
-
-            // ================= НИЖНЯЯ СЕТКА =================
-            // НС РАУНД 1
-            "l1": { id: 17, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 1", ph2: "Проигравший 2", images: [] },
-            "l2": { id: 18, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 3", ph2: "Проигравший 4", images: [] },
-            "l3": { id: 19, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 5", ph2: "Проигравший 6", images: [] },
-            "l4": { id: 20, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 7", ph2: "Проигравший 8", images: [] },
-
-            // НС РАУНД 2
-            "l5": { id: 21, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 17", ph2: "Проигравший 9", images: [] },
-            "l6": { id: 22, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 18", ph2: "Проигравший 10", images: [] },
-            "l7": { id: 23, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 19", ph2: "Проигравший 11", images: [] },
-            "l8": { id: 24, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 20", ph2: "Проигравший 12", images: [] },
-
-            // НС РАУНД 3
-            "l9": { id: 25, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 21", ph2: "Проигравший 13", images: [] },
-            "l10": { id: 26, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 22", ph2: "Проигравший 14", images: [] },
-            "l11": { id: 27, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 23", ph2: "Проигравший 15", images: [] },
-            "l12": { id: 28, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 24", ph2: "Проигравший 16", images: [] },
-
-            // НС РАУНД 4
-            "l13": { id: 33, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 25", ph2: "Проигравший 29", images: [] },
-            "l14": { id: 34, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 26", ph2: "Проигравший 30", images: [] },
-            "l15": { id: 35, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 27", ph2: "Проигравший 31", images: [] },
-            "l16": { id: 36, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 28", ph2: "Проигравший 32", images: [] },
-
-            // НС ПОЛУФИНАЛЫ: ЭТАП 1
-            "l17": { id: 37, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 33", ph2: "Победитель 34", images: [] },
-            "l18": { id: 38, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 35", ph2: "Победитель 36", images: [] },
-
-            // НС ПОЛУФИНАЛЫ: ЭТАП 2
-            "l19": { id: 42, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 37", ph2: "Проигравший 39", images: [] },
-            "l20": { id: 43, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 38", ph2: "Проигравший 40", images: [] },
-
-            // НС ФИНАЛ: ЭТАП 1
-            "l21": { id: 44, type: "lower-f", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 42", ph2: "Победитель 43", images: [] },
-            
-            // НС ФИНАЛ: ЭТАП 2
-            "l22": { id: 45, type: "lower-f", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 41", ph2: "Победитель 44", images: [] },
-
-            // ================= ГРАНД-ФИНАЛ =================
-            "gf1": { id: 50, type: "grand-final", s1: "ВС", team1: "", score1: 0, s2: "НС", team2: "", score2: 0, ph1: "Победитель 41", ph2: "Победитель 45", images: [] }
-        };
+          "u1": {
+                    "id": 1,
+                    "type": "upper-r1",
+                    "s1": 16,
+                    "team1": "svoloch",
+                    "score1": 1,
+                    "s2": 17,
+                    "team2": "Lotus",
+                    "score2": 0,
+                    "images": [
+                              "screenshot.png"
+                    ]
+          },
+          "u2": {
+                    "id": 2,
+                    "type": "upper-r1",
+                    "s1": 9,
+                    "team1": "Laz",
+                    "score1": 1,
+                    "s2": 24,
+                    "team2": "xKros",
+                    "score2": 0,
+                    "images": []
+          },
+          "u3": {
+                    "id": 3,
+                    "type": "upper-r1",
+                    "s1": 13,
+                    "team1": "mogilka",
+                    "score1": 1,
+                    "s2": 20,
+                    "team2": "isagi",
+                    "score2": 0,
+                    "images": []
+          },
+          "u4": {
+                    "id": 4,
+                    "type": "upper-r1",
+                    "s1": 12,
+                    "team1": "Justix",
+                    "score1": 1,
+                    "s2": 21,
+                    "team2": "miate",
+                    "score2": 0,
+                    "images": []
+          },
+          "u5": {
+                    "id": 5,
+                    "type": "upper-r1",
+                    "s1": 15,
+                    "team1": "Daniil",
+                    "score1": 1,
+                    "s2": 18,
+                    "team2": "HD",
+                    "score2": 0,
+                    "images": []
+          },
+          "u6": {
+                    "id": 6,
+                    "type": "upper-r1",
+                    "s1": 10,
+                    "team1": "vovelon",
+                    "score1": 1,
+                    "s2": 23,
+                    "team2": "Rangerss",
+                    "score2": 0,
+                    "images": []
+          },
+          "u7": {
+                    "id": 7,
+                    "type": "upper-r1",
+                    "s1": 14,
+                    "team1": "VikuSiK",
+                    "score1": 1,
+                    "s2": 19,
+                    "team2": "willave",
+                    "score2": 0,
+                    "images": []
+          },
+          "u8": {
+                    "id": 8,
+                    "type": "upper-r1",
+                    "s1": 11,
+                    "team1": "KiNg",
+                    "score1": 1,
+                    "s2": 22,
+                    "team2": "W1nston",
+                    "score2": 0,
+                    "images": []
+          },
+          "u9": {
+                    "id": 9,
+                    "type": "upper-r2",
+                    "s1": 1,
+                    "team1": "Pokich",
+                    "score1": 1,
+                    "s2": 16,
+                    "team2": "svoloch",
+                    "score2": 0,
+                    "ph2": "Победитель 1",
+                    "images": []
+          },
+          "u10": {
+                    "id": 10,
+                    "type": "upper-r2",
+                    "s1": 8,
+                    "team1": "Chacomol",
+                    "score1": 1,
+                    "s2": 9,
+                    "team2": "Laz",
+                    "score2": 0,
+                    "ph2": "Победитель 2",
+                    "images": []
+          },
+          "u11": {
+                    "id": 11,
+                    "type": "upper-r2",
+                    "s1": 4,
+                    "team1": "Akuma",
+                    "score1": 1,
+                    "s2": 13,
+                    "team2": "mogilka",
+                    "score2": 0,
+                    "ph2": "Победитель 3",
+                    "images": []
+          },
+          "u12": {
+                    "id": 12,
+                    "type": "upper-r2",
+                    "s1": 5,
+                    "team1": "Kayix",
+                    "score1": 1,
+                    "s2": 12,
+                    "team2": "Justix",
+                    "score2": 0,
+                    "ph2": "Победитель 4",
+                    "images": []
+          },
+          "u13": {
+                    "id": 13,
+                    "type": "upper-r2",
+                    "s1": 2,
+                    "team1": "STICMAN",
+                    "score1": 1,
+                    "s2": 15,
+                    "team2": "Daniil",
+                    "score2": 0,
+                    "ph2": "Победитель 5",
+                    "images": []
+          },
+          "u14": {
+                    "id": 14,
+                    "type": "upper-r2",
+                    "s1": 7,
+                    "team1": "qwrchk",
+                    "score1": 1,
+                    "s2": 10,
+                    "team2": "vovelon",
+                    "score2": 0,
+                    "ph2": "Победитель 6",
+                    "images": []
+          },
+          "u15": {
+                    "id": 15,
+                    "type": "upper-r2",
+                    "s1": 3,
+                    "team1": "german",
+                    "score1": 1,
+                    "s2": 14,
+                    "team2": "VikuSiK",
+                    "score2": 0,
+                    "ph2": "Победитель 7",
+                    "images": []
+          },
+          "u16": {
+                    "id": 16,
+                    "type": "upper-r2",
+                    "s1": 6,
+                    "team1": "DuRimAn",
+                    "score1": 1,
+                    "s2": 11,
+                    "team2": "KiNg",
+                    "score2": 0,
+                    "ph2": "Победитель 8",
+                    "images": []
+          },
+          "u29": {
+                    "id": 29,
+                    "type": "upper-r3",
+                    "s1": 1,
+                    "team1": "Pokich",
+                    "score1": 1,
+                    "s2": 8,
+                    "team2": "Chacomol",
+                    "score2": 0,
+                    "ph1": "Победитель 9",
+                    "ph2": "Победитель 10",
+                    "images": []
+          },
+          "u30": {
+                    "id": 30,
+                    "type": "upper-r3",
+                    "s1": 4,
+                    "team1": "Akuma",
+                    "score1": 1,
+                    "s2": 5,
+                    "team2": "Kayix",
+                    "score2": 0,
+                    "ph1": "Победитель 11",
+                    "ph2": "Победитель 12",
+                    "images": []
+          },
+          "u31": {
+                    "id": 31,
+                    "type": "upper-r3",
+                    "s1": 2,
+                    "team1": "STICMAN",
+                    "score1": 1,
+                    "s2": 7,
+                    "team2": "qwrchk",
+                    "score2": 0,
+                    "ph1": "Победитель 13",
+                    "ph2": "Победитель 14",
+                    "images": []
+          },
+          "u32": {
+                    "id": 32,
+                    "type": "upper-r3",
+                    "s1": 3,
+                    "team1": "german",
+                    "score1": 0,
+                    "s2": 6,
+                    "team2": "DuRimAn",
+                    "score2": 1,
+                    "ph1": "Победитель 15",
+                    "ph2": "Победитель 16",
+                    "images": []
+          },
+          "u39": {
+                    "id": 39,
+                    "type": "upper-sf",
+                    "s1": 1,
+                    "team1": "Pokich",
+                    "score1": 1,
+                    "s2": 4,
+                    "team2": "Akuma",
+                    "score2": 0,
+                    "ph1": "Победитель 29",
+                    "ph2": "Победитель 30",
+                    "images": []
+          },
+          "u40": {
+                    "id": 40,
+                    "type": "upper-sf",
+                    "s1": 2,
+                    "team1": "STICMAN",
+                    "score1": 1,
+                    "s2": 6,
+                    "team2": "DuRimAn",
+                    "score2": 0,
+                    "ph1": "Победитель 31",
+                    "ph2": "Победитель 32",
+                    "images": []
+          },
+          "u41": {
+                    "id": 41,
+                    "type": "upper-f",
+                    "s1": 1,
+                    "team1": "Pokich",
+                    "score1": 0,
+                    "s2": 2,
+                    "team2": "STICMAN",
+                    "score2": 1,
+                    "ph1": "Победитель 39",
+                    "ph2": "Победитель 40",
+                    "images": []
+          },
+          "l1": {
+                    "id": 17,
+                    "type": "lower-r1",
+                    "s1": 17,
+                    "team1": "Lotus",
+                    "score1": 0,
+                    "s2": 24,
+                    "team2": "xKros",
+                    "score2": 0,
+                    "ph1": "Проигравший 1",
+                    "ph2": "Проигравший 2",
+                    "images": []
+          },
+          "l2": {
+                    "id": 18,
+                    "type": "lower-r1",
+                    "s1": 20,
+                    "team1": "isagi",
+                    "score1": 0,
+                    "s2": 21,
+                    "team2": "miate",
+                    "score2": 0,
+                    "ph1": "Проигравший 3",
+                    "ph2": "Проигравший 4",
+                    "images": []
+          },
+          "l3": {
+                    "id": 19,
+                    "type": "lower-r1",
+                    "s1": 18,
+                    "team1": "HD",
+                    "score1": 0,
+                    "s2": 23,
+                    "team2": "Rangerss",
+                    "score2": 0,
+                    "ph1": "Проигравший 5",
+                    "ph2": "Проигравший 6",
+                    "images": []
+          },
+          "l4": {
+                    "id": 20,
+                    "type": "lower-r1",
+                    "s1": 19,
+                    "team1": "willave",
+                    "score1": 0,
+                    "s2": 22,
+                    "team2": "W1nston",
+                    "score2": 0,
+                    "ph1": "Проигравший 7",
+                    "ph2": "Проигравший 8",
+                    "images": []
+          },
+          "l5": {
+                    "id": 21,
+                    "type": "lower-r2",
+                    "s1": "?",
+                    "team1": "",
+                    "score1": 0,
+                    "s2": 16,
+                    "team2": "svoloch",
+                    "score2": 0,
+                    "ph1": "Победитель 17",
+                    "ph2": "Проигравший 9",
+                    "images": []
+          },
+          "l6": {
+                    "id": 22,
+                    "type": "lower-r2",
+                    "s1": "?",
+                    "team1": "",
+                    "score1": 0,
+                    "s2": 9,
+                    "team2": "Laz",
+                    "score2": 0,
+                    "ph1": "Победитель 18",
+                    "ph2": "Проигравший 10",
+                    "images": []
+          },
+          "l7": {
+                    "id": 23,
+                    "type": "lower-r2",
+                    "s1": "?",
+                    "team1": "",
+                    "score1": 0,
+                    "s2": 13,
+                    "team2": "mogilka",
+                    "score2": 0,
+                    "ph1": "Победитель 19",
+                    "ph2": "Проигравший 11",
+                    "images": []
+          },
+          "l8": {
+                    "id": 24,
+                    "type": "lower-r2",
+                    "s1": "?",
+                    "team1": "",
+                    "score1": 0,
+                    "s2": 12,
+                    "team2": "Justix",
+                    "score2": 0,
+                    "ph1": "Победитель 20",
+                    "ph2": "Проигравший 12",
+                    "images": []
+          },
+          "l9": {
+                    "id": 25,
+                    "type": "lower-r3",
+                    "s1": "?",
+                    "team1": "",
+                    "score1": 0,
+                    "s2": 15,
+                    "team2": "Daniil",
+                    "score2": 0,
+                    "ph1": "Победитель 21",
+                    "ph2": "Проигравший 13",
+                    "images": []
+          },
+          "l10": {
+                    "id": 26,
+                    "type": "lower-r3",
+                    "s1": "?",
+                    "team1": "",
+                    "score1": 0,
+                    "s2": 10,
+                    "team2": "vovelon",
+                    "score2": 0,
+                    "ph1": "Победитель 22",
+                    "ph2": "Проигравший 14",
+                    "images": []
+          },
+          "l11": {
+                    "id": 27,
+                    "type": "lower-r3",
+                    "s1": "?",
+                    "team1": "",
+                    "score1": 0,
+                    "s2": 14,
+                    "team2": "VikuSiK",
+                    "score2": 0,
+                    "ph1": "Победитель 23",
+                    "ph2": "Проигравший 15",
+                    "images": []
+          },
+          "l12": {
+                    "id": 28,
+                    "type": "lower-r3",
+                    "s1": "?",
+                    "team1": "",
+                    "score1": 0,
+                    "s2": 11,
+                    "team2": "KiNg",
+                    "score2": 0,
+                    "ph1": "Победитель 24",
+                    "ph2": "Проигравший 16",
+                    "images": []
+          },
+          "l13": {
+                    "id": 33,
+                    "type": "lower-r4",
+                    "s1": "?",
+                    "team1": "",
+                    "score1": 0,
+                    "s2": 8,
+                    "team2": "Chacomol",
+                    "score2": 0,
+                    "ph1": "Победитель 25",
+                    "ph2": "Проигравший 29",
+                    "images": []
+          },
+          "l14": {
+                    "id": 34,
+                    "type": "lower-r4",
+                    "s1": "?",
+                    "team1": "",
+                    "score1": 0,
+                    "s2": 5,
+                    "team2": "Kayix",
+                    "score2": 0,
+                    "ph1": "Победитель 26",
+                    "ph2": "Проигравший 30",
+                    "images": []
+          },
+          "l15": {
+                    "id": 35,
+                    "type": "lower-r4",
+                    "s1": "?",
+                    "team1": "",
+                    "score1": 0,
+                    "s2": 7,
+                    "team2": "qwrchk",
+                    "score2": 0,
+                    "ph1": "Победитель 27",
+                    "ph2": "Проигравший 31",
+                    "images": []
+          },
+          "l16": {
+                    "id": 36,
+                    "type": "lower-r4",
+                    "s1": "?",
+                    "team1": "",
+                    "score1": 0,
+                    "s2": 3,
+                    "team2": "german",
+                    "score2": 0,
+                    "ph1": "Победитель 28",
+                    "ph2": "Проигравший 32",
+                    "images": []
+          },
+          "l17": {
+                    "id": 37,
+                    "type": "lower-sf",
+                    "s1": "?",
+                    "team1": "",
+                    "score1": 0,
+                    "s2": "?",
+                    "team2": "",
+                    "score2": 0,
+                    "ph1": "Победитель 33",
+                    "ph2": "Победитель 34",
+                    "images": []
+          },
+          "l18": {
+                    "id": 38,
+                    "type": "lower-sf",
+                    "s1": "?",
+                    "team1": "",
+                    "score1": 0,
+                    "s2": "?",
+                    "team2": "",
+                    "score2": 0,
+                    "ph1": "Победитель 35",
+                    "ph2": "Победитель 36",
+                    "images": []
+          },
+          "l19": {
+                    "id": 42,
+                    "type": "lower-sf",
+                    "s1": "?",
+                    "team1": "",
+                    "score1": 0,
+                    "s2": 4,
+                    "team2": "Akuma",
+                    "score2": 0,
+                    "ph1": "Победитель 37",
+                    "ph2": "Проигравший 39",
+                    "images": []
+          },
+          "l20": {
+                    "id": 43,
+                    "type": "lower-sf",
+                    "s1": "?",
+                    "team1": "",
+                    "score1": 0,
+                    "s2": 6,
+                    "team2": "DuRimAn",
+                    "score2": 0,
+                    "ph1": "Победитель 38",
+                    "ph2": "Проигравший 40",
+                    "images": []
+          },
+          "l21": {
+                    "id": 44,
+                    "type": "lower-f",
+                    "s1": "?",
+                    "team1": "",
+                    "score1": 0,
+                    "s2": "?",
+                    "team2": "",
+                    "score2": 0,
+                    "ph1": "Победитель 42",
+                    "ph2": "Победитель 43",
+                    "images": []
+          },
+          "l22": {
+                    "id": 45,
+                    "type": "lower-f",
+                    "s1": 1,
+                    "team1": "Pokich",
+                    "score1": 0,
+                    "s2": "?",
+                    "team2": "",
+                    "score2": 0,
+                    "ph1": "Проигравший 41",
+                    "ph2": "Победитель 44",
+                    "images": []
+          },
+          "gf1": {
+                    "id": 50,
+                    "type": "grand-final",
+                    "s1": 2,
+                    "team1": "STICMAN",
+                    "score1": 0,
+                    "s2": "?",
+                    "team2": "",
+                    "score2": 0,
+                    "ph1": "Победитель 41",
+                    "ph2": "Победитель 45",
+                    "images": []
+          }
+};
 
         let store = bracketData;
         let isAdmin = false;
@@ -794,5 +1848,7 @@
         buildTournament();
         toggleAdminInterface(false);
     </script>
-</body>
+
+
+</body></html>
 </html>
