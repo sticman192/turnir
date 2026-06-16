@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Турнирная Сетка (24 Участника)</title>
+    <title>Турнирная Сетка (Double Elimination)</title>
     <style>
         /* --- СТИЛИ (CSS) --- */
         body {
@@ -15,7 +15,7 @@
         }
 
         .bracket-header {
-            max-width: 1500px;
+            max-width: 1600px;
             margin: 0 auto 20px auto;
             display: flex;
             justify-content: flex-end;
@@ -38,7 +38,7 @@
         .admin-toggle-btn.log-out:hover { background-color: #c82333; }
 
         .tournament-wrapper {
-            max-width: 1500px;
+            max-width: 1600px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
@@ -51,9 +51,10 @@
             margin-bottom: 16px;
             color: #ffffff;
             text-transform: uppercase;
+            border-left: 4px solid #ff7a00;
+            padding-left: 10px;
         }
 
-        /* Модифицированная сетка под 5 колонок */
         .bracket-grid-upper {
             display: grid;
             grid-template-columns: repeat(5, minmax(240px, 1fr));
@@ -67,13 +68,23 @@
 
         .bracket-grid-lower {
             display: grid;
-            grid-template-columns: repeat(4, minmax(250px, 1fr));
+            grid-template-columns: repeat(6, minmax(220px, 1fr));
             gap: 25px;
             background-color: #1a1a1a;
             padding: 25px;
             border-radius: 6px;
             box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
             overflow-x: auto;
+        }
+
+        .grand-final-section {
+            background: linear-gradient(135deg, #2e1f10 0%, #1a1a1a 100%);
+            border: 2px solid #ff7a00;
+            padding: 25px;
+            border-radius: 6px;
+            max-width: 400px;
+            margin: 20px auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
 
         .round-col { display: flex; flex-direction: column; }
@@ -90,15 +101,17 @@
             border-radius: 4px;
         }
 
-        /* Увеличенная высота контейнера, чтобы вместить 8 матчей */
         .match-wrapper {
             display: flex;
             flex-direction: column;
             gap: 15px;
             justify-content: space-around;
             height: 100%;
-            min-height: 950px;
+            min-height: 500px;
         }
+
+        /* Высота для первых раундов, где много матчей */
+        .height-large { min-height: 850px; }
 
         .match-node {
             background-color: #3a3a3a;
@@ -271,7 +284,7 @@
         }
         .delete-img-btn:hover { background-color: #c82333; }
 
-        /* ОКНО ПРОСМОТРА ИЗОБРАЖЕНИЯ (ЛАЙТБОКС) */
+        /* ОКНО ПРОСМОТРА КАРТИНКИ */
         .lightbox-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0,0,0,0.9); display: none;
@@ -301,7 +314,7 @@
         }
 
         .export-panel {
-            max-width: 1500px; margin: 40px auto 20px auto;
+            max-width: 1600px; margin: 40px auto 20px auto;
             background-color: #1a1a1a; padding: 25px;
             border-left: 5px solid #ff7a00; border-radius: 4px;
         }
@@ -314,19 +327,25 @@
         <button id="adminLogoutBtn" class="admin-toggle-btn log-out" style="display: none;">Выйти из Админа</button>
     </header>
 
+    <!-- ГРАНД-ФИНАЛ СУПЕРМАТЧ -->
+    <div class="grand-final-section">
+        <div class="bracket-title-main" style="text-align: center; border: none; padding: 0; margin-bottom: 10px; color: #ff7a00;">🏆 Гранд-Финал 🏆</div>
+        <div id="grand-final-container"></div>
+    </div>
+
     <div class="tournament-wrapper">
         
-        <!-- ВЕРХНЯЯ СЕТКА (5 колонок под 24 участника) -->
+        <!-- ВЕРХНЯЯ СЕТКА -->
         <div class="bracket-section">
             <div class="bracket-title-main">Верхняя сетка</div>
             <div class="bracket-grid bracket-grid-upper">
                 <div class="round-col">
                     <div class="round-header">Раунд 1</div>
-                    <div class="match-wrapper" id="upper-r1"></div>
+                    <div class="match-wrapper height-large" id="upper-r1"></div>
                 </div>
                 <div class="round-col">
                     <div class="round-header">Раунд 2</div>
-                    <div class="match-wrapper" id="upper-r2"></div>
+                    <div class="match-wrapper height-large" id="upper-r2"></div>
                 </div>
                 <div class="round-col">
                     <div class="round-header">Раунд 3</div>
@@ -337,7 +356,7 @@
                     <div class="match-wrapper" id="upper-sf"></div>
                 </div>
                 <div class="round-col">
-                    <div class="round-header">Финал</div>
+                    <div class="round-header">Финал ВС</div>
                     <div class="match-wrapper" id="upper-f"></div>
                 </div>
             </div>
@@ -345,23 +364,31 @@
 
         <!-- НИЖНЯЯ СЕТКА -->
         <div class="bracket-section">
-            <div class="bracket-title-main">Нижняя сетка</div>
+            <div class="bracket-title-main">Нижняя сетка (Сетка Проигравших)</div>
             <div class="bracket-grid bracket-grid-lower">
                 <div class="round-col">
-                    <div class="round-header">Раунд 1 НС</div>
+                    <div class="round-header">НС Раунд 1</div>
                     <div class="match-wrapper" id="lower-r1"></div>
                 </div>
                 <div class="round-col">
-                    <div class="round-header">Раунд 2 НС</div>
+                    <div class="round-header">НС Раунд 2</div>
                     <div class="match-wrapper" id="lower-r2"></div>
                 </div>
                 <div class="round-col">
-                    <div class="round-header">Раунд 3 НС</div>
+                    <div class="round-header">НС Раунд 3</div>
                     <div class="match-wrapper" id="lower-r3"></div>
                 </div>
                 <div class="round-col">
-                    <div class="round-header">Раунд 4 НС</div>
+                    <div class="round-header">НС Раунд 4</div>
                     <div class="match-wrapper" id="lower-r4"></div>
+                </div>
+                <div class="round-col">
+                    <div class="round-header">НС Полуфиналы</div>
+                    <div class="match-wrapper" id="lower-sf"></div>
+                </div>
+                <div class="round-col">
+                    <div class="round-header">Финал НС</div>
+                    <div class="match-wrapper" id="lower-f"></div>
                 </div>
             </div>
         </div>
@@ -413,7 +440,7 @@
         </div>
     </div>
 
-    <!-- ОКНО ПРОСМОТРА КАРТИНКИ (LIGHTBOX) -->
+    <!-- ОКНО ПРОСМОТРА КАРТИНКИ -->
     <div id="lightboxOverlay" class="lightbox-overlay" onclick="this.style.display='none'">
         <img id="lightboxImg" src="" alt="Скриншот">
     </div>
@@ -422,9 +449,9 @@
     <script>
         const ADMIN_PASSWORD = "1234"; 
 
-        // СТРУКТУРА СЕТКИ НА 24 УЧАСТНИКА СТРОГО ПО СНИМКУ image_f94560.png
+        // ИДЕАЛЬНАЯ ПОЛНАЯ ТУРНИРНАЯ БАЗА ДАННЫХ НА 24 ЧЕЛОВЕКА С ГРАНД-ФИНАЛОМ
         const bracketData = {
-            // РАУНД 1 (8 матчей)
+            // ВЕРХНЯЯ СЕТКА: РАУНД 1
             "u1": { id: 1, type: "upper-r1", s1: 16, team1: "svoloch", score1: 0, s2: 17, team2: "Lotus", score2: 0, images: [] },
             "u2": { id: 2, type: "upper-r1", s1: 9, team1: "Laz", score1: 0, s2: 24, team2: "xKros", score2: 0, images: [] },
             "u3": { id: 3, type: "upper-r1", s1: 13, team1: "mogilka", score1: 0, s2: 20, team2: "isagi", score2: 0, images: [] },
@@ -434,7 +461,7 @@
             "u7": { id: 7, type: "upper-r1", s1: 14, team1: "VikuSiK", score1: 0, s2: 19, team2: "willave", score2: 0, images: [] },
             "u8": { id: 8, type: "upper-r1", s1: 11, team1: "KiNg", score1: 0, s2: 22, team2: "W1nston", score2: 0, images: [] },
             
-            // РАУНД 2 (8 топ-игроков ждут победителей из Раунда 1)
+            // ВЕРХНЯЯ СЕТКА: РАУНД 2
             "u9": { id: 9, type: "upper-r2", s1: 1, team1: "Pokich", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
             "u10": { id: 10, type: "upper-r2", s1: 8, team1: "Chacomol", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
             "u11": { id: 11, type: "upper-r2", s1: 4, team1: "Akuma", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
@@ -444,28 +471,60 @@
             "u15": { id: 15, type: "upper-r2", s1: 3, team1: "german", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
             "u16": { id: 16, type: "upper-r2", s1: 6, team1: "DuRimAn", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
             
-            // РАУНД 3 (4 матча)
+            // ВЕРХНЯЯ СЕТКА: РАУНД 3
             "u29": { id: 29, type: "upper-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
             "u30": { id: 30, type: "upper-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
             "u31": { id: 31, type: "upper-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
             "u32": { id: 32, type: "upper-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
 
-            // ПОЛУФИНАЛЫ
+            // ВЕРХНЯЯ СЕТКА: ПОЛУФИНАЛЫ
             "u39": { id: 39, type: "upper-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
             "u40": { id: 40, type: "upper-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
 
-            // ФИНАЛ ВЕРХНЕЙ СЕТКИ
+            // ВЕРХНЯЯ СЕТКА: ФИНАЛ
             "u41": { id: 41, type: "upper-f", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
 
-            // НИЖНЯЯ СЕТКА (Автоматический сбор проигравших)
+            // ================= НИЖНЯЯ СЕТКА =================
+            // НС РАУНД 1 (Сюда падают 8 проигравших из Верхней Сетки Раунда 1)
             "l1": { id: 17, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
             "l2": { id: 18, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
             "l3": { id: 19, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
             "l4": { id: 20, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+
+            // НС РАУНД 2 (Победители НС Р1 против первых 4 проигравших из Верхней Сетки Раунда 2)
             "l5": { id: 21, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
             "l6": { id: 22, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
             "l7": { id: 23, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
-            "l8": { id: 24, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] }
+            "l8": { id: 24, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+
+            // НС РАУНД 3 (Победители НС Р2 против оставшихся 4 проигравших из Верхней Сетки Раунда 2)
+            "l9": { id: 25, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+            "l10": { id: 26, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+            "l11": { id: 27, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+            "l12": { id: 28, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+
+            // НС РАУНД 4 (Победители НС Р3 против 4 проигравших из Верхней Сетки Раунда 3)
+            "l13": { id: 33, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+            "l14": { id: 34, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+            "l15": { id: 35, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+            "l16": { id: 36, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+
+            // НС ПОЛУФИНАЛЫ: ЭТАП 1 (Сражение выживших в нижней сетке)
+            "l17": { id: 37, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+            "l18": { id: 38, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+
+            // НС ПОЛУФИНАЛЫ: ЭТАП 2 (Победители прошлых матчей против 2 проигравших из Полуфиналов Верхней Сетки)
+            "l19": { id: 42, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+            "l20": { id: 43, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+
+            // НС ФИНАЛ: ЭТАП 1 (Определяем лучшего в НС)
+            "l21": { id: 44, type: "lower-f", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+            
+            // НС ФИНАЛ: ЭТАП 2 (Последний выживший НС против проигравшего в Финале Верхней Сетки)
+            "l22": { id: 45, type: "lower-f", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, images: [] },
+
+            // ================= ГРАНД-ФИНАЛ =================
+            "gf1": { id: 50, type: "grand-final", s1: "Верх", team1: "Победитель ВС", score1: 0, s2: "Нижн", team2: "Победитель НС", score2: 0, images: [] }
         };
 
         let store = bracketData;
@@ -473,20 +532,19 @@
         let activeKey = null;
 
         function recalculateAllMatches() {
-            // Очищаем зависимые слоты перед пересчетом
-            const dependents = ["u29", "u30", "u31", "u32", "u39", "u40", "u41", "l1", "l2", "l3", "l4", "l5", "l6", "l7", "l8"];
-            dependents.forEach(k => {
+            // Очищаем зависимые динамические поля
+            const keysToReset = [
+                "u29", "u30", "u31", "u32", "u39", "u40", "u41",
+                "l1", "l2", "l3", "l4", "l5", "l6", "l7", "l8", "l9", "l10", "l11", "l12",
+                "l13", "l14", "l15", "l16", "l17", "l18", "l19", "l20", "l21", "l22", "gf1"
+            ];
+            keysToReset.forEach(k => {
                 store[k].team1 = ""; store[k].team2 = "";
                 store[k].s1 = "?"; store[k].s2 = "?";
             });
+            for (let i = 9; i <= 16; i++) { store["u" + i].team2 = ""; store["u" + i].s2 = "?"; }
 
-            // Очищаем только вторые слоты Раунда 2 верхней сетки, так как первые заняты топ-посевами
-            for (let i = 9; i <= 16; i++) {
-                store["u" + i].team2 = "";
-                store["u" + i].s2 = "?";
-            }
-
-            // Продвижение победителей Раунда 1 во Раунд 2 (а проигравших в Нижнюю Сетку Раунд 1)
+            // 1. Из Раунда 1 ВС -> Победители во Раунд 2 ВС, а Проигравшие в НС Раунд 1
             autoPush("u1", "u9", "team2", "s2", "l1", "team1", "s1");
             autoPush("u2", "u10", "team2", "s2", "l1", "team2", "s2");
             autoPush("u3", "u11", "team2", "s2", "l2", "team1", "s1");
@@ -496,25 +554,67 @@
             autoPush("u7", "u15", "team2", "s2", "l4", "team1", "s1");
             autoPush("u8", "u16", "team2", "s2", "l4", "team2", "s2");
 
-            // Из Раунда 2 в Раунд 3
-            autoPush("u9", "u29", "team1", "s1", "l5", "team1", "s1");
-            autoPush("u10", "u29", "team2", "s2", "l5", "team2", "s2");
-            autoPush("u11", "u30", "team1", "s1", "l6", "team1", "s1");
-            autoPush("u12", "u30", "team2", "s2", "l6", "team2", "s2");
-            autoPush("u13", "u31", "team1", "s1", "l7", "team1", "s1");
-            autoPush("u14", "u31", "team2", "s2", "l7", "team2", "s2");
-            autoPush("u15", "u32", "team1", "s1", "l8", "team1", "s1");
-            autoPush("u16", "u32", "team2", "s2", "l8", "team2", "s2");
+            // 2. Из НС Раунда 1 -> Победители переходят в НС Раунд 2
+            autoPush("l1", "l5", "team1", "s1", null, null, null);
+            autoPush("l2", "l6", "team1", "s1", null, null, null);
+            autoPush("l3", "l7", "team1", "s1", null, null, null);
+            autoPush("l4", "l8", "team1", "s1", null, null, null);
 
-            // Из Раунда 3 в Полуфиналы
-            autoPush("u29", "u39", "team1", "s1", null, null, null);
-            autoPush("u30", "u39", "team2", "s2", null, null, null);
-            autoPush("u31", "u40", "team1", "s1", null, null, null);
-            autoPush("u32", "u40", "team2", "s2", null, null, null);
+            // 3. Из Раунда 2 ВС -> Победители идут в Раунд 3 ВС, а Проигравшие падают в НС Раунд 2 и Раунд 3
+            autoPush("u9", "u29", "team1", "s1", "l5", "team2", "s2");
+            autoPush("u10", "u29", "team2", "s2", "l6", "team2", "s2");
+            autoPush("u11", "u30", "team1", "s1", "l7", "team2", "s2");
+            autoPush("u12", "u30", "team2", "s2", "l8", "team2", "s2");
+            
+            // Победители НС Раунда 2 идут в НС Раунд 3 к остальным упавшим из ВС Р2
+            autoPush("l5", "l9", "team1", "s1", null, null, null);
+            autoPush("l6", "l10", "team1", "s1", null, null, null);
+            autoPush("l7", "l11", "team1", "s1", null, null, null);
+            autoPush("l8", "l12", "team1", "s1", null, null, null);
 
-            // Из Полуфиналов в Финал
-            autoPush("u39", "u41", "team1", "s1", null, null, null);
-            autoPush("u40", "u41", "team2", "s2", null, null, null);
+            autoPush("u13", "u31", "team1", "s1", "l9", "team2", "s2");
+            autoPush("u14", "u31", "team2", "s2", "l10", "team2", "s2");
+            autoPush("u15", "u32", "team1", "s1", "l11", "team2", "s2");
+            autoPush("u16", "u32", "team2", "s2", "l12", "team2", "s2");
+
+            // 4. Из НС Раунда 3 -> Победители идут в НС Раунд 4
+            autoPush("l9", "l13", "team1", "s1", null, null, null);
+            autoPush("l10", "l14", "team1", "s1", null, null, null);
+            autoPush("l11", "l15", "team1", "s1", null, null, null);
+            autoPush("l12", "l16", "team1", "s1", null, null, null);
+
+            // 5. Из Раунда 3 ВС -> Победители в Полуфинал ВС, Проигравшие падают в НС Раунд 4
+            autoPush("u29", "u39", "team1", "s1", "l13", "team2", "s2");
+            autoPush("u30", "u39", "team2", "s2", "l14", "team2", "s2");
+            autoPush("u31", "u40", "team1", "s1", "l15", "team2", "s2");
+            autoPush("u32", "u40", "team2", "s2", "l16", "team2", "s2");
+
+            // 6. Из НС Раунда 4 -> Победители играют между собой в НС Полуфинале (Этап 1)
+            autoPush("l13", "l17", "team1", "s1", null, null, null);
+            autoPush("l14", "l17", "team2", "s2", null, null, null);
+            autoPush("l15", "l18", "team1", "s1", null, null, null);
+            autoPush("l16", "l18", "team2", "s2", null, null, null);
+
+            // 7. Победители НС Полуфинала (Этап 1) выходят на проигравших из Полуфиналов ВС
+            autoPush("l17", "l19", "team1", "s1", null, null, null);
+            autoPush("l18", "l20", "team1", "s1", null, null, null);
+
+            // Полуфиналы ВС -> Победители в Финал ВС, Проигравшие падают в НС Полуфинал (Этап 2)
+            autoPush("u39", "u41", "team1", "s1", "l19", "team2", "s2");
+            autoPush("u40", "u41", "team2", "s2", "l20", "team2", "s2");
+
+            // 8. Из НС Полуфинала (Этап 2) победители сражаются в Финале НС (Этап 1)
+            autoPush("l19", "l21", "team1", "s1", null, null, null);
+            autoPush("l20", "l21", "team2", "s2", null, null, null);
+
+            // Победитель выходит на проигравшего в Финале ВС
+            autoPush("l21", "l22", "team2", "s2", null, null, null);
+
+            // Финал ВС -> Победитель летит прямиком в Гранд-Финал, Проигравший падает в финальную стадию НС
+            autoPush("u41", "gf1", "team1", "s1", "l22", "team1", "s1");
+
+            // Последний матч НС определяет финального оппонента для Гранд-Финала!
+            autoPush("l22", "gf1", "team2", "s2", null, null, null);
         }
 
         function autoPush(matchKey, winKey, winProp, winSeed, loseKey, loseProp, loseSeed) {
@@ -526,19 +626,14 @@
             const lName = m.score1 > m.score2 ? m.team2 : m.team1;
             const lSeed = m.score1 > m.score2 ? m.s2 : m.s1;
 
-            if (winKey && winProp) {
-                store[winKey][winProp] = wName;
-                store[winKey][winSeed] = wSeed;
-            }
-            if (loseKey && loseProp) {
-                store[loseKey][loseProp] = lName;
-                store[loseKey][loseSeed] = lSeed;
-            }
+            if (winKey && winProp) { store[winKey][winProp] = wName; store[winKey][winSeed] = wSeed; }
+            if (loseKey && loseProp) { store[loseKey][loseProp] = lName; store[loseKey][loseSeed] = lSeed; }
         }
 
         function buildTournament() {
             recalculateAllMatches();
             document.querySelectorAll('.match-wrapper').forEach(c => c.innerHTML = '');
+            document.getElementById('grand-final-container').innerHTML = '';
 
             Object.keys(store).forEach(key => {
                 const data = store[key];
@@ -563,8 +658,13 @@
                         <div class="team-score">${data.team1 && data.team2 ? data.score2 : ''}</div>
                     </div>
                 `;
-                const targetContainer = document.getElementById(data.type);
-                if (targetContainer) targetContainer.appendChild(node);
+                
+                if(data.type === "grand-final") {
+                    document.getElementById('grand-final-container').appendChild(node);
+                } else {
+                    const targetContainer = document.getElementById(data.type);
+                    if (targetContainer) targetContainer.appendChild(node);
+                }
             });
         }
 
@@ -676,7 +776,7 @@
             const regex = /const bracketData = \{[\s\S]*?\};/;
             const finalHtml = "<!DOCTYPE html>\n<html lang=\"ru\">\n" + currentFullHtml.replace(regex, `const bracketData = ${cleanStoreData};`) + "\n</html>";
             navigator.clipboard.writeText(finalHtml);
-            alert("УСПЕШНО!\n\nВесь код скопирован. Залейте его на GitHub!");
+            alert("УСПЕШНО!\n\nВесь код скопирован. Обновите файл index.html на GitHub!");
         };
 
         buildTournament();
