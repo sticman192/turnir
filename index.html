@@ -110,6 +110,22 @@
             min-height: 500px;
         }
 
+        /* Новые стили для центрирования кастомных блоков в НС Полуфиналах и Финале */
+        .match-wrapper-centered {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 30px;
+            height: 100%;
+            min-height: 500px;
+        }
+
+        .match-group-block {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
         .height-large { min-height: 850px; }
 
         .match-node {
@@ -387,11 +403,11 @@
                 </div>
                 <div class="round-col">
                     <div class="round-header">НС Полуфиналы</div>
-                    <div class="match-wrapper" id="lower-sf"></div>
+                    <div class="match-wrapper-centered" id="lower-sf"></div>
                 </div>
                 <div class="round-col">
                     <div class="round-header">Финал НС</div>
-                    <div class="match-wrapper" id="lower-f"></div>
+                    <div class="match-wrapper-centered" id="lower-f"></div>
                 </div>
             </div>
         </div>
@@ -643,10 +659,10 @@
 
         function buildTournament() {
             recalculateAllMatches();
-            document.querySelectorAll('.match-wrapper').forEach(c => c.innerHTML = '');
+            document.querySelectorAll('.match-wrapper, .match-wrapper-centered').forEach(c => c.innerHTML = '');
             document.getElementById('grand-final-container').innerHTML = '';
 
-            // Стандартный рендер обычных раундов
+            // Обычный рендер
             Object.keys(store).forEach(key => {
                 const data = store[key];
                 if (data.type === "grand-final") {
@@ -657,19 +673,30 @@
                 }
             });
 
-            // ЖЕСТКИЙ ПОРЯДОК ОТРЕСОВКИ ДЛЯ НИЖНЕЙ СЕТКИ (ЧТОБЫ 37, 38 БЫЛИ В ЦЕНТРЕ И СВЕРХУ)
+            // ИСПРАВЛЕННЫЙ ВЫВОД: группируем матчи внутри контейнеров, чтобы они шли друг за другом по центру
             const sfContainer = document.getElementById('lower-sf');
             if (sfContainer) {
-                sfContainer.appendChild(createMatchNode("l17")); // Матч 37
-                sfContainer.appendChild(createMatchNode("l18")); // Матч 38
-                sfContainer.appendChild(createMatchNode("l19")); // Матч 42
-                sfContainer.appendChild(createMatchNode("l20")); // Матч 43
+                const topGroup = document.createElement('div');
+                topGroup.className = 'match-group-block';
+                topGroup.appendChild(createMatchNode("l17")); // Матч 37
+                topGroup.appendChild(createMatchNode("l18")); // Матч 38
+
+                const bottomGroup = document.createElement('div');
+                bottomGroup.className = 'match-group-block';
+                bottomGroup.appendChild(createMatchNode("l19")); // Матч 42
+                bottomGroup.appendChild(createMatchNode("l20")); // Матч 43
+
+                sfContainer.appendChild(topGroup);
+                sfContainer.appendChild(bottomGroup);
             }
 
             const fContainer = document.getElementById('lower-f');
             if (fContainer) {
-                fContainer.appendChild(createMatchNode("l21")); // Матч 44
-                fContainer.appendChild(createMatchNode("l22")); // Матч 45
+                const finalGroup = document.createElement('div');
+                finalGroup.className = 'match-group-block';
+                finalGroup.appendChild(createMatchNode("l21")); // Матч 44
+                finalGroup.appendChild(createMatchNode("l22")); // Матч 45
+                fContainer.appendChild(finalGroup);
             }
         }
 
