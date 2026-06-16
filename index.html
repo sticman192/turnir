@@ -168,6 +168,7 @@
             color: #bbbbbb;
         }
 
+        /* Стиль для умных подсказок (Победитель/Проигравший) */
         .team-title.placeholder-hint {
             color: #777777;
             font-style: italic;
@@ -333,6 +334,7 @@
         <button id="adminLogoutBtn" class="admin-toggle-btn log-out" style="display: none;">Выйти из Админа</button>
     </header>
 
+    <!-- ГРАНД-ФИНАЛ -->
     <div class="grand-final-section">
         <div class="bracket-title-main" style="text-align: center; border: none; padding: 0; margin-bottom: 10px; color: #ff7a00;">🏆 Гранд-Финал 🏆</div>
         <div id="grand-final-container"></div>
@@ -340,6 +342,7 @@
 
     <div class="tournament-wrapper">
         
+        <!-- ВЕРХНЯЯ СЕТКА -->
         <div class="bracket-section">
             <div class="bracket-title-main">Верхняя сетка</div>
             <div class="bracket-grid bracket-grid-upper">
@@ -366,6 +369,7 @@
             </div>
         </div>
 
+        <!-- НИЖНЯЯ СЕТКА -->
         <div class="bracket-section">
             <div class="bracket-title-main">Нижняя сетка (Сетка Проигравших)</div>
             <div class="bracket-grid bracket-grid-lower">
@@ -387,23 +391,29 @@
                 </div>
                 <div class="round-col">
                     <div class="round-header">НС Полуфиналы</div>
-                    <div class="match-wrapper" id="lower-sf"></div>
+                    <!-- Блоки-контейнеры для матчей 37,38 и 42,43 разделены по вашему запросу -->
+                    <div class="match-wrapper" id="lower-sf-1"></div>
+                    <div class="match-wrapper" id="lower-sf-2"></div>
                 </div>
                 <div class="round-col">
                     <div class="round-header">Финал НС</div>
-                    <div class="match-wrapper" id="lower-f"></div>
+                    <!-- Блоки-контейнеры для матчей 44 и 45 -->
+                    <div class="match-wrapper" id="lower-f-1"></div>
+                    <div class="match-wrapper" id="lower-f-2"></div>
                 </div>
             </div>
         </div>
 
     </div>
 
+    <!-- ПАНЕЛЬ ЭКСПОРТА -->
     <div id="adminExportPanel" class="export-panel" style="display: none;">
         <h3 style="margin-top:0; color:#ff7a00;">Панель администратора: Сохранение турнира</h3>
-        <p>Вы изменили счёт или добавили скриншоты. Нажмите на кнопку ниже, чтобы скопировать весь код, затем полностью вставьте его в ваш file <b>index.html</b> на GitHub.</p>
+        <p>Вы изменили счёт или добавили скриншоты. Нажмите на кнопку ниже, чтобы скопировать весь код, затем полностью вставьте его в ваш файл <b>index.html</b> на GitHub.</p>
         <button id="exportDataBtn" class="custom-btn">Скопировать весь код страницы</button>
     </div>
 
+    <!-- МОДАЛЬНОЕ ОКНО МАТЧА -->
     <div class="modal-overlay" id="matchModal">
         <div class="modal-content">
             <button class="close-modal-btn" id="closeModal">&times;</button>
@@ -441,89 +451,91 @@
         </div>
     </div>
 
+    <!-- ОКНО ПРОСМОТРА КАРТИНКИ -->
     <div id="lightboxOverlay" class="lightbox-overlay" onclick="this.style.display='none'">
         <img id="lightboxImg" src="" alt="Скриншот">
     </div>
 
+    <!-- --- ЛОГИКА (JAVASCRIPT) --- -->
     <script>
         const ADMIN_PASSWORD = "1234"; 
 
         // АРХИТЕКТУРА СЕТКИ С ИНТЕГРИРОВАННЫМИ ДИНАМИЧЕСКИМИ МАРКЕРАМИ НАПРАВЛЕНИЙ
         const bracketData = {
             // ВЕРХНЯЯ СЕТКА: РАУНД 1
-            "u1": { id: 1, type: "upper-r1", s1: 16, team1: "svoloch", score1: 1, s2: 17, team2: "Lotus", score2: 0, images: ["screenshot.png", "screenshot1.png", "screenshot2.png", "screenshot3.png", "screenshot4.png", "screenshot5.png", "screenshot6.png"] },
-            "u2": { id: 2, type: "upper-r1", s1: 9, team1: "Laz", score1: 1, s2: 24, team2: "xKros", score2: 0, images: [] },
-            "u3": { id: 3, type: "upper-r1", s1: 13, team1: "mogilka", score1: 1, s2: 20, team2: "isagi", score2: 0, images: [] },
-            "u4": { id: 4, type: "upper-r1", s1: 12, team1: "Justix", score1: 1, s2: 21, team2: "miate", score2: 0, images: [] },
+            "u1": { id: 1, type: "upper-r1", s1: 16, team1: "svoloch", score1: 0, s2: 17, team2: "Lotus", score2: 0, images: [] },
+            "u2": { id: 2, type: "upper-r1", s1: 9, team1: "Laz", score1: 0, s2: 24, team2: "xKros", score2: 0, images: [] },
+            "u3": { id: 3, type: "upper-r1", s1: 13, team1: "mogilka", score1: 0, s2: 20, team2: "isagi", score2: 0, images: [] },
+            "u4": { id: 4, type: "upper-r1", s1: 12, team1: "Justix", score1: 0, s2: 21, team2: "miate", score2: 0, images: [] },
             "u5": { id: 5, type: "upper-r1", s1: 15, team1: "Daniil", score1: 0, s2: 18, team2: "HD", score2: 0, images: [] },
             "u6": { id: 6, type: "upper-r1", s1: 10, team1: "vovelon", score1: 0, s2: 23, team2: "Rangerss", score2: 0, images: [] },
             "u7": { id: 7, type: "upper-r1", s1: 14, team1: "VikuSiK", score1: 0, s2: 19, team2: "willave", score2: 0, images: [] },
             "u8": { id: 8, type: "upper-r1", s1: 11, team1: "KiNg", score1: 0, s2: 22, team2: "W1nston", score2: 0, images: [] },
             
             // ВЕРХНЯЯ СЕТКА: РАУНД 2
-            "u9": { id: 9, type: "upper-r2", s1: 1, team1: "Pokich", score1: 1, s2: 16, team2: "svoloch", score2: 0, ph2: "Победитель 1", images: [] },
-            "u10": { id: 10, type: "upper-r2", s1: 8, team1: "Chacomol", score1: 1, s2: 9, team2: "Laz", score2: 0, ph2: "Победитель 2", images: [] },
-            "u11": { id: 11, type: "upper-r2", s1: 4, team1: "Akuma", score1: 1, s2: 13, team2: "mogilka", score2: 0, ph2: "Победитель 3", images: [] },
-            "u12": { id: 12, type: "upper-r2", s1: 5, team1: "Kayix", score1: 1, s2: 12, team2: "Justix", score2: 0, ph2: "Победитель 4", images: [] },
+            "u9": { id: 9, type: "upper-r2", s1: 1, team1: "Pokich", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 1", images: [] },
+            "u10": { id: 10, type: "upper-r2", s1: 8, team1: "Chacomol", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 2", images: [] },
+            "u11": { id: 11, type: "upper-r2", s1: 4, team1: "Akuma", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 3", images: [] },
+            "u12": { id: 12, type: "upper-r2", s1: 5, team1: "Kayix", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 4", images: [] },
             "u13": { id: 13, type: "upper-r2", s1: 2, team1: "STICMAN", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 5", images: [] },
             "u14": { id: 14, type: "upper-r2", s1: 7, team1: "qwrchk", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 6", images: [] },
             "u15": { id: 15, type: "upper-r2", s1: 3, team1: "german", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 7", images: [] },
             "u16": { id: 16, type: "upper-r2", s1: 6, team1: "DuRimAn", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 8", images: [] },
             
             // ВЕРХНЯЯ СЕТКА: РАУНД 3
-            "u29": { id: 29, type: "upper-r3", s1: 1, team1: "Pokich", score1: 1, s2: 8, team2: "Chacomol", score2: 0, ph1: "Победитель 9", ph2: "Победитель 10", images: [] },
-            "u30": { id: 30, type: "upper-r3", s1: 4, team1: "Akuma", score1: 1, s2: 5, team2: "Kayix", score2: 0, ph1: "Победитель 11", ph2: "Победитель 12", images: [] },
+            "u29": { id: 29, type: "upper-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 9", ph2: "Победитель 10", images: [] },
+            "u30": { id: 30, type: "upper-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 11", ph2: "Победитель 12", images: [] },
             "u31": { id: 31, type: "upper-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 13", ph2: "Победитель 14", images: [] },
             "u32": { id: 32, type: "upper-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 15", ph2: "Победитель 16", images: [] },
 
             // ВЕРХНЯЯ СЕТКА: ПОЛУФИНАЛЫ
-            "u39": { id: 39, type: "upper-sf", s1: 1, team1: "Pokich", score1: 1, s2: 4, team2: "Akuma", score2: 0, ph1: "Победитель 29", ph2: "Победитель 30", images: [] },
+            "u39": { id: 39, type: "upper-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 29", ph2: "Победитель 30", images: [] },
             "u40": { id: 40, type: "upper-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 31", ph2: "Победитель 32", images: [] },
 
             // ВЕРХНЯЯ СЕТКА: ФИНАЛ
-            "u41": { id: 41, type: "upper-f", s1: 1, team1: "Pokich", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 39", ph2: "Победитель 40", images: [] },
+            "u41": { id: 41, type: "upper-f", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 39", ph2: "Победитель 40", images: [] },
 
             // ================= НИЖНЯЯ СЕТКА =================
             // НС РАУНД 1
-            "u17": { id: 17, type: "lower-r1", s1: 17, team1: "Lotus", score1: 0, s2: 24, team2: "xKros", score2: 0, ph1: "Проигравший 1", ph2: "Проигравший 2", images: [] },
-            "u18": { id: 18, type: "lower-r1", s1: 20, team1: "isagi", score1: 0, s2: 21, team2: "miate", score2: 0, ph1: "Проигравший 3", ph2: "Проигравший 4", images: [] },
-            "u19": { id: 19, type: "lower-r1", s1: 15, team1: "HD", score1: 0, s2: 23, team2: "Rangerss", score2: 0, ph1: "Проигравший 5", ph2: "Проигравший 6", images: [] },
-            "u20": { id: 20, type: "lower-r1", s1: 19, team1: "willave", score1: 0, s2: 22, team2: "W1nston", score2: 0, ph1: "Проигравший 7", ph2: "Проигравший 8", images: [] },
+            "l1": { id: 17, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 1", ph2: "Проигравший 2", images: [] },
+            "l2": { id: 18, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 3", ph2: "Проигравший 4", images: [] },
+            "l3": { id: 19, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 5", ph2: "Проигравший 6", images: [] },
+            "l4": { id: 20, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 7", ph2: "Проигравший 8", images: [] },
 
             // НС РАУНД 2
-            "u21": { id: 21, type: "lower-r2", s1: 16, team1: "svoloch", score1: 0, s2: 9, team2: "Laz", score2: 0, ph1: "Победитель 17", ph2: "Проигравший 9", images: [] },
-            "u22": { id: 22, type: "lower-r2", s1: 13, team1: "mogilka", score1: 0, s2: 12, team2: "Justix", score2: 0, ph1: "Победитель 18", ph2: "Проигравший 10", images: [] },
-            "u23": { id: 23, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 19", ph2: "Проигравший 11", images: [] },
-            "u24": { id: 24, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 20", ph2: "Проигравший 12", images: [] },
+            "l5": { id: 21, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 17", ph2: "Проигравший 9", images: [] },
+            "l6": { id: 22, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 18", ph2: "Проигравший 10", images: [] },
+            "l7": { id: 23, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 19", ph2: "Проигравший 11", images: [] },
+            "l8": { id: 24, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 20", ph2: "Проигравший 12", images: [] },
 
             // НС РАУНД 3
-            "u25": { id: 25, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 21", ph2: "Проигравший 13", images: [] },
-            "u26": { id: 26, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 22", ph2: "Проигравший 14", images: [] },
-            "u27": { id: 27, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 23", ph2: "Проигравший 15", images: [] },
-            "u28": { id: 28, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 24", ph2: "Проигравший 16", images: [] },
+            "l9": { id: 25, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 21", ph2: "Проигравший 13", images: [] },
+            "l10": { id: 26, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 22", ph2: "Проигравший 14", images: [] },
+            "l11": { id: 27, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 23", ph2: "Проигравший 15", images: [] },
+            "l12": { id: 28, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 24", ph2: "Проигравший 16", images: [] },
 
             // НС РАУНД 4
-            "u33": { id: 33, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 25", ph2: "Проигравший 29", images: [] },
-            "u34": { id: 34, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 26", ph2: "Проигравший 30", images: [] },
-            "u35": { id: 35, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 27", ph2: "Проигравший 31", images: [] },
-            "u36": { id: 36, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 28", ph2: "Проигравший 32", images: [] },
+            "l13": { id: 33, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 25", ph2: "Проигравший 29", images: [] },
+            "l14": { id: 34, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 26", ph2: "Проигравший 30", images: [] },
+            "l15": { id: 35, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 27", ph2: "Проигравший 31", images: [] },
+            "l16": { id: 36, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 28", ph2: "Проигравший 32", images: [] },
 
-            // СХОДЯТСЯ К ЦЕНТРУ (ПОЛУФИНАЛЫ ЭТАП 1)
-            "u37": { id: 37, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 33", ph2: "Победитель 34", images: [] },
-            "u38": { id: 38, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 35", ph2: "Победитель 36", images: [] },
+            // НС ПОЛУФИНАЛЫ: ЭТАП 1 (Идут первыми в колонке)
+            "l17": { id: 37, type: "lower-sf-1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 33", ph2: "Победитель 34", images: [] },
+            "l18": { id: 38, type: "lower-sf-1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 35", ph2: "Победитель 36", images: [] },
 
-            // НС ПОЛУФИНАЛЫ ЭТАП 2
-            "u42": { id: 42, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 37", ph2: "Победитель 38", images: [] },
-            "u43": { id: 43, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 39", ph2: "Проигравший 40", images: [] },
+            // НС ПОЛУФИНАЛЫ: ЭТАП 2 (Идут вторыми в колонке)
+            "l19": { id: 42, type: "lower-sf-2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 37", ph2: "Проигравший 39", images: [] },
+            "l20": { id: 43, type: "lower-sf-2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 38", ph2: "Проигравший 40", images: [] },
 
-            // ФИНАЛ НИЖНЕЙ СЕТКИ
-            "u44": { id: 44, type: "lower-f", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 42", ph2: "Победитель 43", images: [] },
+            // НС ФИНАЛ: ЭТАП 1
+            "l21": { id: 44, type: "lower-f-1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 42", ph2: "Победитель 43", images: [] },
             
-            // ДОПОЛНИТЕЛЬНЫЙ МАТЧ ФИНАЛА НС (ЕСЛИ НУЖЕН ПО СТРУКТУРЕ)
-            "u45": { id: 45, type: "lower-f", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 41", ph2: "Победитель 44", images: [] },
+            // НС ФИНАЛ: ЭТАП 2
+            "l22": { id: 45, type: "lower-f-2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 41", ph2: "Победитель 44", images: [] },
 
             // ================= ГРАНД-ФИНАЛ =================
-            "gf1": { id: 50, type: "grand-final", s1: "ВС", team1: "Pokich", score1: 0, s2: "НС", team2: "", score2: 0, ph1: "Победитель 41", ph2: "Победитель 45", images: [] }
+            "gf1": { id: 50, type: "grand-final", s1: "ВС", team1: "", score1: 0, s2: "НС", team2: "", score2: 0, ph1: "Победитель 41", ph2: "Победитель 45", images: [] }
         };
 
         let store = bracketData;
@@ -534,8 +546,8 @@
             // Сброс динамических полей перед циклом перерасчета
             const keysToReset = [
                 "u29", "u30", "u31", "u32", "u39", "u40", "u41",
-                "u17", "u18", "u19", "u20", "u21", "u22", "u23", "u24", "u25", "u26", "u27", "u28",
-                "u33", "u34", "u35", "u36", "u37", "u38", "u42", "u43", "u44", "u45", "gf1"
+                "l1", "l2", "l3", "l4", "l5", "l6", "l7", "l8", "l9", "l10", "l11", "l12",
+                "l13", "l14", "l15", "l16", "l17", "l18", "l19", "l20", "l21", "l22", "gf1"
             ];
             keysToReset.forEach(k => {
                 store[k].team1 = ""; store[k].team2 = "";
@@ -543,94 +555,67 @@
             });
             for (let i = 9; i <= 16; i++) { store["u" + i].team2 = ""; store["u" + i].s2 = "?"; }
 
-            // Восстановление базовых жестких связей первого раунда
-            store["u1"].team1 = "svoloch"; store["u1"].team2 = "Lotus";
-            store["u2"].team1 = "Laz"; store["u2"].team2 = "xKros";
-            store["u3"].team1 = "mogilka"; store["u3"].team2 = "isagi";
-            store["u4"].team1 = "Justix"; store["u4"].team2 = "miate";
-            store["u5"].team1 = "Daniil"; store["u5"].team2 = "HD";
-            store["u6"].team1 = "vovelon"; store["u6"].team2 = "Rangerss";
-            store["u7"].team1 = "VikuSiK"; store["u7"].team2 = "willave";
-            store["u8"].team1 = "KiNg"; store["u8"].team2 = "W1nston";
+            // Логика автоматического продвижения по цепочкам Double Elimination
+            autoPush("u1", "u9", "team2", "s2", "l1", "team1", "s1");
+            autoPush("u2", "u10", "team2", "s2", "l1", "team2", "s2");
+            autoPush("u3", "u11", "team2", "s2", "l2", "team1", "s1");
+            autoPush("u4", "u12", "team2", "s2", "l2", "team2", "s2");
+            autoPush("u5", "u13", "team2", "s2", "l3", "team1", "s1");
+            autoPush("u6", "u14", "team2", "s2", "l3", "team2", "s2");
+            autoPush("u7", "u15", "team2", "s2", "l4", "team1", "s1");
+            autoPush("u8", "u16", "team2", "s2", "l4", "team2", "s2");
 
-            // Продвижение Раунд 1 -> Раунд 2 (Верхняя) + Раунд 1 (Нижняя)
-            autoPush("u1", "u9", "team2", "s2", "u17", "team1", "s1");
-            autoPush("u2", "u10", "team2", "s2", "u17", "team2", "s2");
-            autoPush("u3", "u11", "team2", "s2", "u18", "team1", "s1");
-            autoPush("u4", "u12", "team2", "s2", "u18", "team2", "s2");
-            autoPush("u5", "u13", "team2", "s2", "u19", "team1", "s1");
-            autoPush("u6", "u14", "team2", "s2", "u19", "team2", "s2");
-            autoPush("u7", "u15", "team2", "s2", "u20", "team1", "s1");
-            autoPush("u8", "u16", "team2", "s2", "u20", "team2", "s2");
+            autoPush("l1", "l5", "team1", "s1", null, null, null);
+            autoPush("l2", "l6", "team1", "s1", null, null, null);
+            autoPush("l3", "l7", "team1", "s1", null, null, null);
+            autoPush("l4", "l8", "team1", "s1", null, null, null);
 
-            // Заполнение жестких сеяных игроков во 2-м раунде ВС
-            store["u9"].team1 = "Pokich"; store["u9"].s1 = 1;
-            store["u10"].team1 = "Chacomol"; store["u10"].s1 = 8;
-            store["u11"].team1 = "Akuma"; store["u11"].s1 = 4;
-            store["u12"].team1 = "Kayix"; store["u12"].s1 = 5;
-            store["u13"].team1 = "STICMAN"; store["u13"].s1 = 2;
-            store["u14"].team1 = "qwrchk"; store["u14"].s1 = 7;
-            store["u15"].team1 = "german"; store["u15"].s1 = 3;
-            store["u16"].team1 = "DuRimAn"; store["u16"].s1 = 6;
+            autoPush("u9", "u29", "team1", "s1", "l5", "team2", "s2");
+            autoPush("u10", "u29", "team2", "s2", "l6", "team2", "s2");
+            autoPush("u11", "u30", "team1", "s1", "l7", "team2", "s2");
+            autoPush("u12", "u30", "team2", "s2", "l8", "team2", "s2");
+            
+            autoPush("l5", "l9", "team1", "s1", null, null, null);
+            autoPush("l6", "l10", "team1", "s1", null, null, null);
+            autoPush("l7", "l11", "team1", "s1", null, null, null);
+            autoPush("l8", "l12", "team1", "s1", null, null, null);
 
-            // НС Раунд 1 -> НС Раунд 2
-            autoPush("u17", "u21", "team1", "s1", null, null, null);
-            autoPush("u18", "u22", "team1", "s1", null, null, null);
-            autoPush("u19", "u23", "team1", "s1", null, null, null);
-            autoPush("u20", "u24", "team1", "s1", null, null, null);
+            autoPush("u13", "u31", "team1", "s1", "l9", "team2", "s2");
+            autoPush("u14", "u31", "team2", "s2", "l10", "team2", "s2");
+            autoPush("u15", "u32", "team1", "s1", "l11", "team2", "s2");
+            autoPush("u16", "u32", "team2", "s2", "l12", "team2", "s2");
 
-            // ВС Раунд 2 -> ВС Раунд 3 + НС Раунд 2
-            autoPush("u9", "u29", "team1", "s1", "u21", "team2", "s2");
-            autoPush("u10", "u29", "team2", "s2", "u22", "team2", "s2");
-            autoPush("u11", "u30", "team1", "s1", "u23", "team2", "s2");
-            autoPush("u12", "u30", "team2", "s2", "u24", "team2", "s2");
-            autoPush("u13", "u31", "team1", "s1", "u25", "team2", "s2"); // Из проигравших ВС ведем в НС Р3
-            autoPush("u14", "u31", "team2", "s2", "u26", "team2", "s2");
-            autoPush("u15", "u32", "team1", "s1", "u27", "team2", "s2");
-            autoPush("u16", "u32", "team2", "s2", "u28", "team2", "s2");
+            autoPush("l9", "l13", "team1", "s1", null, null, null);
+            autoPush("l10", "l14", "team1", "s1", null, null, null);
+            autoPush("l11", "l15", "team1", "s1", null, null, null);
+            autoPush("l12", "l16", "team1", "s1", null, null, null);
 
-            // НС Раунд 2 -> НС Раунд 3
-            autoPush("u21", "u25", "team1", "s1", null, null, null);
-            autoPush("u22", "u26", "team1", "s1", null, null, null);
-            autoPush("u23", "u27", "team1", "s1", null, null, null);
-            autoPush("u24", "u28", "team1", "s1", null, null, null);
+            autoPush("u29", "u39", "team1", "s1", "l13", "team2", "s2");
+            autoPush("u30", "u39", "team2", "s2", "l14", "team2", "s2");
+            autoPush("u31", "u40", "team1", "s1", "l15", "team2", "s2");
+            autoPush("u32", "u40", "team2", "s2", "l16", "team2", "s2");
 
-            // НС Раунд 3 -> НС Раунд 4
-            autoPush("u25", "u33", "team1", "s1", null, null, null);
-            autoPush("u26", "u34", "team1", "s1", null, null, null);
-            autoPush("u27", "u35", "team1", "s1", null, null, null);
-            autoPush("u28", "u36", "team1", "s1", null, null, null);
+            autoPush("l13", "l17", "team1", "s1", null, null, null);
+            autoPush("l14", "l17", "team2", "s2", null, null, null);
+            autoPush("l15", "l18", "team1", "s1", null, null, null);
+            autoPush("l16", "l18", "team2", "s2", null, null, null);
 
-            // ВС Раунд 3 -> ВС Полуфиналы + НС Раунд 4
-            autoPush("u29", "u39", "team1", "s1", "u33", "team2", "s2");
-            autoPush("u30", "u39", "team2", "s2", "u34", "team2", "s2");
-            autoPush("u31", "u40", "team1", "s1", "u35", "team2", "s2");
-            autoPush("u32", "u40", "team2", "s2", "u36", "team2", "s2");
+            // Направление победителей: 37 -> 42, 38 -> 43
+            autoPush("l17", "l19", "team1", "s1", null, null, null);
+            autoPush("l18", "l20", "team1", "s1", null, null, null);
 
-            // НС Раунд 4 -> Схождение к центру (Матчи 37 и 38)
-            autoPush("u33", "u37", "team1", "s1", null, null, null);
-            autoPush("u34", "u37", "team2", "s2", null, null, null);
-            autoPush("u35", "u38", "team1", "s1", null, null, null);
-            autoPush("u36", "u38", "team2", "s2", null, null, null);
+            autoPush("u39", "u41", "team1", "s1", "l19", "team2", "s2");
+            autoPush("u40", "u41", "team2", "s2", "l20", "team2", "s2");
 
-            // Матчи 37 и 38 -> Матч 42 (Центр)
-            autoPush("u37", "u42", "team1", "s1", null, null, null);
-            autoPush("u38", "u42", "team2", "s2", null, null, null);
+            // Победители 42 и 43 идут в матч 44
+            autoPush("l19", "l21", "team1", "s1", null, null, null);
+            autoPush("l20", "l21", "team2", "s2", null, null, null);
 
-            // ВС Полуфиналы -> ВС Финал + НС Полуфиналы Этап 2 (Матч 43)
-            autoPush("u39", "u41", "team1", "s1", "u43", "team1", "s1");
-            autoPush("u40", "u41", "team2", "s2", "u43", "team2", "s2");
+            // Победитель 44 идет в матч 45
+            autoPush("l21", "l22", "team2", "s2", null, null, null);
 
-            // Из центральных матчей 42 и 43 сводим в Финал НС (Матч 44)
-            autoPush("u42", "u44", "team1", "s1", null, null, null);
-            autoPush("u43", "u44", "team2", "s2", null, null, null);
-
-            // Финал ВС (Матч 41) отправляет проигравшего в Финал НС Этап 2 (Матч 45)
-            autoPush("u41", "gf1", "team1", "s1", "u45", "team1", "s1");
-            autoPush("u44", "u45", "team2", "s2", null, null, null);
-
-            // Итоговые победители выходят в Гранд-Финал
-            autoPush("u45", "gf1", "team2", "s2", null, null, null);
+            autoPush("u41", "gf1", "team1", "s1", "l22", "team1", "s1");
+            autoPush("l22", "gf1", "team2", "s2", null, null, null);
         }
 
         function autoPush(matchKey, winKey, winProp, winSeed, loseKey, loseProp, loseSeed) {
@@ -649,8 +634,7 @@
         function buildTournament() {
             recalculateAllMatches();
             document.querySelectorAll('.match-wrapper').forEach(c => c.innerHTML = '');
-            const gfContainer = document.getElementById('grand-final-container');
-            if (gfContainer) gfContainer.innerHTML = '';
+            document.getElementById('grand-final-container').innerHTML = '';
 
             Object.keys(store).forEach(key => {
                 const data = store[key];
@@ -662,6 +646,7 @@
                 const win1 = hasPlayed && data.score1 > data.score2;
                 const win2 = hasPlayed && data.score2 > data.score1;
 
+                // Генерация названий: если имени нет, берем умную подсказку, иначе стандартное "Ожидание"
                 const dispTeam1 = data.team1 || (data.ph1 ? `(${data.ph1})` : 'Ожидание');
                 const dispTeam2 = data.team2 || (data.ph2 ? `(${data.ph2})` : 'Ожидание');
                 
@@ -683,7 +668,7 @@
                 `;
                 
                 if(data.type === "grand-final") {
-                    if (gfContainer) gfContainer.appendChild(node);
+                    document.getElementById('grand-final-container').appendChild(node);
                 } else {
                     const targetContainer = document.getElementById(data.type);
                     if (targetContainer) targetContainer.appendChild(node);
@@ -691,7 +676,6 @@
             });
         }
 
-        // КОНТРОЛЛЕРЫ МОДАЛЬНОГО ОКНА
         const modalOverlay = document.getElementById('matchModal');
         const closeBtn = document.getElementById('closeModal');
         const fileLoader = document.getElementById('fileInput');
@@ -699,142 +683,123 @@
         const adminLoginBtn = document.getElementById('adminLoginBtn');
         const adminLogoutBtn = document.getElementById('adminLogoutBtn');
         const adminExportPanel = document.getElementById('adminExportPanel');
-        const saveResultsBtn = document.getElementById('saveMatchResultsBtn');
-        const uploadZone = document.getElementById('adminUploadZone');
+        const adminUploadZone = document.getElementById('adminUploadZone');
+        const saveMatchResultsBtn = document.getElementById('saveMatchResultsBtn');
+        const inputScore1 = document.getElementById('inputScore1');
+        const inputScore2 = document.getElementById('inputScore2');
+        const modalScore1 = document.getElementById('modal-score1');
+        const modalScore2 = document.getElementById('modal-score2');
+
+        function toggleAdminInterface(visible) {
+            isAdmin = visible;
+            adminLoginBtn.style.display = visible ? 'none' : 'block';
+            adminLogoutBtn.style.display = visible ? 'block' : 'none';
+            adminExportPanel.style.display = visible ? 'block' : 'none';
+            adminUploadZone.style.display = visible ? 'block' : 'none';
+            saveMatchResultsBtn.style.display = visible ? 'block' : 'none';
+            inputScore1.style.display = visible ? 'block' : 'none';
+            inputScore2.style.display = visible ? 'block' : 'none';
+            modalScore1.style.display = visible ? 'none' : 'block';
+            modalScore2.style.display = visible ? 'none' : 'block';
+        }
+
+        adminLoginBtn.onclick = () => {
+            if (prompt("Введите пароль администратора:") === ADMIN_PASSWORD) toggleAdminInterface(true);
+            else alert("Неверный пароль!");
+        };
+        adminLogoutBtn.onclick = () => toggleAdminInterface(false);
 
         function openModalBox(key) {
             activeKey = key;
-            const data = store[key];
+            const match = store[key];
+            
+            const modalName1 = match.team1 || (match.ph1 ? `(${match.ph1})` : 'Ожидание');
+            const modalName2 = match.team2 || (match.ph2 ? `(${match.ph2})` : 'Ожидание');
+            
+            const t1Box = document.getElementById('modal-team1');
+            const t2Box = document.getElementById('modal-team2');
+            
+            t1Box.innerText = modalName1;
+            t2Box.innerText = modalName2;
+            
+            if(!match.team1 && match.ph1) t1Box.classList.add('placeholder-hint'); else t1Box.classList.remove('placeholder-hint');
+            if(!match.team2 && match.ph2) t2Box.classList.add('placeholder-hint'); else t2Box.classList.remove('placeholder-hint');
 
-            document.getElementById('modal-team1').textContent = data.team1 || (data.ph1 ? `(${data.ph1})` : 'Ожидание');
-            document.getElementById('modal-team2').textContent = data.team2 || (data.ph2 ? `(${data.ph2})` : 'Ожидание');
-            document.getElementById('modal-score1').textContent = data.score1;
-            document.getElementById('modal-score2').textContent = data.score2;
-
-            const in1 = document.getElementById('inputScore1');
-            const in2 = document.getElementById('inputScore2');
-            in1.value = data.score1;
-            in2.value = data.score2;
-
-            if (isAdmin) {
-                in1.style.display = 'block';
-                in2.style.display = 'block';
-                document.getElementById('modal-score1').style.display = 'none';
-                document.getElementById('modal-score2').style.display = 'none';
-                saveResultsBtn.style.display = 'block';
-                uploadZone.style.display = 'block';
-            } else {
-                in1.style.display = 'none';
-                in2.style.display = 'none';
-                document.getElementById('modal-score1').style.display = 'block';
-                document.getElementById('modal-score2').style.display = 'block';
-                saveResultsBtn.style.display = 'none';
-                uploadZone.style.display = 'none';
-            }
-
-            renderGallery(data.images);
+            modalScore1.innerText = match.score1; modalScore2.innerText = match.score2;
+            inputScore1.value = match.score1; inputScore2.value = match.score2;
+            updateGalleryView();
             modalOverlay.classList.add('active');
         }
 
-        function renderGallery(imagesList) {
-            galleryBox.innerHTML = '';
-            if(!imagesList || imagesList.length === 0) {
-                galleryBox.innerHTML = '<span style="color:#666; font-style:italic; font-size:12px;">Скриншоты отсутствуют</span>';
-                return;
-            }
+        saveMatchResultsBtn.onclick = () => {
+            store[activeKey].score1 = parseInt(inputScore1.value) || 0;
+            store[activeKey].score2 = parseInt(inputScore2.value) || 0;
+            buildTournament();
+            closeModalBox();
+        };
 
-            imagesList.forEach((src, idx) => {
+        function closeModalBox() { modalOverlay.classList.remove('active'); }
+        closeBtn.onclick = closeModalBox;
+        modalOverlay.onclick = (e) => { if (e.target === modalOverlay) closeModalBox(); };
+
+        function viewImage(src) {
+            document.getElementById('lightboxImg').src = src;
+            document.getElementById('lightboxOverlay').style.display = 'flex';
+        }
+
+        function deleteImage(index) {
+            if (confirm("Удалить этот скриншот?")) {
+                store[activeKey].images.splice(index, 1);
+                updateGalleryView();
+            }
+        }
+
+        function updateGalleryView() {
+            galleryBox.innerHTML = '';
+            const imgs = store[activeKey].images || [];
+            if (imgs.length === 0) { galleryBox.innerHTML = '<div style="color: #666; font-size: 13px;">Скриншотов нет</div>'; return; }
+            
+            imgs.forEach((src, idx) => {
                 const wrapper = document.createElement('div');
                 wrapper.className = 'gallery-item';
-
+                
                 const img = document.createElement('img');
-                img.src = src;
-                img.className = 'preview-img';
-                img.onclick = () => {
-                    const lbOverlay = document.getElementById('lightboxOverlay');
-                    const lbImg = document.getElementById('lightboxImg');
-                    lbImg.src = src;
-                    lbOverlay.style.display = 'flex';
-                };
-
+                img.src = src; img.className = 'preview-img';
+                img.onclick = () => viewImage(src);
                 wrapper.appendChild(img);
 
                 if (isAdmin) {
                     const delBtn = document.createElement('button');
-                    delBtn.className = 'delete-img-btn';
-                    delBtn.innerHTML = '&times;';
-                    delBtn.onclick = (e) => {
-                        e.stopPropagation();
-                        store[activeKey].images.splice(idx, 1);
-                        renderGallery(store[activeKey].images);
-                        showExportPanel();
-                    };
+                    delBtn.className = 'delete-img-btn'; delBtn.innerHTML = '&times;';
+                    delBtn.onclick = (e) => { e.stopPropagation(); deleteImage(idx); };
                     wrapper.appendChild(delBtn);
                 }
-
                 galleryBox.appendChild(wrapper);
             });
         }
 
-        saveResultsBtn.onclick = () => {
-            const s1 = parseInt(document.getElementById('inputScore1').value) || 0;
-            const s2 = parseInt(document.getElementById('inputScore2').value) || 0;
-            
-            store[activeKey].score1 = s1;
-            store[activeKey].score2 = s2;
-
-            modalOverlay.classList.remove('active');
-            buildTournament();
-            showExportPanel();
-        };
-
-        fileLoader.onchange = (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-            store[activeKey].images.push(file.name);
-            renderGallery(store[activeKey].images);
-            showExportPanel();
-            fileLoader.value = '';
-        };
-
-        function showExportPanel() {
-            if (isAdmin) adminExportPanel.style.display = 'block';
-        }
-
-        adminLoginBtn.onclick = () => {
-            const pass = prompt("Введите пароль администратора:");
-            if (pass === ADMIN_PASSWORD) {
-                isAdmin = true;
-                adminLoginBtn.style.display = 'none';
-                adminLogoutBtn.style.display = 'block';
-                buildTournament();
-            } else {
-                alert("Неверный пароль!");
-            }
-        };
-
-        adminLogoutBtn.onclick = () => {
-            isAdmin = false;
-            adminLoginBtn.style.display = 'block';
-            adminLogoutBtn.style.display = 'none';
-            adminExportPanel.style.display = 'none';
-            buildTournament();
-        };
+        fileLoader.addEventListener('change', function(e) {
+            const file = e.target.files[0]; if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                if (!store[activeKey].images) store[activeKey].images = [];
+                store[activeKey].images.push(event.target.result);
+                updateGalleryView();
+            };
+            reader.readAsDataURL(file);
+        });
 
         document.getElementById('exportDataBtn').onclick = () => {
-            const textToCopy = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                alert("Весь код страницы скопирован в буфер обмена! Замени им свой index.html.");
-            }).catch(err => {
-                alert("Ошибка при копировании: " + err);
-            });
+            const currentFullHtml = document.documentElement.outerHTML;
+            const cleanStoreData = JSON.stringify(store, null, 12);
+            const regex = /const bracketData = \{[\s\S]*?\};/;
+            const finalHtml = "<!DOCTYPE html>\n<html lang=\"ru\">\n" + currentFullHtml.replace(regex, `const bracketData = ${cleanStoreData};`) + "\n</html>";
+            navigator.clipboard.writeText(finalHtml);
+            alert("УСПЕШНО!\n\nВесь код скопирован вместе со структурами подсказок. Замените его на GitHub!");
         };
 
-        closeBtn.onclick = () => modalOverlay.classList.remove('active');
-        window.onclick = (e) => { if (e.target === modalOverlay) modalOverlay.classList.remove('active'); };
-
-        // Инициализация первой загрузки страницы
-        window.onload = () => { buildTournament(); };
+        buildTournament();
+        toggleAdminInterface(false);
     </script>
 </body>
 </html>
