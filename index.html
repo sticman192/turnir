@@ -66,7 +66,7 @@
             overflow-x: auto;
         }
 
-        /* Увеличили количество колонок до 7, чтобы 44 и 45 матчи стояли в разных столбцах, но между 2 и 3 линией */
+        /* 7 колонок для аккуратного тайминга шагов в Нижней сетке */
         .bracket-grid-lower {
             display: grid;
             grid-template-columns: repeat(7, minmax(200px, 1fr));
@@ -111,7 +111,7 @@
             min-height: 500px;
         }
 
-        /* Построчное позиционирование для строгого выравнивания линий 1, 2, 3, 4 */
+        /* Обертка для линий в раундах 4, 5, 6 */
         .match-wrapper-rows {
             display: flex;
             flex-direction: column;
@@ -121,18 +121,18 @@
             justify-content: center;
         }
 
-        /* Центрирование контента между 2-й и 3-й линиями */
+        /* Обертка для Финала НС, которая держит элементы по центру */
         .match-wrapper-between {
             display: flex;
             flex-direction: column;
             justify-content: center;
             height: 100%;
             min-height: 500px;
-            padding-top: 74px; /* Сдвиг, чтобы убрать влияние 1-й линии и встать ровно между 2 и 3 */
+            padding-top: 74px; 
             box-sizing: border-box;
         }
 
-        /* Жесткий слот под высоту одного матча + гэп */
+        /* Высотный слот для фиксации строк сетки */
         .grid-row-slot {
             height: 74px; 
             display: flex;
@@ -298,7 +298,6 @@
 
         .vs-divider { padding: 0 15px; color: #777; font-style: italic; }
 
-        /* ГАЛЕРЕЯ СКРИНШОТОВ */
         .screenshot-block { border-top: 1px solid #444; padding-top: 20px; }
         .screenshot-title { font-size: 14px; color: #aaa; margin-bottom: 15px; }
         .gallery-container { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px; }
@@ -326,7 +325,6 @@
         }
         .delete-img-btn:hover { background-color: #c82333; }
 
-        /* ОКНО ПРОСМОТРА КАРТИНКИ */
         .lightbox-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0,0,0,0.9); display: none;
@@ -339,7 +337,6 @@
             box-shadow: 0 0 20px rgba(0,0,0,0.8);
         }
 
-        /* КНОПКИ */
         .custom-btn {
             background-color: #ff7a00; color: white;
             padding: 12px 20px; border: none; border-radius: 4px;
@@ -403,7 +400,7 @@
         </div>
 
         <div class="bracket-section">
-            <div class="bracket-title-main">Нижняя сетка (Сетка Проигравших)</div>
+            <div class="bracket-title-main">Нижняя сетка</div>
             <div class="bracket-grid bracket-grid-lower">
                 <div class="round-col">
                     <div class="round-header">НС Раунд 1</div>
@@ -489,7 +486,7 @@
         const ADMIN_PASSWORD = "1234"; 
 
         const bracketData = {
-            // ВЕРХНЯЯ СЕТКА: РАУНД 1 (Обновлено по image_cd19e4.png)
+            // ВЕРХНЯЯ СЕТКА: РАУНД 1 (По первому скриншоту)
             "u1": { id: 1, type: "upper-r1", s1: 16, team1: "german", score1: 0, s2: 17, team2: "VikuSiK", score2: 0, images: [] },
             "u2": { id: 2, type: "upper-r1", s1: 9, team1: "Laz", score1: 0, s2: 24, team2: "bildreyn", score2: 0, images: [] },
             "u3": { id: 3, type: "upper-r1", s1: 13, team1: "mogilka", score1: 0, s2: 20, team2: "Rangerss", score2: 0, images: [] },
@@ -499,7 +496,7 @@
             "u7": { id: 7, type: "upper-r1", s1: 14, team1: "Daniil", score1: 0, s2: 19, team2: "HD", score2: 0, images: [] },
             "u8": { id: 8, type: "upper-r1", s1: 11, team1: "KiNg", score1: 0, s2: 22, team2: "W1nston", score2: 0, images: [] },
             
-            // ВЕРХНЯЯ СЕТКА: РАУНД 2 (Обновлено по image_cd19e4.png)
+            // ВЕРХНЯЯ СЕТКА: РАУНД 2 (По первому скриншоту)
             "u9": { id: 9, type: "upper-r2", s1: 1, team1: "Pokich", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 1", images: [] },
             "u10": { id: 10, type: "upper-r2", s1: 8, team1: "Chacomol", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 2", images: [] },
             "u11": { id: 11, type: "upper-r2", s1: 4, team1: "Mail", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 3", images: [] },
@@ -541,19 +538,19 @@
             "l11": { id: 27, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 23", ph2: "Проигравший 15", images: [] },
             "l12": { id: 28, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 24", ph2: "Проигравший 16", images: [] },
 
-            // НС РАУНД 4
+            // НС РАУНД 4 (Матчи 33, 34, 35, 36)
             "l13": { id: 33, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 25", ph2: "Проигравший 29", images: [] },
             "l14": { id: 34, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 26", ph2: "Проигравший 30", images: [] },
             "l15": { id: 35, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 27", ph2: "Проигравший 31", images: [] },
             "l16": { id: 36, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 28", ph2: "Проигравший 32", images: [] },
 
-            // НС ПОЛУФИНАЛЫ
+            // НС ПОЛУФИНАЛЫ (По второму скриншоту: 37 и 38, затем 42 и 43)
             "l17": { id: 37, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 33", ph2: "Победитель 34", images: [] },
             "l18": { id: 38, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 35", ph2: "Победитель 36", images: [] },
             "l19": { id: 42, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 37", ph2: "Проигравший 39", images: [] },
             "l20": { id: 43, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 38", ph2: "Проигравший 40", images: [] },
 
-            // НС ФИНАЛ
+            // НС ФИНАЛ (По второму скриншоту: матчи 44 и 45 идут строго по центру между 2 и 3 линиями)
             "l21": { id: 44, type: "lower-f", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 42", ph2: "Победитель 43", images: [] },
             "l22": { id: 45, type: "lower-f", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 41", ph2: "Победитель 44", images: [] },
 
@@ -698,7 +695,6 @@
             document.querySelectorAll('.match-wrapper, .match-wrapper-rows, .match-wrapper-between').forEach(c => c.innerHTML = '');
             document.getElementById('grand-final-container').innerHTML = '';
 
-            // Обычный рендер верхних и первых нижних раундов
             Object.keys(store).forEach(key => {
                 const data = store[key];
                 if (data.type === "grand-final") {
@@ -709,7 +705,7 @@
                 }
             });
 
-            // --- СТРОГОЕ ВЫРАВНИВАНИЕ ПО ЛИНИЯМ (1, 2, 3, 4) ---
+            // --- СТРОГОЕ ВЫРАВНИВАНИЕ ПО ЛИНИЯМ (По второму скриншоту) ---
             
             // Колонка НС Раунд 4: Матчи 33, 34, 35, 36
             const r4Container = document.getElementById('lower-r4');
@@ -724,8 +720,8 @@
             const sf1Container = document.getElementById('lower-sf1');
             if (sf1Container) {
                 sf1Container.appendChild(createRowSlot(null));                   // Линия 1: Пусто
-                sf1Container.appendChild(createRowSlot(createMatchNode("l17"))); // Линия 2: Матч 37 (напротив 34)
-                sf1Container.appendChild(createRowSlot(createMatchNode("l18"))); // Линия 3: Матч 38 (напротив 35)
+                sf1Container.appendChild(createRowSlot(createMatchNode("l17"))); // Линия 2: Матч 37
+                sf1Container.appendChild(createRowSlot(createMatchNode("l18"))); // Линия 3: Матч 38
                 sf1Container.appendChild(createRowSlot(null));                   // Линия 4: Пусто
             }
 
@@ -733,17 +729,15 @@
             const sf2Container = document.getElementById('lower-sf2');
             if (sf2Container) {
                 sf2Container.appendChild(createRowSlot(null));                   // Линия 1: Пусто
-                sf2Container.appendChild(createRowSlot(createMatchNode("l19"))); // Линия 2: Матч 42 (напротив 37)
-                sf2Container.appendChild(createRowSlot(createMatchNode("l20"))); // Линия 3: Матч 43 (напротив 38)
+                sf2Container.appendChild(createRowSlot(createMatchNode("l19"))); // Линия 2: Матч 42
+                sf2Container.appendChild(createRowSlot(createMatchNode("l20"))); // Линия 3: Матч 43
                 sf2Container.appendChild(createRowSlot(null));                   // Линия 4: Пусто
             }
 
-            // Финал НС: Матчи 44 и 45 выводятся друг под другом ровно посередине между 2 и 3 линией
+            // Финал НС: Матчи 44 и 45 выводятся ровно посередине между 2 и 3 линией
             const fFinalContainer = document.getElementById('lower-f-final');
             if (fFinalContainer) {
-                // Выводим 44 и 45 матчи. Благодарная стилям .match-wrapper-between структура выровняет их ровно по центру между линиями 2 и 3
                 fFinalContainer.appendChild(createMatchNode("l21")); // Матч 44 (между 2-3 линией)
-                // Создаем небольшой отступ между матчами 44 и 45 внутри центральной зоны
                 const gapSpacer = document.createElement('div');
                 gapSpacer.style.height = '15px';
                 fFinalContainer.appendChild(gapSpacer);
@@ -870,7 +864,7 @@
             const regex = /const bracketData = \{[\s\S]*?\};/;
             const finalHtml = "<!DOCTYPE html>\n<html lang=\"ru\">\n" + currentFullHtml.replace(regex, `const bracketData = ${cleanStoreData};`) + "\n</html>";
             navigator.clipboard.writeText(finalHtml);
-            alert("УСПЕШНО!\n\nВесь код скопирован вместе со структурами подсказок. Замените его на GitHub!");
+            alert("УСПЕШНО!\n\nВесь код скопирован вместе с обновленным списком участников. Замените ваш index.html на GitHub!");
         };
 
         buildTournament();
