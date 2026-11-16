@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Турнирная Сетка (28 участников - Double Elimination)</title>
+    <title>Турнирная Сетка (8 команд - Double Elimination)</title>
     <style>
         /* --- СТИЛИ (CSS) --- */
         body {
-            background-color: #1e1e1e;
+            background-color: #222222;
             color: #e0e0e0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             margin: 0;
@@ -15,7 +15,7 @@
         }
 
         .bracket-header {
-            max-width: 1600px;
+            max-width: 1400px;
             margin: 0 auto 20px auto;
             display: flex;
             justify-content: flex-end;
@@ -38,181 +38,154 @@
         .admin-toggle-btn.log-out:hover { background-color: #c82333; }
 
         .tournament-wrapper {
-            max-width: 1600px;
+            max-width: 1400px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 30px;
-        }
-
-        .bracket-section {
-            background-color: #171717;
-            border: 1px solid #2a2a2a;
-            padding: 20px;
+            gap: 35px;
+            background-color: #1a1a1a;
+            padding: 25px;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-        }
-
-        .bracket-title-main {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: #ffffff;
-            text-transform: uppercase;
-            border-left: 4px solid #ff7a00;
-            padding-left: 10px;
-            letter-spacing: 0.5px;
-        }
-
-        .bracket-grid-upper {
-            display: grid;
-            grid-template-columns: repeat(5, minmax(220px, 1fr));
-            gap: 20px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-        }
-
-        .bracket-grid-lower {
-            display: grid;
-            grid-template-columns: repeat(7, minmax(180px, 1fr));
-            gap: 20px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-        }
-
-        .grand-final-section {
-            background: linear-gradient(135deg, #2e1f10 0%, #1a1a1a 100%);
-            border: 2px solid #ff7a00;
-            padding: 20px;
-            border-radius: 8px;
-            max-width: 380px;
-            margin: 0 auto 30px auto;
+            border: 1px solid #2e2e2e;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            overflow-x: auto;
         }
 
-        .round-col { display: flex; flex-direction: column; }
+        /* 4 колонки для Верхней сетки (включая Гранд-финал справа) и 4 для Нижней */
+        .bracket-grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(260px, 1fr));
+            gap: 36px;
+            min-width: 1120px;
+        }
+
+        .round-col {
+            display: flex;
+            flex-direction: column;
+        }
 
         .round-header {
-            background-color: #252525;
+            background-color: #2c2c2c;
             padding: 10px;
             text-align: center;
             font-size: 13px;
             font-weight: bold;
-            color: #aaaaaa;
+            color: #cccccc;
             border-bottom: 2px solid #ff7a00;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             border-radius: 4px;
         }
 
-        .match-wrapper {
+        .round-header.empty-header {
+            background-color: transparent;
+            border-bottom: 2px solid transparent;
+            color: #ff7a00;
+        }
+
+        /* Контейнеры матчей для точного вертикального выравнивания как на примере */
+        .upper-wrapper {
             display: flex;
             flex-direction: column;
-            gap: 12px;
             justify-content: space-around;
-            height: 100%;
-            min-height: 480px;
+            height: 360px;
+            position: relative;
         }
 
-        .height-large { min-height: 1100px; }
-
-        .match-wrapper-rows {
+        .lower-r1-wrapper {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            height: 100%;
-            min-height: 480px;
-            justify-content: center;
-        }
-
-        .match-wrapper-between {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            height: 100%;
-            min-height: 480px;
-            padding-top: 68px;
+            justify-content: flex-end;
+            gap: 18px;
+            height: 210px;
+            padding-bottom: 8px;
             box-sizing: border-box;
         }
 
-        .grid-row-slot {
-            height: 68px;
+        .lower-r2-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 210px;
+            padding: 8px 0;
+            box-sizing: border-box;
+        }
+
+        .lower-r3-wrapper, .lower-r4-wrapper {
             display: flex;
             flex-direction: column;
             justify-content: center;
-        }
-        
-        .empty-match-spacer {
-            height: 68px;
+            height: 210px;
         }
 
         .match-node {
-            background-color: #2a2a2a;
-            border-radius: 5px;
-            border: 1px solid #383838;
+            background-color: #3a3a3a;
+            border-radius: 4px;
+            border: 1px solid #4a4a4a;
             cursor: pointer;
             position: relative;
-            transition: all 0.2s ease;
-            height: 66px;
+            transition: border-color 0.2s, transform 0.1s;
+            height: 68px;
             box-sizing: border-box;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            margin-left: 18px;
         }
 
         .match-node:hover {
             border-color: #ff7a00;
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(255,122,0,0.15);
         }
 
         .match-index {
             position: absolute;
-            left: -20px;
+            left: -22px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 11px;
-            color: #777;
+            font-size: 12px;
+            color: #888;
             font-weight: bold;
         }
 
         .team-slot {
             display: flex;
             align-items: center;
-            height: 32px;
-            border-bottom: 1px solid #222;
-            background-color: #333333;
+            height: 33px;
+            border-bottom: 1px solid #2b2b2b;
+            background-color: #464646;
         }
 
-        .team-slot:first-child { border-top-left-radius: 4px; border-top-right-radius: 4px; }
-        .team-slot:last-child { border-bottom: none; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; }
+        .team-slot:first-child { border-top-left-radius: 3px; border-top-right-radius: 3px; }
+        .team-slot:last-child { border-bottom: none; border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; }
 
         .seed-num {
-            background-color: #252525;
-            color: #888;
+            background-color: #555555;
+            color: #cccccc;
             font-size: 11px;
-            width: 24px;
+            width: 26px;
             height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            border-right: 1px solid #222;
+            border-right: 1px solid #383838;
+            font-weight: 600;
         }
 
         .team-title {
             padding-left: 10px;
-            font-size: 12px;
+            font-size: 13px;
             flex-grow: 1;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            color: #cccccc;
+            color: #e8e8e8;
         }
 
         .team-title.placeholder-hint {
-            color: #777777;
+            color: #999999;
             font-style: italic;
+            font-size: 12px;
         }
 
         .team-score {
-            background-color: #3e3e3e;
+            background-color: #383838;
             width: 32px;
             height: 100%;
             display: flex;
@@ -220,6 +193,7 @@
             align-items: center;
             font-weight: bold;
             font-size: 13px;
+            border-left: 1px solid #2b2b2b;
         }
 
         .winner-row .team-score { background-color: #ff7a00; color: #ffffff; }
@@ -242,30 +216,28 @@
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
 
         .modal-content {
-            background-color: #262626;
+            background-color: #2b2b2b;
             width: 90%;
             max-width: 560px;
             padding: 25px;
             border-radius: 8px;
             position: relative;
-            border: 1px solid #383838;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+            border: 1px solid #444;
         }
 
         .close-modal-btn {
             position: absolute;
             top: 15px; right: 20px;
             background: none; border: none;
-            color: #888; font-size: 28px; cursor: pointer;
+            color: #999; font-size: 28px; cursor: pointer;
         }
         .close-modal-btn:hover { color: #fff; }
 
         .modal-header-title {
-            font-size: 16px; font-weight: bold;
+            font-size: 17px; font-weight: bold;
             border-bottom: 2px solid #ff7a00;
             padding-bottom: 6px; margin-bottom: 20px;
             display: inline-block;
-            color: #fff;
         }
 
         .vs-flex-box {
@@ -276,45 +248,40 @@
         }
 
         .team-modal-card {
-            background-color: #1e1e1e;
+            background-color: #1f1f1f;
             flex: 1; text-align: center;
             padding: 15px; border-radius: 6px;
-            border: 1px solid #333;
+            border: 1px solid #3a3a3a;
         }
 
         .avatar-circle {
             width: 40px; height: 40px; background-color: #333;
             border-radius: 50%; display: flex;
             justify-content: center; align-items: center; margin: 0 auto 10px auto;
-            color: #ff7a00;
         }
 
-        .modal-t-name { font-size: 13px; margin-bottom: 10px; font-weight: 500; color: #ddd; }
-        .modal-t-name.placeholder-hint { color: #777; font-style: italic; }
-        .modal-t-score { background-color: #2a2a2a; font-size: 24px; font-weight: bold; padding: 6px 0; border-radius: 4px; color: #fff; }
+        .modal-t-name { font-size: 13px; margin-bottom: 10px; font-weight: 500; }
+        .modal-t-name.placeholder-hint { color: #888; font-style: italic; }
+        .modal-t-score { background-color: #2d2d2d; font-size: 24px; font-weight: bold; padding: 6px 0; border-radius: 4px; }
         
         .admin-score-input {
-            width: 70%; background-color: #333; color: #fff;
+            width: 75%; background-color: #3a3a3a; color: #fff;
             border: 1px solid #ff7a00; padding: 6px;
             text-align: center; font-size: 16px; font-weight: bold;
             border-radius: 4px; margin: 8px auto 0 auto;
-            outline: none;
         }
 
-        .vs-divider { padding: 0 15px; color: #666; font-style: italic; font-weight: bold; }
+        .vs-divider { padding: 0 15px; color: #777; font-style: italic; }
 
-        .screenshot-block { border-top: 1px solid #333; padding-top: 15px; }
+        .screenshot-block { border-top: 1px solid #3a3a3a; padding-top: 15px; }
         .screenshot-title { font-size: 13px; color: #aaa; margin-bottom: 12px; }
         .gallery-container { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 15px; }
         
-        .gallery-item {
-            position: relative;
-            display: inline-block;
-        }
+        .gallery-item { position: relative; display: inline-block; }
 
         .preview-img {
             width: 100px; height: 70px; object-fit: cover;
-            border-radius: 4px; border: 1px solid #444;
+            border-radius: 4px; border: 1px solid #555;
             cursor: pointer;
             transition: transform 0.2s, border-color 0.2s;
         }
@@ -326,7 +293,6 @@
             border-radius: 50%; width: 20px; height: 20px;
             font-size: 12px; font-weight: bold; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
         .delete-img-btn:hover { background-color: #c82333; }
 
@@ -339,14 +305,13 @@
         .lightbox-overlay img {
             max-width: 90%; max-height: 90%;
             border: 2px solid #fff; border-radius: 4px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.8);
         }
 
         .custom-btn {
             background-color: #ff7a00; color: white;
             padding: 10px 18px; border: none; border-radius: 4px;
             cursor: pointer; font-weight: bold; display: inline-block;
-            font-size: 13px; transition: background 0.2s;
+            font-size: 13px;
         }
         .custom-btn:hover { background-color: #e06b00; }
         .style-success { background-color: #28a745; width: 100%; }
@@ -356,15 +321,12 @@
             background-color: #ff7a00; color: white;
             padding: 8px 16px; border-radius: 4px;
             cursor: pointer; font-size: 12px; font-weight: bold; display: inline-block;
-            transition: background 0.2s;
         }
-        .custom-file-upload:hover { background-color: #e06b00; }
 
         .export-panel {
-            max-width: 1600px; margin: 30px auto 20px auto;
-            background-color: #171717; padding: 20px;
+            max-width: 1400px; margin: 25px auto 20px auto;
+            background-color: #1a1a1a; padding: 20px;
             border-left: 4px solid #ff7a00; border-radius: 6px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
     </style>
 </head>
@@ -375,73 +337,45 @@
         <button id="adminLogoutBtn" class="admin-toggle-btn log-out" style="display: none;">Выйти из Админа</button>
     </header>
 
-    <!-- ГРАНД-ФИНАЛ -->
-    <div class="grand-final-section">
-        <div class="bracket-title-main" style="text-align: center; border: none; padding: 0; margin-bottom: 8px; color: #ff7a00;">🏆 Гранд-Финал 🏆</div>
-        <div id="grand-final-container"></div>
-    </div>
-
     <div class="tournament-wrapper">
         
-        <!-- ВЕРХНЯЯ СЕТКА -->
-        <div class="bracket-section">
-            <div class="bracket-title-main">Верхняя сетка</div>
-            <div class="bracket-grid bracket-grid-upper">
-                <div class="round-col">
-                    <div class="round-header">Раунд 1</div>
-                    <div class="match-wrapper height-large" id="upper-r1"></div>
-                </div>
-                <div class="round-col">
-                    <div class="round-header">Раунд 2</div>
-                    <div class="match-wrapper height-large" id="upper-r2"></div>
-                </div>
-                <div class="round-col">
-                    <div class="round-header">Раунд 3</div>
-                    <div class="match-wrapper" id="upper-r3"></div>
-                </div>
-                <div class="round-col">
-                    <div class="round-header">Полуфиналы</div>
-                    <div class="match-wrapper" id="upper-sf"></div>
-                </div>
-                <div class="round-col">
-                    <div class="round-header">Финал ВС</div>
-                    <div class="match-wrapper" id="upper-f"></div>
-                </div>
+        <!-- ВЕРХНЯЯ СЕТКА + ГРАНД-ФИНАЛ СПРАВА (КАК НА ПРИМЕРЕ) -->
+        <div class="bracket-grid-4">
+            <div class="round-col">
+                <div class="round-header">Раунд 1</div>
+                <div class="upper-wrapper" id="upper-r1"></div>
+            </div>
+            <div class="round-col">
+                <div class="round-header">Раунд 2</div>
+                <div class="upper-wrapper" id="upper-r2"></div>
+            </div>
+            <div class="round-col">
+                <div class="round-header">Полуфиналы</div>
+                <div class="upper-wrapper" id="upper-sf"></div>
+            </div>
+            <div class="round-col">
+                <div class="round-header empty-header">🏆 Гранд-Финал</div>
+                <div class="upper-wrapper" id="grand-final-col"></div>
             </div>
         </div>
 
-        <!-- НИЖНЯЯ СЕТКА -->
-        <div class="bracket-section">
-            <div class="bracket-title-main">Нижняя сетка</div>
-            <div class="bracket-grid bracket-grid-lower">
-                <div class="round-col">
-                    <div class="round-header">НС Раунд 1</div>
-                    <div class="match-wrapper" id="lower-r1"></div>
-                </div>
-                <div class="round-col">
-                    <div class="round-header">НС Раунд 2</div>
-                    <div class="match-wrapper" id="lower-r2"></div>
-                </div>
-                <div class="round-col">
-                    <div class="round-header">НС Раунд 3</div>
-                    <div class="match-wrapper" id="lower-r3"></div>
-                </div>
-                <div class="round-col">
-                    <div class="round-header">НС Раунд 4</div>
-                    <div class="match-wrapper-rows" id="lower-r4"></div>
-                </div>
-                <div class="round-col">
-                    <div class="round-header">НС Полуфиналы 1</div>
-                    <div class="match-wrapper-rows" id="lower-sf1"></div>
-                </div>
-                <div class="round-col">
-                    <div class="round-header">НС Полуфиналы 2</div>
-                    <div class="match-wrapper-rows" id="lower-sf2"></div>
-                </div>
-                <div class="round-col">
-                    <div class="round-header">Финал НС</div>
-                    <div class="match-wrapper-between" id="lower-f-final"></div>
-                </div>
+        <!-- НИЖНЯЯ СЕТКА СНИЗУ (КАК НА ПРИМЕРЕ) -->
+        <div class="bracket-grid-4">
+            <div class="round-col">
+                <div class="round-header">Раунд нижней сетки 1</div>
+                <div class="lower-r1-wrapper" id="lower-r1"></div>
+            </div>
+            <div class="round-col">
+                <div class="round-header">Раунд нижней сетки 2</div>
+                <div class="lower-r2-wrapper" id="lower-r2"></div>
+            </div>
+            <div class="round-col">
+                <div class="round-header">Раунд нижней сетки 3</div>
+                <div class="lower-r3-wrapper" id="lower-r3"></div>
+            </div>
+            <div class="round-col">
+                <div class="round-header">Раунд нижней сетки 4</div>
+                <div class="lower-r4-wrapper" id="lower-r4"></div>
             </div>
         </div>
 
@@ -450,7 +384,7 @@
     <!-- ПАНЕЛЬ ЭКСПОРТА -->
     <div id="adminExportPanel" class="export-panel" style="display: none;">
         <h3 style="margin-top:0; color:#ff7a00; font-size:16px;">Панель администратора: Сохранение турнира</h3>
-        <p style="font-size:13px; color:#bbb; margin-bottom:15px;">Вы изменили счёт или добавили скриншоты. Нажмите кнопку ниже, чтобы скопировать весь код, затем полностью вставьте его в ваш файл <b>index.html</b> на GitHub.</p>
+        <p style="font-size:13px; color:#bbb;">Вы изменили счёт или добавили скриншоты. Нажмите на кнопку ниже, чтобы скопировать весь код, затем полностью вставьте его в ваш файл <b>index.html</b> на GitHub.</p>
         <button id="exportDataBtn" class="custom-btn">Скопировать весь код страницы</button>
     </div>
 
@@ -468,7 +402,7 @@
                     <input type="number" id="inputScore1" class="admin-score-input" min="0" style="display: none;">
                 </div>
                 
-                <div class="vs-divider">VS</div>
+                <div class="vs-divider">против</div>
                 
                 <div class="team-modal-card">
                     <div class="avatar-circle">⚡</div>
@@ -499,87 +433,38 @@
 
     <!-- --- ЛОГИКА (JAVASCRIPT) --- -->
     <script>
-        const ADMIN_PASSWORD = "1234"; 
+        const ADMIN_PASSWORD = "1234";
 
         const bracketData = {
-            // ВЕРХНЯЯ СЕТКА: РАУНД 1
-            "u1": { id: 1, type: "upper-r1", s1: 16, team1: "mogilka", score1: 0, s2: 17, team2: "Justix", score2: 0, images: [] },
-            "u2": { id: 2, type: "upper-r1", s1: 8, team1: "special", score1: 0, s2: 25, team2: "isagi", score2: 0, images: [] },
-            "u3": { id: 3, type: "upper-r1", s1: 9, team1: "Chacomol", score1: 0, s2: 24, team2: "Rangerss", score2: 0, images: [] },
-            
-            "u4": { id: 4, type: "upper-r1", s1: 13, team1: "svoloch", score1: 0, s2: 20, team2: "Daniil", score2: 0, images: [] },
-            "u5": { id: 5, type: "upper-r1", s1: 5, team1: "Akuma", score1: 0, s2: 28, team2: "HD", score2: 0, images: [] },
-            "u6": { id: 6, type: "upper-r1", s1: 12, team1: "Reuch", score1: 0, s2: 21, team2: "vovelon", score2: 0, images: [] },
-            
-            "u7": { id: 7, type: "upper-r1", s1: 15, team1: "W1nston", score1: 0, s2: 18, team2: "Lotus", score2: 0, images: [] },
-            "u8": { id: 8, type: "upper-r1", s1: 7, team1: "qwrchk", score1: 0, s2: 26, team2: "miate", score2: 0, images: [] },
-            "u9": { id: 9, type: "upper-r1", s1: 10, team1: "german", score1: 0, s2: 23, team2: "VikuSiK", score2: 0, images: [] },
-            
-            "u10": { id: 10, type: "upper-r1", s1: 14, team1: "Laz", score1: 0, s2: 19, team2: "bildreyn", score2: 0, images: [] },
-            "u11": { id: 11, type: "upper-r1", s1: 6, team1: "Kayix", score1: 0, s2: 27, team2: "willave", score2: 0, images: [] },
-            "u12": { id: 12, type: "upper-r1", s1: 11, team1: "KiNg", score1: 0, s2: 22, team2: "xKros", score2: 0, images: [] },
-            
-            // ВЕРХНЯЯ СЕТКА: РАУНД 2
-            "u17": { id: 17, type: "upper-r2", s1: 1, team1: "Pokich", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 1", images: [] },
-            "u18": { id: 18, type: "upper-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 2", ph2: "Победитель 3", images: [] },
-            
-            "u19": { id: 19, type: "upper-r2", s1: 4, team1: "Mail", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 4", images: [] },
-            "u20": { id: 20, type: "upper-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 5", ph2: "Победитель 6", images: [] },
-            
-            "u21": { id: 21, type: "upper-r2", s1: 2, team1: "STICMAN", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 7", images: [] },
-            "u22": { id: 22, type: "upper-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 8", ph2: "Победитель 9", images: [] },
-            
-            "u23": { id: 23, type: "upper-r2", s1: 3, team1: "DuRimAn", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 10", images: [] },
-            "u24": { id: 24, type: "upper-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 11", ph2: "Победитель 12", images: [] },
-            
-            // ВЕРХНЯЯ СЕТКА: РАУНД 3
-            "u37": { id: 37, type: "upper-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 17", ph2: "Победитель 18", images: [] },
-            "u38": { id: 38, type: "upper-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 19", ph2: "Победитель 20", images: [] },
-            "u39": { id: 39, type: "upper-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 21", ph2: "Победитель 22", images: [] },
-            "u40": { id: 40, type: "upper-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 23", ph2: "Победитель 24", images: [] },
+            // ВЕРХНЯЯ СЕТКА: РАУНД 1 (Матчи 1-4)
+            "m1": { id: 1, container: "upper-r1", s1: 1, team1: "zernd + miate", score1: 0, s2: 8, team2: "Akuma + Kayix", score2: 0, images: [] },
+            "m2": { id: 2, container: "upper-r1", s1: 4, team1: "VikuSiK + aStro_Gart1", score1: 0, s2: 5, team2: "special + Cube", score2: 0, images: [] },
+            "m3": { id: 3, container: "upper-r1", s1: 2, team1: "svoloch + BabyNeyz", score1: 0, s2: 7, team2: "STICMAN + isagi", score2: 0, images: [] },
+            "m4": { id: 4, container: "upper-r1", s1: 3, team1: "Slabiy + xKros", score1: 0, s2: 6, team2: "Daniil + willave", score2: 0, images: [] },
 
-            // ВЕРХНЯЯ СЕТКА: ПОЛУФИНАЛЫ
-            "u41": { id: 41, type: "upper-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 37", ph2: "Победитель 38", images: [] },
-            "u42": { id: 42, type: "upper-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 39", ph2: "Победитель 40", images: [] },
+            // ВЕРХНЯЯ СЕТКА: РАУНД 2 (Матчи 7-8)
+            "m7": { id: 7, container: "upper-r2", s1: "", team1: "", score1: 0, s2: "", team2: "", score2: 0, ph1: "Победитель 1", ph2: "Победитель 2", images: [] },
+            "m8": { id: 8, container: "upper-r2", s1: "", team1: "", score1: 0, s2: "", team2: "", score2: 0, ph1: "Победитель 3", ph2: "Победитель 4", images: [] },
 
-            // ВЕРХНЯЯ СЕТКА: ФИНАЛ
-            "u43": { id: 43, type: "upper-f", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 41", ph2: "Победитель 42", images: [] },
+            // ВЕРХНЯЯ СЕТКА: ПОЛУФИНАЛЫ / ФИНАЛ ВС (Матч 12)
+            "m12": { id: 12, container: "upper-sf", s1: "", team1: "", score1: 0, s2: "", team2: "", score2: 0, ph1: "Победитель 7", ph2: "Победитель 8", images: [] },
 
-            // ================= НИЖНЯЯ СЕТКА =================
-            "l1": { id: 25, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 1", ph2: "Проигравший 2", images: [] },
-            "l2": { id: 26, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 3", ph2: "Проигравший 4", images: [] },
-            "l3": { id: 27, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 5", ph2: "Проигравший 6", images: [] },
-            "l4": { id: 28, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 7", ph2: "Проигравший 8", images: [] },
-            "l5": { id: 29, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 9", ph2: "Проигравший 10", images: [] },
-            "l6": { id: 30, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 11", ph2: "Проигравший 12", images: [] },
+            // ГРАНД-ФИНАЛ (Матч 14)
+            "m14": { id: 14, container: "grand-final-col", s1: "", team1: "", score1: 0, s2: "", team2: "", score2: 0, ph1: "Победитель 12", ph2: "Победители из числа про...", images: [] },
 
-            "l7": { id: 31, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 25", ph2: "Проигравший 17", images: [] },
-            "l8": { id: 32, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 26", ph2: "Проигравший 18", images: [] },
-            "l9": { id: 33, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 27", ph2: "Проигравший 19", images: [] },
-            "l10": { id: 34, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 28", ph2: "Проигравший 20", images: [] },
-            "l11": { id: 35, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 29", ph2: "Проигравший 21", images: [] },
-            "l12": { id: 36, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 30", ph2: "Проигравший 22", images: [] },
+            // НИЖНЯЯ СЕТКА: РАУНД 1 (Матчи 5-6)
+            "m5": { id: 5, container: "lower-r1", s1: "", team1: "", score1: 0, s2: "", team2: "", score2: 0, ph1: "Проигравший 1", ph2: "Проигравший 2", images: [] },
+            "m6": { id: 6, container: "lower-r1", s1: "", team1: "", score1: 0, s2: "", team2: "", score2: 0, ph1: "Проигравший 3", ph2: "Проигравший 4", images: [] },
 
-            "l13": { id: 44, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 31", ph2: "Проигравший 23", images: [] },
-            "l14": { id: 45, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 32", ph2: "Проигравший 24", images: [] },
-            "l15": { id: 46, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 33", ph2: "Победитель 34", images: [] },
-            "l16": { id: 47, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 35", ph2: "Победитель 36", images: [] },
+            // НИЖНЯЯ СЕТКА: РАУНД 2 (Сверху матч 10, снизу матч 9 — строго как на скриншоте)
+            "m10": { id: 10, container: "lower-r2", s1: "", team1: "", score1: 0, s2: "", team2: "", score2: 0, ph1: "Проигравший 8", ph2: "Победитель 5", images: [] },
+            "m9": { id: 9, container: "lower-r2", s1: "", team1: "", score1: 0, s2: "", team2: "", score2: 0, ph1: "Проигравший 7", ph2: "Победитель 6", images: [] },
 
-            "l17": { id: 48, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 44", ph2: "Проигравший 37", images: [] },
-            "l18": { id: 49, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 45", ph2: "Проигравший 38", images: [] },
-            "l19": { id: 50, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 46", ph2: "Проигравший 39", images: [] },
-            "l20": { id: 51, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 47", ph2: "Проигравший 40", images: [] },
+            // НИЖНЯЯ СЕТКА: РАУНД 3 (Матч 11)
+            "m11": { id: 11, container: "lower-r3", s1: "", team1: "", score1: 0, s2: "", team2: "", score2: 0, ph1: "Победитель 10", ph2: "Победитель 9", images: [] },
 
-            "l21": { id: 52, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 48", ph2: "Победитель 49", images: [] },
-            "l22": { id: 53, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 50", ph2: "Победитель 51", images: [] },
-            "l23": { id: 54, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 52", ph2: "Проигравший 41", images: [] },
-            "l24": { id: 55, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 53", ph2: "Проигравший 42", images: [] },
-
-            "l25": { id: 56, type: "lower-f", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 54", ph2: "Победитель 55", images: [] },
-            "l26": { id: 57, type: "lower-f", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 43", ph2: "Победитель 56", images: [] },
-
-            // ГРАНД-ФИНАЛ
-            "gf1": { id: 60, type: "grand-final", s1: "ВС", team1: "", score1: 0, s2: "НС", team2: "", score2: 0, ph1: "Победитель 43", ph2: "Победитель 57", images: [] }
+            // НИЖНЯЯ СЕТКА: РАУНД 4 / ФИНАЛ НС (Матч 13)
+            "m13": { id: 13, container: "lower-r4", s1: "", team1: "", score1: 0, s2: "", team2: "", score2: 0, ph1: "Проигравший 12", ph2: "Победитель 11", images: [] }
         };
 
         let store = bracketData;
@@ -587,87 +472,40 @@
         let activeKey = null;
 
         function recalculateAllMatches() {
-            const keysToReset = [
-                "u18", "u20", "u22", "u24", "u37", "u38", "u39", "u40", "u41", "u42", "u43",
-                "l1", "l2", "l3", "l4", "l5", "l6", "l7", "l8", "l9", "l10", "l11", "l12",
-                "l13", "l14", "l15", "l16", "l17", "l18", "l19", "l20", "l21", "l22", "l23", "l24", "l25", "l26", "gf1"
-            ];
+            const keysToReset = ["m7", "m8", "m12", "m14", "m5", "m6", "m10", "m9", "m11", "m13"];
             keysToReset.forEach(k => {
-                store[k].team1 = ""; store[k].team2 = "";
-                store[k].s1 = "?"; store[k].s2 = "?";
+                store[k].team1 = "";
+                store[k].team2 = "";
+                store[k].s1 = "";
+                store[k].s2 = "";
             });
-            store["u17"].team2 = ""; store["u17"].s2 = "?";
-            store["u19"].team2 = ""; store["u19"].s2 = "?";
-            store["u21"].team2 = ""; store["u21"].s2 = "?";
-            store["u23"].team2 = ""; store["u23"].s2 = "?";
 
-            autoPush("u1", "u17", "team2", "s2", "l1", "team1", "s1");
-            autoPush("u2", "u18", "team1", "s1", "l1", "team2", "s2");
-            autoPush("u3", "u18", "team2", "s2", "l2", "team1", "s1");
-            
-            autoPush("u4", "u19", "team2", "s2", "l2", "team2", "s2");
-            autoPush("u5", "u20", "team1", "s1", "l3", "team1", "s1");
-            autoPush("u6", "u20", "team2", "s2", "l3", "team2", "s2");
-            
-            autoPush("u7", "u21", "team2", "s2", "l4", "team1", "s1");
-            autoPush("u8", "u22", "team1", "s1", "l4", "team2", "s2");
-            autoPush("u9", "u22", "team2", "s2", "l5", "team1", "s1");
-            
-            autoPush("u10", "u23", "team2", "s2", "l5", "team2", "s2");
-            autoPush("u11", "u24", "team1", "s1", "l6", "team1", "s1");
-            autoPush("u12", "u24", "team2", "s2", "l6", "team2", "s2");
+            // Раунд 1 ВС -> Раунд 2 ВС (победители) и Раунд 1 НС (проигравшие)
+            autoPush("m1", "m7", "team1", "s1", "m5", "team1", "s1");
+            autoPush("m2", "m7", "team2", "s2", "m5", "team2", "s2");
+            autoPush("m3", "m8", "team1", "s1", "m6", "team1", "s1");
+            autoPush("m4", "m8", "team2", "s2", "m6", "team2", "s2");
 
-            autoPush("l1", "l7", "team1", "s1", null, null, null);
-            autoPush("l2", "l8", "team1", "s1", null, null, null);
-            autoPush("l3", "l9", "team1", "s1", null, null, null);
-            autoPush("l4", "l10", "team1", "s1", null, null, null);
-            autoPush("l5", "l11", "team1", "s1", null, null, null);
-            autoPush("l6", "l12", "team1", "s1", null, null, null);
+            // Раунд 1 НС -> Раунд 2 НС (нижние слоты матчей 10 и 9)
+            autoPush("m5", "m10", "team2", "s2", null, null, null);
+            autoPush("m6", "m9", "team2", "s2", null, null, null);
 
-            autoPush("u17", "u37", "team1", "s1", "l7", "team2", "s2");
-            autoPush("u18", "u37", "team2", "s2", "l8", "team2", "s2");
-            autoPush("u19", "u38", "team1", "s1", "l9", "team2", "s2");
-            autoPush("u20", "u38", "team2", "s2", "l10", "team2", "s2");
-            autoPush("u21", "u39", "team1", "s1", "l11", "team2", "s2");
-            autoPush("u22", "u39", "team2", "s2", "l12", "team2", "s2");
-            autoPush("u23", "u40", "team1", "s1", "l13", "team2", "s2");
-            autoPush("u24", "u40", "team2", "s2", "l14", "team2", "s2");
+            // Раунд 2 ВС -> Полуфинал ВС (12) и Раунд 2 НС (верхние слоты матчей 10 и 9)
+            autoPush("m7", "m12", "team1", "s1", "m9", "team1", "s1");
+            autoPush("m8", "m12", "team2", "s2", "m10", "team1", "s1");
 
-            autoPush("l7", "l13", "team1", "s1", null, null, null);
-            autoPush("l8", "l14", "team1", "s1", null, null, null);
-            autoPush("l9", "l15", "team1", "s1", null, null, null);
-            autoPush("l10", "l15", "team2", "s2", null, null, null);
-            autoPush("l11", "l16", "team1", "s1", null, null, null);
-            autoPush("l12", "l16", "team2", "s2", null, null, null);
+            // Раунд 2 НС -> Раунд 3 НС (11)
+            autoPush("m10", "m11", "team1", "s1", null, null, null);
+            autoPush("m9", "m11", "team2", "s2", null, null, null);
 
-            autoPush("l13", "l17", "team1", "s1", null, null, null);
-            autoPush("l14", "l18", "team1", "s1", null, null, null);
-            autoPush("l15", "l19", "team1", "s1", null, null, null);
-            autoPush("l16", "l20", "team1", "s1", null, null, null);
+            // Полуфинал ВС (12) -> Гранд-финал (14, верх) и Раунд 4 НС (13, верх)
+            autoPush("m12", "m14", "team1", "s1", "m13", "team1", "s1");
 
-            autoPush("u37", "u41", "team1", "s1", "l17", "team2", "s2");
-            autoPush("u38", "u41", "team2", "s2", "l18", "team2", "s2");
-            autoPush("u39", "u42", "team1", "s1", "l19", "team2", "s2");
-            autoPush("u40", "u42", "team2", "s2", "l20", "team2", "s2");
+            // Раунд 3 НС (11) -> Раунд 4 НС (13, низ)
+            autoPush("m11", "m13", "team2", "s2", null, null, null);
 
-            autoPush("l17", "l21", "team1", "s1", null, null, null);
-            autoPush("l18", "l21", "team2", "s2", null, null, null);
-            autoPush("l19", "l22", "team1", "s1", null, null, null);
-            autoPush("l20", "l22", "team2", "s2", null, null, null);
-
-            autoPush("u41", "u43", "team1", "s1", "l23", "team2", "s2");
-            autoPush("u42", "u43", "team2", "s2", "l24", "team2", "s2");
-
-            autoPush("l21", "l23", "team1", "s1", null, null, null);
-            autoPush("l22", "l24", "team1", "s1", null, null, null);
-
-            autoPush("l23", "l25", "team1", "s1", null, null, null);
-            autoPush("l24", "l25", "team2", "s2", null, null, null);
-
-            autoPush("l25", "l26", "team2", "s2", null, null, null);
-            autoPush("u43", "gf1", "team1", "s1", "l26", "team1", "s1");
-
-            autoPush("l26", "gf1", "team2", "s2", null, null, null);
+            // Раунд 4 НС (13) -> Гранд-финал (14, низ)
+            autoPush("m13", "m14", "team2", "s2", null, null, null);
         }
 
         function autoPush(matchKey, winKey, winProp, winSeed, loseKey, loseProp, loseSeed) {
@@ -693,8 +531,8 @@
             const win1 = hasPlayed && data.score1 > data.score2;
             const win2 = hasPlayed && data.score2 > data.score1;
 
-            const dispTeam1 = data.team1 || (data.ph1 ? `(${data.ph1})` : 'Ожидание');
-            const dispTeam2 = data.team2 || (data.ph2 ? `(${data.ph2})` : 'Ожидание');
+            const dispTeam1 = data.team1 || (data.ph1 ? data.ph1 : '');
+            const dispTeam2 = data.team2 || (data.ph2 ? data.ph2 : '');
             
             const isHint1 = !data.team1 && data.ph1;
             const isHint2 = !data.team2 && data.ph2;
@@ -702,12 +540,12 @@
             node.innerHTML = `
                 <div class="match-index">${data.id}</div>
                 <div class="team-slot ${win1 ? 'winner-row' : ''}">
-                    <div class="seed-num">${data.s1}</div>
+                    <div class="seed-num">${data.s1 !== undefined ? data.s1 : ''}</div>
                     <div class="team-title ${isHint1 ? 'placeholder-hint' : ''}">${dispTeam1}</div>
                     <div class="team-score">${data.team1 && data.team2 ? data.score1 : ''}</div>
                 </div>
                 <div class="team-slot ${win2 ? 'winner-row' : ''}">
-                    <div class="seed-num">${data.s2}</div>
+                    <div class="seed-num">${data.s2 !== undefined ? data.s2 : ''}</div>
                     <div class="team-title ${isHint2 ? 'placeholder-hint' : ''}">${dispTeam2}</div>
                     <div class="team-score">${data.team1 && data.team2 ? data.score2 : ''}</div>
                 </div>
@@ -715,65 +553,21 @@
             return node;
         }
 
-        function createRowSlot(child) {
-            const slot = document.createElement('div');
-            slot.className = 'grid-row-slot';
-            if (child) slot.appendChild(child);
-            else {
-                const spacer = document.createElement('div');
-                spacer.className = 'empty-match-spacer';
-                slot.appendChild(spacer);
-            }
-            return slot;
-        }
-
         function buildTournament() {
             recalculateAllMatches();
-            document.querySelectorAll('.match-wrapper, .match-wrapper-rows, .match-wrapper-between').forEach(c => c.innerHTML = '');
-            document.getElementById('grand-final-container').innerHTML = '';
-
-            Object.keys(store).forEach(key => {
-                const data = store[key];
-                if (data.type === "grand-final") {
-                    document.getElementById('grand-final-container').appendChild(createMatchNode(key));
-                } else if (data.type !== "lower-r4" && data.type !== "lower-sf" && data.type !== "lower-f") {
-                    const targetContainer = document.getElementById(data.type);
-                    if (targetContainer) targetContainer.appendChild(createMatchNode(key));
-                }
+            const containers = ["upper-r1", "upper-r2", "upper-sf", "grand-final-col", "lower-r1", "lower-r2", "lower-r3", "lower-r4"];
+            containers.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.innerHTML = '';
             });
 
-            const r4Container = document.getElementById('lower-r4');
-            if (r4Container) {
-                r4Container.appendChild(createRowSlot(createMatchNode("l17")));
-                r4Container.appendChild(createRowSlot(createMatchNode("l18")));
-                r4Container.appendChild(createRowSlot(createMatchNode("l19")));
-                r4Container.appendChild(createRowSlot(createMatchNode("l20")));
-            }
-
-            const sf1Container = document.getElementById('lower-sf1');
-            if (sf1Container) {
-                sf1Container.appendChild(createRowSlot(null));
-                sf1Container.appendChild(createRowSlot(createMatchNode("l21")));
-                sf1Container.appendChild(createRowSlot(createMatchNode("l22")));
-                sf1Container.appendChild(createRowSlot(null));
-            }
-
-            const sf2Container = document.getElementById('lower-sf2');
-            if (sf2Container) {
-                sf2Container.appendChild(createRowSlot(null));
-                sf2Container.appendChild(createRowSlot(createMatchNode("l23")));
-                sf2Container.appendChild(createRowSlot(createMatchNode("l24")));
-                sf2Container.appendChild(createRowSlot(null));
-            }
-
-            const fFinalContainer = document.getElementById('lower-f-final');
-            if (fFinalContainer) {
-                fFinalContainer.appendChild(createMatchNode("l25"));
-                const gapSpacer = document.createElement('div');
-                gapSpacer.style.height = '12px';
-                fFinalContainer.appendChild(gapSpacer);
-                fFinalContainer.appendChild(createMatchNode("l26"));
-            }
+            // Строгий порядок отрисовки матчей как на скриншоте
+            const renderOrder = ["m1", "m2", "m3", "m4", "m7", "m8", "m12", "m14", "m5", "m6", "m10", "m9", "m11", "m13"];
+            renderOrder.forEach(key => {
+                const data = store[key];
+                const targetContainer = document.getElementById(data.container);
+                if (targetContainer) targetContainer.appendChild(createMatchNode(key));
+            });
         }
 
         const modalOverlay = document.getElementById('matchModal');
