@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Турнирная Сетка (8 команд - Double Elimination)</title>
     <style>
-        /* --- СТИЛИ (CSS) --- */
         body {
             background-color: #222222;
             color: #e0e0e0;
@@ -14,32 +13,9 @@
             padding: 20px;
         }
 
-        .bracket-header {
-            max-width: 1400px;
-            margin: 0 auto 20px auto;
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        .admin-toggle-btn {
-            background-color: #ff7a00;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: bold;
-            transition: background 0.2s;
-        }
-
-        .admin-toggle-btn:hover { background-color: #e06b00; }
-        .admin-toggle-btn.log-out { background-color: #dc3545; }
-        .admin-toggle-btn.log-out:hover { background-color: #c82333; }
-
         .tournament-wrapper {
             max-width: 1400px;
-            margin: 0 auto;
+            margin: 20px auto;
             display: flex;
             flex-direction: column;
             gap: 35px;
@@ -51,7 +27,6 @@
             overflow-x: auto;
         }
 
-        /* 4 колонки для Верхней сетки (включая Гранд-финал справа) и 4 для Нижней */
         .bracket-grid-4 {
             display: grid;
             grid-template-columns: repeat(4, minmax(260px, 1fr));
@@ -82,7 +57,6 @@
             color: #ff7a00;
         }
 
-        /* Контейнеры матчей для точного вертикального выравнивания как на примере */
         .upper-wrapper {
             display: flex;
             flex-direction: column;
@@ -199,7 +173,7 @@
         .winner-row .team-score { background-color: #ff7a00; color: #ffffff; }
         .winner-row .team-title { color: #ffffff; font-weight: 600; }
 
-        /* МОДАЛЬНОЕ ОКНО */
+        /* МОДАЛЬНОЕ ОКНО ДЛЯ ПРОСМОТРА СКРИНШОТОВ */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -263,22 +237,13 @@
         .modal-t-name { font-size: 13px; margin-bottom: 10px; font-weight: 500; }
         .modal-t-name.placeholder-hint { color: #888; font-style: italic; }
         .modal-t-score { background-color: #2d2d2d; font-size: 24px; font-weight: bold; padding: 6px 0; border-radius: 4px; }
-        
-        .admin-score-input {
-            width: 75%; background-color: #3a3a3a; color: #fff;
-            border: 1px solid #ff7a00; padding: 6px;
-            text-align: center; font-size: 16px; font-weight: bold;
-            border-radius: 4px; margin: 8px auto 0 auto;
-        }
 
         .vs-divider { padding: 0 15px; color: #777; font-style: italic; }
 
         .screenshot-block { border-top: 1px solid #3a3a3a; padding-top: 15px; }
         .screenshot-title { font-size: 13px; color: #aaa; margin-bottom: 12px; }
-        .gallery-container { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 15px; }
+        .gallery-container { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 5px; }
         
-        .gallery-item { position: relative; display: inline-block; }
-
         .preview-img {
             width: 100px; height: 70px; object-fit: cover;
             border-radius: 4px; border: 1px solid #555;
@@ -286,15 +251,6 @@
             transition: transform 0.2s, border-color 0.2s;
         }
         .preview-img:hover { transform: scale(1.03); border-color: #ff7a00; }
-
-        .delete-img-btn {
-            position: absolute; top: -6px; right: -6px;
-            background-color: #dc3545; color: white; border: none;
-            border-radius: 50%; width: 20px; height: 20px;
-            font-size: 12px; font-weight: bold; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .delete-img-btn:hover { background-color: #c82333; }
 
         .lightbox-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -306,40 +262,12 @@
             max-width: 90%; max-height: 90%;
             border: 2px solid #fff; border-radius: 4px;
         }
-
-        .custom-btn {
-            background-color: #ff7a00; color: white;
-            padding: 10px 18px; border: none; border-radius: 4px;
-            cursor: pointer; font-weight: bold; display: inline-block;
-            font-size: 13px;
-        }
-        .custom-btn:hover { background-color: #e06b00; }
-        .style-success { background-color: #28a745; width: 100%; }
-        .style-success:hover { background-color: #218838; }
-
-        .custom-file-upload {
-            background-color: #ff7a00; color: white;
-            padding: 8px 16px; border-radius: 4px;
-            cursor: pointer; font-size: 12px; font-weight: bold; display: inline-block;
-        }
-
-        .export-panel {
-            max-width: 1400px; margin: 25px auto 20px auto;
-            background-color: #1a1a1a; padding: 20px;
-            border-left: 4px solid #ff7a00; border-radius: 6px;
-        }
     </style>
 </head>
 <body>
 
-    <header class="bracket-header">
-        <button id="adminLoginBtn" class="admin-toggle-btn">Войти как Admin</button>
-        <button id="adminLogoutBtn" class="admin-toggle-btn log-out" style="display: none;">Выйти из Админа</button>
-    </header>
-
     <div class="tournament-wrapper">
-        
-        <!-- ВЕРХНЯЯ СЕТКА + ГРАНД-ФИНАЛ СПРАВА (КАК НА ПРИМЕРЕ) -->
+        <!-- ВЕРХНЯЯ СЕТКА + ГРАНД-ФИНАЛ -->
         <div class="bracket-grid-4">
             <div class="round-col">
                 <div class="round-header">Раунд 1</div>
@@ -359,7 +287,7 @@
             </div>
         </div>
 
-        <!-- НИЖНЯЯ СЕТКА СНИЗУ (КАК НА ПРИМЕРЕ) -->
+        <!-- НИЖНЯЯ СЕТКА -->
         <div class="bracket-grid-4">
             <div class="round-col">
                 <div class="round-header">Раунд нижней сетки 1</div>
@@ -378,133 +306,85 @@
                 <div class="lower-r4-wrapper" id="lower-r4"></div>
             </div>
         </div>
-
     </div>
 
-    <!-- ПАНЕЛЬ ЭКСПОРТА -->
-    <div id="adminExportPanel" class="export-panel" style="display: none;">
-        <h3 style="margin-top:0; color:#ff7a00; font-size:16px;">Панель администратора: Сохранение турнира</h3>
-        <p style="font-size:13px; color:#bbb;">Вы изменили счёт или добавили скриншоты. Нажмите на кнопку ниже, чтобы скопировать весь код, затем полностью вставьте его в ваш файл <b>index.html</b> на GitHub.</p>
-        <button id="exportDataBtn" class="custom-btn">Скопировать весь код страницы</button>
-    </div>
-
-    <!-- МОДАЛЬНОЕ ОКНО МАТЧА -->
+    <!-- МОДАЛЬНОЕ ОКНО -->
     <div class="modal-overlay" id="matchModal">
         <div class="modal-content">
             <button class="close-modal-btn" id="closeModal">&times;</button>
             <div class="modal-header-title">Результаты матча</div>
-            
             <div class="vs-flex-box">
                 <div class="team-modal-card">
                     <div class="avatar-circle">⚡</div>
                     <div class="modal-t-name" id="modal-team1">Команда 1</div>
                     <div class="modal-t-score" id="modal-score1">0</div>
-                    <input type="number" id="inputScore1" class="admin-score-input" min="0" style="display: none;">
                 </div>
-                
                 <div class="vs-divider">против</div>
-                
                 <div class="team-modal-card">
                     <div class="avatar-circle">⚡</div>
                     <div class="modal-t-name" id="modal-team2">Команда 2</div>
                     <div class="modal-t-score" id="modal-score2">0</div>
-                    <input type="number" id="inputScore2" class="admin-score-input" min="0" style="display: none;">
                 </div>
             </div>
-
-            <button id="saveMatchResultsBtn" class="custom-btn style-success" style="display: none; margin-bottom: 20px;">Сохранить результаты</button>
-
             <div class="screenshot-block">
-                <div class="screenshot-title">Скриншоты матча (Нажмите для просмотра)</div>
+                <div class="screenshot-title">Скриншоты матча (Нажмите для увеличения)</div>
                 <div class="gallery-container" id="screenshotsGallery"></div>
-                
-                <div class="upload-zone" id="adminUploadZone" style="display: none;">
-                    <label for="fileInput" class="custom-file-upload">Добавить скриншот</label>
-                    <input type="file" id="fileInput" accept="image/*" style="display:none;">
-                </div>
             </div>
         </div>
     </div>
 
-    <!-- ОКНО ПРОСМОТРА КАРТИНКИ -->
     <div id="lightboxOverlay" class="lightbox-overlay" onclick="this.style.display='none'">
         <img id="lightboxImg" src="" alt="Скриншот">
     </div>
 
-    <!-- --- ЛОГИКА (JAVASCRIPT) --- -->
+    <!-- ЛОГИКА ТУРНИРНОЙ СЕТКИ -->
     <script>
-        const ADMIN_PASSWORD = "1234";
-
         const bracketData = {
-            // ВЕРХНЯЯ СЕТКА: РАУНД 1 (Матчи 1-4)
             "m1": { id: 1, container: "upper-r1", s1: 1, team1: "zernd + miate", score1: 0, s2: 8, team2: "Akuma + Kayix", score2: 0, images: [] },
             "m2": { id: 2, container: "upper-r1", s1: 4, team1: "VikuSiK + aStro_Gart1", score1: 0, s2: 5, team2: "special + Cube", score2: 0, images: [] },
             "m3": { id: 3, container: "upper-r1", s1: 2, team1: "svoloch + BabyNeyz", score1: 0, s2: 7, team2: "STICMAN + isagi", score2: 0, images: [] },
             "m4": { id: 4, container: "upper-r1", s1: 3, team1: "Slabiy + xKros", score1: 0, s2: 6, team2: "Daniil + willave", score2: 0, images: [] },
 
-            // ВЕРХНЯЯ СЕТКА: РАУНД 2 (Матчи 7-8)
             "m7": { id: 7, container: "upper-r2", s1: "", team1: "", score1: 0, s2: "", team2: "", score2: 0, ph1: "Победитель 1", ph2: "Победитель 2", images: [] },
             "m8": { id: 8, container: "upper-r2", s1: "", team1: "", score1: 0, s2: "", team2: "", score2: 0, ph1: "Победитель 3", ph2: "Победитель 4", images: [] },
 
-            // ВЕРХНЯЯ СЕТКА: ПОЛУФИНАЛЫ / ФИНАЛ ВС (Матч 12)
             "m12": { id: 12, container: "upper-sf", s1: "", team1: "", score1: 0, s2: "", team2: "", score2: 0, ph1: "Победитель 7", ph2: "Победитель 8", images: [] },
-
-            // ГРАНД-ФИНАЛ (Матч 14)
             "m14": { id: 14, container: "grand-final-col", s1: "", team1: "", score1: 0, s2: "", team2: "", score2: 0, ph1: "Победитель 12", ph2: "Победители из числа про...", images: [] },
 
-            // НИЖНЯЯ СЕТКА: РАУНД 1 (Матчи 5-6)
             "m5": { id: 5, container: "lower-r1", s1: "", team1: "", score1: 0, s2: "", team2: "", score2: 0, ph1: "Проигравший 1", ph2: "Проигравший 2", images: [] },
             "m6": { id: 6, container: "lower-r1", s1: "", team1: "", score1: 0, s2: "", team2: "", score2: 0, ph1: "Проигравший 3", ph2: "Проигравший 4", images: [] },
 
-            // НИЖНЯЯ СЕТКА: РАУНД 2 (Сверху матч 10, снизу матч 9 — строго как на скриншоте)
             "m10": { id: 10, container: "lower-r2", s1: "", team1: "", score1: 0, s2: "", team2: "", score2: 0, ph1: "Проигравший 8", ph2: "Победитель 5", images: [] },
             "m9": { id: 9, container: "lower-r2", s1: "", team1: "", score1: 0, s2: "", team2: "", score2: 0, ph1: "Проигравший 7", ph2: "Победитель 6", images: [] },
 
-            // НИЖНЯЯ СЕТКА: РАУНД 3 (Матч 11)
             "m11": { id: 11, container: "lower-r3", s1: "", team1: "", score1: 0, s2: "", team2: "", score2: 0, ph1: "Победитель 10", ph2: "Победитель 9", images: [] },
-
-            // НИЖНЯЯ СЕТКА: РАУНД 4 / ФИНАЛ НС (Матч 13)
             "m13": { id: 13, container: "lower-r4", s1: "", team1: "", score1: 0, s2: "", team2: "", score2: 0, ph1: "Проигравший 12", ph2: "Победитель 11", images: [] }
         };
 
         let store = bracketData;
-        let isAdmin = false;
-        let activeKey = null;
 
         function recalculateAllMatches() {
             const keysToReset = ["m7", "m8", "m12", "m14", "m5", "m6", "m10", "m9", "m11", "m13"];
             keysToReset.forEach(k => {
-                store[k].team1 = "";
-                store[k].team2 = "";
-                store[k].s1 = "";
-                store[k].s2 = "";
+                store[k].team1 = ""; store[k].team2 = ""; store[k].s1 = ""; store[k].s2 = "";
             });
 
-            // Раунд 1 ВС -> Раунд 2 ВС (победители) и Раунд 1 НС (проигравшие)
             autoPush("m1", "m7", "team1", "s1", "m5", "team1", "s1");
             autoPush("m2", "m7", "team2", "s2", "m5", "team2", "s2");
             autoPush("m3", "m8", "team1", "s1", "m6", "team1", "s1");
             autoPush("m4", "m8", "team2", "s2", "m6", "team2", "s2");
 
-            // Раунд 1 НС -> Раунд 2 НС (нижние слоты матчей 10 и 9)
             autoPush("m5", "m10", "team2", "s2", null, null, null);
             autoPush("m6", "m9", "team2", "s2", null, null, null);
 
-            // Раунд 2 ВС -> Полуфинал ВС (12) и Раунд 2 НС (верхние слоты матчей 10 и 9)
             autoPush("m7", "m12", "team1", "s1", "m9", "team1", "s1");
             autoPush("m8", "m12", "team2", "s2", "m10", "team1", "s1");
 
-            // Раунд 2 НС -> Раунд 3 НС (11)
             autoPush("m10", "m11", "team1", "s1", null, null, null);
             autoPush("m9", "m11", "team2", "s2", null, null, null);
 
-            // Полуфинал ВС (12) -> Гранд-финал (14, верх) и Раунд 4 НС (13, верх)
             autoPush("m12", "m14", "team1", "s1", "m13", "team1", "s1");
-
-            // Раунд 3 НС (11) -> Раунд 4 НС (13, низ)
             autoPush("m11", "m13", "team2", "s2", null, null, null);
-
-            // Раунд 4 НС (13) -> Гранд-финал (14, низ)
             autoPush("m13", "m14", "team2", "s2", null, null, null);
         }
 
@@ -561,7 +441,6 @@
                 if (el) el.innerHTML = '';
             });
 
-            // Строгий порядок отрисовки матчей как на скриншоте
             const renderOrder = ["m1", "m2", "m3", "m4", "m7", "m8", "m12", "m14", "m5", "m6", "m10", "m9", "m11", "m13"];
             renderOrder.forEach(key => {
                 const data = store[key];
@@ -570,130 +449,40 @@
             });
         }
 
+        // Модальное окно для скриншотов
         const modalOverlay = document.getElementById('matchModal');
         const closeBtn = document.getElementById('closeModal');
-        const fileLoader = document.getElementById('fileInput');
         const galleryBox = document.getElementById('screenshotsGallery');
-        const adminLoginBtn = document.getElementById('adminLoginBtn');
-        const adminLogoutBtn = document.getElementById('adminLogoutBtn');
-        const adminExportPanel = document.getElementById('adminExportPanel');
-        const adminUploadZone = document.getElementById('adminUploadZone');
-        const saveMatchResultsBtn = document.getElementById('saveMatchResultsBtn');
-        const inputScore1 = document.getElementById('inputScore1');
-        const inputScore2 = document.getElementById('inputScore2');
-        const modalScore1 = document.getElementById('modal-score1');
-        const modalScore2 = document.getElementById('modal-score2');
-
-        function toggleAdminInterface(visible) {
-            isAdmin = visible;
-            adminLoginBtn.style.display = visible ? 'none' : 'block';
-            adminLogoutBtn.style.display = visible ? 'block' : 'none';
-            adminExportPanel.style.display = visible ? 'block' : 'none';
-            adminUploadZone.style.display = visible ? 'block' : 'none';
-            saveMatchResultsBtn.style.display = visible ? 'block' : 'none';
-            inputScore1.style.display = visible ? 'block' : 'none';
-            inputScore2.style.display = visible ? 'block' : 'none';
-            modalScore1.style.display = visible ? 'none' : 'block';
-            modalScore2.style.display = visible ? 'none' : 'block';
-        }
-
-        adminLoginBtn.onclick = () => {
-            if (prompt("Введите пароль администратора:") === ADMIN_PASSWORD) toggleAdminInterface(true);
-            else alert("Неверный пароль!");
-        };
-        adminLogoutBtn.onclick = () => toggleAdminInterface(false);
 
         function openModalBox(key) {
-            activeKey = key;
             const match = store[key];
+            document.getElementById('modal-team1').innerText = match.team1 || match.ph1 || 'Ожидание';
+            document.getElementById('modal-team2').innerText = match.team2 || match.ph2 || 'Ожидание';
+            document.getElementById('modal-score1').innerText = match.score1;
+            document.getElementById('modal-score2').innerText = match.score2;
             
-            const modalName1 = match.team1 || (match.ph1 ? `(${match.ph1})` : 'Ожидание');
-            const modalName2 = match.team2 || (match.ph2 ? `(${match.ph2})` : 'Ожидание');
-            
-            const t1Box = document.getElementById('modal-team1');
-            const t2Box = document.getElementById('modal-team2');
-            
-            t1Box.innerText = modalName1;
-            t2Box.innerText = modalName2;
-            
-            if(!match.team1 && match.ph1) t1Box.classList.add('placeholder-hint'); else t1Box.classList.remove('placeholder-hint');
-            if(!match.team2 && match.ph2) t2Box.classList.add('placeholder-hint'); else t2Box.classList.remove('placeholder-hint');
-
-            modalScore1.innerText = match.score1; modalScore2.innerText = match.score2;
-            inputScore1.value = match.score1; inputScore2.value = match.score2;
-            updateGalleryView();
+            galleryBox.innerHTML = '';
+            const imgs = match.images || [];
+            if (imgs.length === 0) {
+                galleryBox.innerHTML = '<div style="color: #666; font-size: 12px;">Скриншотов нет</div>';
+            } else {
+                imgs.forEach(src => {
+                    const img = document.createElement('img');
+                    img.src = src; img.className = 'preview-img';
+                    img.onclick = () => {
+                        document.getElementById('lightboxImg').src = src;
+                        document.getElementById('lightboxOverlay').style.display = 'flex';
+                    };
+                    galleryBox.appendChild(img);
+                });
+            }
             modalOverlay.classList.add('active');
         }
 
-        saveMatchResultsBtn.onclick = () => {
-            store[activeKey].score1 = parseInt(inputScore1.value) || 0;
-            store[activeKey].score2 = parseInt(inputScore2.value) || 0;
-            buildTournament();
-            closeModalBox();
-        };
-
-        function closeModalBox() { modalOverlay.classList.remove('active'); }
-        closeBtn.onclick = closeModalBox;
-        modalOverlay.onclick = (e) => { if (e.target === modalOverlay) closeModalBox(); };
-
-        function viewImage(src) {
-            document.getElementById('lightboxImg').src = src;
-            document.getElementById('lightboxOverlay').style.display = 'flex';
-        }
-
-        function deleteImage(index) {
-            if (confirm("Удалить этот скриншот?")) {
-                store[activeKey].images.splice(index, 1);
-                updateGalleryView();
-            }
-        }
-
-        function updateGalleryView() {
-            galleryBox.innerHTML = '';
-            const imgs = store[activeKey].images || [];
-            if (imgs.length === 0) { galleryBox.innerHTML = '<div style="color: #666; font-size: 12px;">Скриншотов нет</div>'; return; }
-            
-            imgs.forEach((src, idx) => {
-                const wrapper = document.createElement('div');
-                wrapper.className = 'gallery-item';
-                
-                const img = document.createElement('img');
-                img.src = src; img.className = 'preview-img';
-                img.onclick = () => viewImage(src);
-                wrapper.appendChild(img);
-
-                if (isAdmin) {
-                    const delBtn = document.createElement('button');
-                    delBtn.className = 'delete-img-btn'; delBtn.innerHTML = '&times;';
-                    delBtn.onclick = (e) => { e.stopPropagation(); deleteImage(idx); };
-                    wrapper.appendChild(delBtn);
-                }
-                galleryBox.appendChild(wrapper);
-            });
-        }
-
-        fileLoader.addEventListener('change', function(e) {
-            const file = e.target.files[0]; if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                if (!store[activeKey].images) store[activeKey].images = [];
-                store[activeKey].images.push(event.target.result);
-                updateGalleryView();
-            };
-            reader.readAsDataURL(file);
-        });
-
-        document.getElementById('exportDataBtn').onclick = () => {
-            const currentFullHtml = document.documentElement.outerHTML;
-            const cleanStoreData = JSON.stringify(store, null, 12);
-            const regex = /const bracketData = \{[\s\S]*?\};/;
-            const finalHtml = "<!DOCTYPE html>\n<html lang=\"ru\">\n" + currentFullHtml.replace(regex, `const bracketData = ${cleanStoreData};`) + "\n</html>";
-            navigator.clipboard.writeText(finalHtml);
-            alert("Код скопирован! Теперь вставьте его в index.html на GitHub.");
-        };
+        closeBtn.onclick = () => modalOverlay.classList.remove('active');
+        modalOverlay.onclick = (e) => { if (e.target === modalOverlay) modalOverlay.classList.remove('active'); };
 
         buildTournament();
-        toggleAdminInterface(false);
     </script>
 </body>
 </html>
