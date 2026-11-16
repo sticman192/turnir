@@ -7,7 +7,7 @@
     <style>
         /* --- СТИЛИ (CSS) --- */
         body {
-            background-color: #222222;
+            background-color: #1e1e1e;
             color: #e0e0e0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             margin: 0;
@@ -42,85 +42,85 @@
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 40px;
+            gap: 30px;
+        }
+
+        .bracket-section {
+            background-color: #171717;
+            border: 1px solid #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
 
         .bracket-title-main {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
             margin-bottom: 16px;
             color: #ffffff;
             text-transform: uppercase;
             border-left: 4px solid #ff7a00;
             padding-left: 10px;
+            letter-spacing: 0.5px;
         }
 
         .bracket-grid-upper {
             display: grid;
-            grid-template-columns: repeat(5, minmax(240px, 1fr));
-            gap: 25px;
-            background-color: #1a1a1a;
-            padding: 25px;
-            border-radius: 6px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            grid-template-columns: repeat(5, minmax(220px, 1fr));
+            gap: 20px;
             overflow-x: auto;
+            padding-bottom: 10px;
         }
 
-        /* 7 колонок для плотного тайминга шагов в Нижней сетке */
         .bracket-grid-lower {
             display: grid;
-            grid-template-columns: repeat(7, minmax(200px, 1fr));
-            gap: 25px;
-            background-color: #1a1a1a;
-            padding: 25px;
-            border-radius: 6px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            grid-template-columns: repeat(7, minmax(180px, 1fr));
+            gap: 20px;
             overflow-x: auto;
+            padding-bottom: 10px;
         }
 
         .grand-final-section {
             background: linear-gradient(135deg, #2e1f10 0%, #1a1a1a 100%);
             border: 2px solid #ff7a00;
-            padding: 25px;
-            border-radius: 6px;
-            max-width: 400px;
-            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 380px;
+            margin: 0 auto 30px auto;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
 
         .round-col { display: flex; flex-direction: column; }
 
         .round-header {
-            background-color: #333333;
-            padding: 12px;
+            background-color: #252525;
+            padding: 10px;
             text-align: center;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
-            color: #bbbbbb;
-            border-bottom: 2px solid #444;
-            margin-bottom: 20px;
+            color: #aaaaaa;
+            border-bottom: 2px solid #ff7a00;
+            margin-bottom: 15px;
             border-radius: 4px;
         }
 
         .match-wrapper {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
             justify-content: space-around;
             height: 100%;
-            min-height: 500px;
+            min-height: 480px;
         }
 
-        /* Специальные высотные контейнеры для Раунда 1 и 2 */
-        .height-large { min-height: 1200px; }
+        .height-large { min-height: 1100px; }
 
-        /* Обертки для строгого выравнивания строк в конце Нижней Сетки */
         .match-wrapper-rows {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
             height: 100%;
-            min-height: 500px;
+            min-height: 480px;
             justify-content: center;
         }
 
@@ -129,44 +129,46 @@
             flex-direction: column;
             justify-content: center;
             height: 100%;
-            min-height: 500px;
-            padding-top: 74px; 
+            min-height: 480px;
+            padding-top: 68px;
             box-sizing: border-box;
         }
 
         .grid-row-slot {
-            height: 74px; 
+            height: 68px;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
         
         .empty-match-spacer {
-            height: 74px;
+            height: 68px;
         }
 
         .match-node {
-            background-color: #3a3a3a;
-            border-radius: 4px;
-            border: 1px solid #444;
+            background-color: #2a2a2a;
+            border-radius: 5px;
+            border: 1px solid #383838;
             cursor: pointer;
             position: relative;
-            transition: border-color 0.2s, transform 0.1s;
-            height: 72px;
+            transition: all 0.2s ease;
+            height: 66px;
             box-sizing: border-box;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .match-node:hover {
             border-color: #ff7a00;
             transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255,122,0,0.15);
         }
 
         .match-index {
             position: absolute;
-            left: -22px;
+            left: -20px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 12px;
+            font-size: 11px;
             color: #777;
             font-weight: bold;
         }
@@ -174,15 +176,16 @@
         .team-slot {
             display: flex;
             align-items: center;
-            height: 35px;
-            border-bottom: 1px solid #2e2e2e;
-            background-color: #444444;
+            height: 32px;
+            border-bottom: 1px solid #222;
+            background-color: #333333;
         }
 
-        .team-slot:last-child { border-bottom: none; }
+        .team-slot:first-child { border-top-left-radius: 4px; border-top-right-radius: 4px; }
+        .team-slot:last-child { border-bottom: none; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; }
 
         .seed-num {
-            background-color: #333333;
+            background-color: #252525;
             color: #888;
             font-size: 11px;
             width: 24px;
@@ -190,38 +193,37 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            border-right: 1px solid #2e2e2e;
+            border-right: 1px solid #222;
         }
 
         .team-title {
             padding-left: 10px;
-            font-size: 13px;
+            font-size: 12px;
             flex-grow: 1;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            color: #bbbbbb;
+            color: #cccccc;
         }
 
         .team-title.placeholder-hint {
             color: #777777;
             font-style: italic;
-            font-size: 12px;
         }
 
         .team-score {
-            background-color: #555555;
-            width: 35px;
+            background-color: #3e3e3e;
+            width: 32px;
             height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .winner-row .team-score { background-color: #ff7a00; color: #ffffff; }
-        .winner-row .team-title { color: #ffffff; font-weight: 500; }
+        .winner-row .team-title { color: #ffffff; font-weight: 600; }
 
         /* МОДАЛЬНОЕ ОКНО */
         .modal-overlay {
@@ -240,66 +242,70 @@
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
 
         .modal-content {
-            background-color: #333333;
+            background-color: #262626;
             width: 90%;
-            max-width: 600px;
-            padding: 30px;
-            border-radius: 6px;
+            max-width: 560px;
+            padding: 25px;
+            border-radius: 8px;
             position: relative;
-            border: 1px solid #444;
+            border: 1px solid #383838;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
         }
 
         .close-modal-btn {
             position: absolute;
             top: 15px; right: 20px;
             background: none; border: none;
-            color: #999; font-size: 30px; cursor: pointer;
+            color: #888; font-size: 28px; cursor: pointer;
         }
         .close-modal-btn:hover { color: #fff; }
 
         .modal-header-title {
-            font-size: 18px; font-weight: bold;
+            font-size: 16px; font-weight: bold;
             border-bottom: 2px solid #ff7a00;
-            padding-bottom: 6px; margin-bottom: 25px;
+            padding-bottom: 6px; margin-bottom: 20px;
             display: inline-block;
+            color: #fff;
         }
 
         .vs-flex-box {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .team-modal-card {
-            background-color: #222222;
+            background-color: #1e1e1e;
             flex: 1; text-align: center;
-            padding: 20px; border-radius: 4px;
-            border: 1px solid #444;
+            padding: 15px; border-radius: 6px;
+            border: 1px solid #333;
         }
 
         .avatar-circle {
-            width: 44px; height: 44px; background-color: #444;
+            width: 40px; height: 40px; background-color: #333;
             border-radius: 50%; display: flex;
-            justify-content: center; align-items: center; margin: 0 auto 12px auto;
+            justify-content: center; align-items: center; margin: 0 auto 10px auto;
+            color: #ff7a00;
         }
 
-        .modal-t-name { font-size: 14px; margin-bottom: 12px; font-weight: 500; }
+        .modal-t-name { font-size: 13px; margin-bottom: 10px; font-weight: 500; color: #ddd; }
         .modal-t-name.placeholder-hint { color: #777; font-style: italic; }
-        .modal-t-score { background-color: #333; font-size: 26px; font-weight: bold; padding: 8px 0; border-radius: 4px; }
+        .modal-t-score { background-color: #2a2a2a; font-size: 24px; font-weight: bold; padding: 6px 0; border-radius: 4px; color: #fff; }
         
         .admin-score-input {
-            width: 80%; background-color: #444; color: #fff;
+            width: 70%; background-color: #333; color: #fff;
             border: 1px solid #ff7a00; padding: 6px;
-            text-align: center; font-size: 18px; font-weight: bold;
-            border-radius: 4px; margin: 10px auto 0 auto;
+            text-align: center; font-size: 16px; font-weight: bold;
+            border-radius: 4px; margin: 8px auto 0 auto;
+            outline: none;
         }
 
-        .vs-divider { padding: 0 15px; color: #777; font-style: italic; }
+        .vs-divider { padding: 0 15px; color: #666; font-style: italic; font-weight: bold; }
 
-        .screenshot-block { border-top: 1px solid #444; padding-top: 20px; }
-        .screenshot-title { font-size: 14px; color: #aaa; margin-bottom: 15px; }
-        .gallery-container { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px; }
+        .screenshot-block { border-top: 1px solid #333; padding-top: 15px; }
+        .screenshot-title { font-size: 13px; color: #aaa; margin-bottom: 12px; }
+        .gallery-container { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 15px; }
         
         .gallery-item {
             position: relative;
@@ -307,8 +313,8 @@
         }
 
         .preview-img {
-            width: 110px; height: 75px; object-fit: cover;
-            border-radius: 4px; border: 1px solid #555;
+            width: 100px; height: 70px; object-fit: cover;
+            border-radius: 4px; border: 1px solid #444;
             cursor: pointer;
             transition: transform 0.2s, border-color 0.2s;
         }
@@ -338,23 +344,27 @@
 
         .custom-btn {
             background-color: #ff7a00; color: white;
-            padding: 12px 20px; border: none; border-radius: 4px;
+            padding: 10px 18px; border: none; border-radius: 4px;
             cursor: pointer; font-weight: bold; display: inline-block;
+            font-size: 13px; transition: background 0.2s;
         }
         .custom-btn:hover { background-color: #e06b00; }
-        .style-success { background-color: #28a745; }
+        .style-success { background-color: #28a745; width: 100%; }
         .style-success:hover { background-color: #218838; }
 
         .custom-file-upload {
             background-color: #ff7a00; color: white;
-            padding: 10px 20px; border-radius: 4px;
-            cursor: pointer; font-size: 13px; font-weight: bold; display: inline-block;
+            padding: 8px 16px; border-radius: 4px;
+            cursor: pointer; font-size: 12px; font-weight: bold; display: inline-block;
+            transition: background 0.2s;
         }
+        .custom-file-upload:hover { background-color: #e06b00; }
 
         .export-panel {
-            max-width: 1600px; margin: 40px auto 20px auto;
-            background-color: #1a1a1a; padding: 25px;
-            border-left: 5px solid #ff7a00; border-radius: 4px;
+            max-width: 1600px; margin: 30px auto 20px auto;
+            background-color: #171717; padding: 20px;
+            border-left: 4px solid #ff7a00; border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
     </style>
 </head>
@@ -367,7 +377,7 @@
 
     <!-- ГРАНД-ФИНАЛ -->
     <div class="grand-final-section">
-        <div class="bracket-title-main" style="text-align: center; border: none; padding: 0; margin-bottom: 10px; color: #ff7a00;">🏆 Гранд-Финал 🏆</div>
+        <div class="bracket-title-main" style="text-align: center; border: none; padding: 0; margin-bottom: 8px; color: #ff7a00;">🏆 Гранд-Финал 🏆</div>
         <div id="grand-final-container"></div>
     </div>
 
@@ -439,8 +449,8 @@
 
     <!-- ПАНЕЛЬ ЭКСПОРТА -->
     <div id="adminExportPanel" class="export-panel" style="display: none;">
-        <h3 style="margin-top:0; color:#ff7a00;">Панель администратора: Сохранение турнира</h3>
-        <p>Вы изменили счёт или добавили скриншоты. Нажмите на кнопку ниже, чтобы скопировать весь код, затем полностью вставьте его в ваш файл <b>index.html</b> на GitHub.</p>
+        <h3 style="margin-top:0; color:#ff7a00; font-size:16px;">Панель администратора: Сохранение турнира</h3>
+        <p style="font-size:13px; color:#bbb; margin-bottom:15px;">Вы изменили счёт или добавили скриншоты. Нажмите кнопку ниже, чтобы скопировать весь код, затем полностью вставьте его в ваш файл <b>index.html</b> на GitHub.</p>
         <button id="exportDataBtn" class="custom-btn">Скопировать весь код страницы</button>
     </div>
 
@@ -458,7 +468,7 @@
                     <input type="number" id="inputScore1" class="admin-score-input" min="0" style="display: none;">
                 </div>
                 
-                <div class="vs-divider">против</div>
+                <div class="vs-divider">VS</div>
                 
                 <div class="team-modal-card">
                     <div class="avatar-circle">⚡</div>
@@ -468,7 +478,7 @@
                 </div>
             </div>
 
-            <button id="saveMatchResultsBtn" class="custom-btn style-success" style="display: none; margin-bottom: 20px; width: 100%;">Сохранить результаты</button>
+            <button id="saveMatchResultsBtn" class="custom-btn style-success" style="display: none; margin-bottom: 20px;">Сохранить результаты</button>
 
             <div class="screenshot-block">
                 <div class="screenshot-title">Скриншоты матча (Нажмите для просмотра)</div>
@@ -492,7 +502,7 @@
         const ADMIN_PASSWORD = "1234"; 
 
         const bracketData = {
-            // ВЕРХНЯЯ СЕТКА: РАУНД 1 (Строго по скрину)
+            // ВЕРХНЯЯ СЕТКА: РАУНД 1
             "u1": { id: 1, type: "upper-r1", s1: 16, team1: "mogilka", score1: 0, s2: 17, team2: "Justix", score2: 0, images: [] },
             "u2": { id: 2, type: "upper-r1", s1: 8, team1: "special", score1: 0, s2: 25, team2: "isagi", score2: 0, images: [] },
             "u3": { id: 3, type: "upper-r1", s1: 9, team1: "Chacomol", score1: 0, s2: 24, team2: "Rangerss", score2: 0, images: [] },
@@ -509,7 +519,7 @@
             "u11": { id: 11, type: "upper-r1", s1: 6, team1: "Kayix", score1: 0, s2: 27, team2: "willave", score2: 0, images: [] },
             "u12": { id: 12, type: "upper-r1", s1: 11, team1: "KiNg", score1: 0, s2: 22, team2: "xKros", score2: 0, images: [] },
             
-            // ВЕРХНЯЯ СЕТКА: РАУНД 2 (Топ сеяные ждут на местах 17, 19, 21, 23)
+            // ВЕРХНЯЯ СЕТКА: РАУНД 2
             "u17": { id: 17, type: "upper-r2", s1: 1, team1: "Pokich", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 1", images: [] },
             "u18": { id: 18, type: "upper-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 2", ph2: "Победитель 3", images: [] },
             
@@ -522,7 +532,7 @@
             "u23": { id: 23, type: "upper-r2", s1: 3, team1: "DuRimAn", score1: 0, s2: "?", team2: "", score2: 0, ph2: "Победитель 10", images: [] },
             "u24": { id: 24, type: "upper-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 11", ph2: "Победитель 12", images: [] },
             
-            // ВЕРХНЯЯ СЕТКА: РАУНД 3 (Матчи 37, 38, 39, 40)
+            // ВЕРХНЯЯ СЕТКА: РАУНД 3
             "u37": { id: 37, type: "upper-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 17", ph2: "Победитель 18", images: [] },
             "u38": { id: 38, type: "upper-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 19", ph2: "Победитель 20", images: [] },
             "u39": { id: 39, type: "upper-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 21", ph2: "Победитель 22", images: [] },
@@ -536,7 +546,6 @@
             "u43": { id: 43, type: "upper-f", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 41", ph2: "Победитель 42", images: [] },
 
             // ================= НИЖНЯЯ СЕТКА =================
-            // НС РАУНД 1 (Проигравшие из Раунда 1 Верхней Сетки)
             "l1": { id: 25, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 1", ph2: "Проигравший 2", images: [] },
             "l2": { id: 26, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 3", ph2: "Проигравший 4", images: [] },
             "l3": { id: 27, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 5", ph2: "Проигравший 6", images: [] },
@@ -544,7 +553,6 @@
             "l5": { id: 29, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 9", ph2: "Проигравший 10", images: [] },
             "l6": { id: 30, type: "lower-r1", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 11", ph2: "Проигравший 12", images: [] },
 
-            // НС РАУНД 2 (Победители НС Р1 против упавших из Верхней Сетки Раунда 2)
             "l7": { id: 31, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 25", ph2: "Проигравший 17", images: [] },
             "l8": { id: 32, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 26", ph2: "Проигравший 18", images: [] },
             "l9": { id: 33, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 27", ph2: "Проигравший 19", images: [] },
@@ -552,29 +560,25 @@
             "l11": { id: 35, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 29", ph2: "Проигравший 21", images: [] },
             "l12": { id: 36, type: "lower-r2", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 30", ph2: "Проигравший 22", images: [] },
 
-            // НС РАУНД 3 (Победители НС Р2 против остальных упавших из Верхней Сетки Раунда 2)
             "l13": { id: 44, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 31", ph2: "Проигравший 23", images: [] },
             "l14": { id: 45, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 32", ph2: "Проигравший 24", images: [] },
             "l15": { id: 46, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 33", ph2: "Победитель 34", images: [] },
             "l16": { id: 47, type: "lower-r3", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 35", ph2: "Победитель 36", images: [] },
 
-            // НС РАУНД 4 (Победители НС Р3 против упавших из Верхней Сетки Раунда 3)
             "l17": { id: 48, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 44", ph2: "Проигравший 37", images: [] },
             "l18": { id: 49, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 45", ph2: "Проигравший 38", images: [] },
             "l19": { id: 50, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 46", ph2: "Проигравший 39", images: [] },
             "l20": { id: 51, type: "lower-r4", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 47", ph2: "Проигравший 40", images: [] },
 
-            // НС ПОЛУФИНАЛЫ 1 и 2
             "l21": { id: 52, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 48", ph2: "Победитель 49", images: [] },
             "l22": { id: 53, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 50", ph2: "Победитель 51", images: [] },
             "l23": { id: 54, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 52", ph2: "Проигравший 41", images: [] },
             "l24": { id: 55, type: "lower-sf", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 53", ph2: "Проигравший 42", images: [] },
 
-            // НС ФИНАЛ
             "l25": { id: 56, type: "lower-f", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Победитель 54", ph2: "Победитель 55", images: [] },
             "l26": { id: 57, type: "lower-f", s1: "?", team1: "", score1: 0, s2: "?", team2: "", score2: 0, ph1: "Проигравший 43", ph2: "Победитель 56", images: [] },
 
-            // ================= ГРАНД-ФИНАЛ =================
+            // ГРАНД-ФИНАЛ
             "gf1": { id: 60, type: "grand-final", s1: "ВС", team1: "", score1: 0, s2: "НС", team2: "", score2: 0, ph1: "Победитель 43", ph2: "Победитель 57", images: [] }
         };
 
@@ -597,7 +601,6 @@
             store["u21"].team2 = ""; store["u21"].s2 = "?";
             store["u23"].team2 = ""; store["u23"].s2 = "?";
 
-            // Раунд 1 Верхней сетки -> Раунд 2
             autoPush("u1", "u17", "team2", "s2", "l1", "team1", "s1");
             autoPush("u2", "u18", "team1", "s1", "l1", "team2", "s2");
             autoPush("u3", "u18", "team2", "s2", "l2", "team1", "s1");
@@ -614,7 +617,6 @@
             autoPush("u11", "u24", "team1", "s1", "l6", "team1", "s1");
             autoPush("u12", "u24", "team2", "s2", "l6", "team2", "s2");
 
-            // Продвижение Нижней сетки Раунд 1 -> Раунд 2
             autoPush("l1", "l7", "team1", "s1", null, null, null);
             autoPush("l2", "l8", "team1", "s1", null, null, null);
             autoPush("l3", "l9", "team1", "s1", null, null, null);
@@ -622,7 +624,6 @@
             autoPush("l5", "l11", "team1", "s1", null, null, null);
             autoPush("l6", "l12", "team1", "s1", null, null, null);
 
-            // Раунд 2 Верхней Сетки -> Раунд 3
             autoPush("u17", "u37", "team1", "s1", "l7", "team2", "s2");
             autoPush("u18", "u37", "team2", "s2", "l8", "team2", "s2");
             autoPush("u19", "u38", "team1", "s1", "l9", "team2", "s2");
@@ -632,7 +633,6 @@
             autoPush("u23", "u40", "team1", "s1", "l13", "team2", "s2");
             autoPush("u24", "u40", "team2", "s2", "l14", "team2", "s2");
 
-            // Нижняя сетка Раунд 2 -> Раунд 3
             autoPush("l7", "l13", "team1", "s1", null, null, null);
             autoPush("l8", "l14", "team1", "s1", null, null, null);
             autoPush("l9", "l15", "team1", "s1", null, null, null);
@@ -640,33 +640,27 @@
             autoPush("l11", "l16", "team1", "s1", null, null, null);
             autoPush("l12", "l16", "team2", "s2", null, null, null);
 
-            // Нижняя сетка Раунд 3 -> Раунд 4
             autoPush("l13", "l17", "team1", "s1", null, null, null);
             autoPush("l14", "l18", "team1", "s1", null, null, null);
             autoPush("l15", "l19", "team1", "s1", null, null, null);
             autoPush("l16", "l20", "team1", "s1", null, null, null);
 
-            // Раунд 3 Верхней Сетки -> Полуфиналы
             autoPush("u37", "u41", "team1", "s1", "l17", "team2", "s2");
             autoPush("u38", "u41", "team2", "s2", "l18", "team2", "s2");
             autoPush("u39", "u42", "team1", "s1", "l19", "team2", "s2");
             autoPush("u40", "u42", "team2", "s2", "l20", "team2", "s2");
 
-            // Нижняя сетка Раунд 4 -> Полуфиналы 1
             autoPush("l17", "l21", "team1", "s1", null, null, null);
             autoPush("l18", "l21", "team2", "s2", null, null, null);
             autoPush("l19", "l22", "team1", "s1", null, null, null);
             autoPush("l20", "l22", "team2", "s2", null, null, null);
 
-            // Полуфиналы Верхней сетки
             autoPush("u41", "u43", "team1", "s1", "l23", "team2", "s2");
             autoPush("u42", "u43", "team2", "s2", "l24", "team2", "s2");
 
-            // Нижняя сетка Полуфиналы 1 -> Полуфиналы 2
             autoPush("l21", "l23", "team1", "s1", null, null, null);
             autoPush("l22", "l24", "team1", "s1", null, null, null);
 
-            // Нижняя сетка Полуфиналы 2 -> Финал НС
             autoPush("l23", "l25", "team1", "s1", null, null, null);
             autoPush("l24", "l25", "team2", "s2", null, null, null);
 
@@ -748,7 +742,6 @@
                 }
             });
 
-            // --- КОМПАКТНОЕ ВЫРАВНИВАНИЕ СТРОК НИЖНЕЙ СЕТКИ ---
             const r4Container = document.getElementById('lower-r4');
             if (r4Container) {
                 r4Container.appendChild(createRowSlot(createMatchNode("l17")));
@@ -777,7 +770,7 @@
             if (fFinalContainer) {
                 fFinalContainer.appendChild(createMatchNode("l25"));
                 const gapSpacer = document.createElement('div');
-                gapSpacer.style.height = '15px';
+                gapSpacer.style.height = '12px';
                 fFinalContainer.appendChild(gapSpacer);
                 fFinalContainer.appendChild(createMatchNode("l26"));
             }
@@ -864,7 +857,7 @@
         function updateGalleryView() {
             galleryBox.innerHTML = '';
             const imgs = store[activeKey].images || [];
-            if (imgs.length === 0) { galleryBox.innerHTML = '<div style="color: #666; font-size: 13px;">Скриншотов нет</div>'; return; }
+            if (imgs.length === 0) { galleryBox.innerHTML = '<div style="color: #666; font-size: 12px;">Скриншотов нет</div>'; return; }
             
             imgs.forEach((src, idx) => {
                 const wrapper = document.createElement('div');
@@ -902,7 +895,7 @@
             const regex = /const bracketData = \{[\s\S]*?\};/;
             const finalHtml = "<!DOCTYPE html>\n<html lang=\"ru\">\n" + currentFullHtml.replace(regex, `const bracketData = ${cleanStoreData};`) + "\n</html>";
             navigator.clipboard.writeText(finalHtml);
-            alert("Код скопирован. Обновите index.html!");
+            alert("Код скопирован! Теперь вставьте его в index.html на GitHub.");
         };
 
         buildTournament();
